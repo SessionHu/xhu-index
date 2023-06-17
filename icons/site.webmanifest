@@ -1,0 +1,20 @@
+{
+    "name": "XhuOffice",
+    "short_name": "XhuOffice",
+    "icons": [
+        {
+            "src": "/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#66ccff",
+    "background_color": "#66ccff",
+    "start_url": "https://xhuoffice.tk",
+    "display": "standalone"
+}
