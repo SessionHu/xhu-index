@@ -3,10 +3,16 @@
 
 
 /* Fonts */
+/* 字体的使用及传播遵从 CC-BY-SA-4.0 许可 */
 
 @font-face {
 	font-family: Mojangles;
 	src: url("mojangles.ttf");
+}
+
+@font-face {
+	font-family: Unifont;
+	src: url("http://unifoundry.com/pub/unifont/unifont-15.0.06/font-builds/unifont-15.0.06.otf");
 }
 
 /* Screen Display */
@@ -16,9 +22,9 @@
 	/* Universal Style */
 
 	body {
-		margin-top: -21px;				/* 去除页面上方多余空白 */
+		margin-top: -21px;	/* 去除页面上方多余空白 */
 		background-color: #fefefe;
-		font-family: Mojangles;
+		font-family: Mojangles, Unifont;
 		color: #010101
 	}
 
@@ -34,7 +40,7 @@
 	}
 
 	a:hover {
-		color: #9ff;
+		color: #9ff;	/* 鼠标悬停时的颜色 */
 	}
 
 	div {
@@ -48,8 +54,8 @@
 	/* Special Div Styles */
 
 	div.frame {
-		margin: auto;						/* 居中 */
-		width: 800px;						/* 宽度800px */
+		margin: auto;	/* 居中 */
+		width: 800px;	/* 宽度800px */
 		box-shadow: 10px 10px 10px #ccc;	/* 美丽的阴影 */
 		background-color: #eee;
 		text-align: center;
