@@ -9,48 +9,76 @@
 	src: url("mojangles.ttf");
 }
 
+/* Screen Display */
 
-/* Universal Style */
+@media screen {
 
-body {
-	margin-top: -21px;				/* 去除页面上方多余空白 */
-	background-color: #fefefe;
-	font-family: Mojangles;
-	color: #010101
+	/* Universal Style */
+
+	body {
+		margin-top: -21px;				/* 去除页面上方多余空白 */
+		background-color: #fefefe;
+		font-family: Mojangles;
+		color: #010101
+	}
+
+	h1 {
+		/* 去除上下天地 */
+		margin-block-start: 0em;
+		margin-block-end: 0em;
+	}
+
+	a {
+		color: #6cf;
+		text-decoration: none;
+	}
+
+	a:hover {
+		color: #9ff;
+	}
+
+	div {
+		/* 全部外边距10px */
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	/* Special Div Styles */
+
+	div.frame {
+		margin: auto;						/* 居中 */
+		width: 800px;						/* 宽度800px */
+		box-shadow: 10px 10px 10px #ccc;	/* 美丽的阴影 */
+		background-color: #eee;
+		text-align: center;
+	}
+
+	div.header{
+		padding-top: 30px;	/* 防止标题在屏幕外显示 */
+	}
+
+	div.footer {
+		font-size: 12px;
+	}
+
 }
 
-h1 {
-	/* 去除上下天地 */
-	margin-block-start: 0em;
-	margin-block-end: 0em;
-}
+/* Printer Display */
 
-a {
-	color: #6cf;
-	text-decoration: none;
-}
+@media print {
 
-div {
-	/* 全部外边距10px */
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-/* Special Div Styles */
-
-div.frame {
-	margin: auto;				/* 居中 */
-	width: 800px;				/* 宽度800px */
-	background-color: #eee;
-	text-align: center;
-}
-
-div.header{
-	padding-top: 30px;	/* 防止标题在屏幕外显示 */
-}
-
-div.footer {
-	font-size: 12px;
+	body {
+		font-family: Mojangles;
+	}
+	
+	a {
+		color: #6cf;
+		text-decoration: none;
+	}
+	
+	div.footer {
+		font-size: 12px;
+	}
 }
