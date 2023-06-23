@@ -8,6 +8,7 @@
 @font-face {
 	font-family: Mojangles;
 	src: url("mojangles.ttf");
+	/* 该Mojangles字体并非来自官方 */
 }
 
 @font-face {
@@ -44,9 +45,10 @@
 	}
 
 	div {
-		/* 全部外边距10px */
-		padding-top: 10px;
-		padding-bottom: 10px;
+		/* 上下外边距5px */
+		padding-top: 5px;
+		padding-bottom: 5px;
+		/* 左右外边距10px */
 		padding-left: 10px;
 		padding-right: 10px;
 	}
@@ -69,6 +71,9 @@
 		font-size: 12px;
 	}
 
+	div.gp {
+		text-align: left;
+	}
 }
 
 /* Printer Display */
