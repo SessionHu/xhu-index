@@ -3,10 +3,17 @@
 
 
 /* Fonts */
+/* 字体的使用及传播遵从 CC-BY-SA-4.0 许可 */
 
 @font-face {
 	font-family: Mojangles;
 	src: url("mojangles.ttf");
+	/* 该Mojangles字体并非来自官方 */
+}
+
+@font-face {
+	font-family: Unifont;
+	src: url("http://unifoundry.com/pub/unifont/unifont-15.0.06/font-builds/unifont-15.0.06.otf");
 }
 
 /* Screen Display */
@@ -16,16 +23,28 @@
 	/* Universal Style */
 
 	body {
-		margin-top: -21px;				/* 去除页面上方多余空白 */
+		margin-top: -21px;	/* 去除页面上方多余空白 */
 		background-color: #fefefe;
-		font-family: Mojangles;
+		font-family: Mojangles, Unifont;
 		color: #010101
 	}
 
 	h1 {
+		/* 减小上下天地 */
+		margin-block-start: 0.3em;
+		margin-block-end: 0.3em;
+	}
+
+	h2 {
 		/* 去除上下天地 */
 		margin-block-start: 0em;
 		margin-block-end: 0em;
+	}
+
+	hr {
+		/* 减小上下天地 */
+		margin-block-start: 0.25em;
+		margin-block-end: 0.25em;
 	}
 
 	a {
@@ -34,22 +53,18 @@
 	}
 
 	a:hover {
-		color: #9ff;
+		color: #8ef;	/* 鼠标悬停时的颜色 */
 	}
 
 	div {
-		/* 全部外边距10px */
-		padding-top: 10px;
-		padding-bottom: 10px;
-		padding-left: 10px;
-		padding-right: 10px;
+		padding: 5px 10px 5px 10px;
 	}
 
 	/* Special Div Styles */
 
 	div.frame {
-		margin: auto;						/* 居中 */
-		width: 800px;						/* 宽度800px */
+		margin: auto;	/* 居中 */
+		width: 800px;	/* 宽度800px */
 		box-shadow: 10px 10px 10px #ccc;	/* 美丽的阴影 */
 		background-color: #eee;
 		text-align: center;
@@ -63,22 +78,72 @@
 		font-size: 12px;
 	}
 
+	/* Website Links Styles */
+
+	div.gp {
+		text-align: left;
+	}
+
+	div.gpframe {
+		width: 760px;
+	}
+
+	div.siteboxframe {
+		width: 190px;
+		height: 110px;
+		border-radius: 5px;
+		background-color: #fefefe;
+	}
+
+	a.siteboxlink {
+		display: block;
+		width: 190px;
+		height: 110px;
+		color: #111;
+	}
+
+	a.siteboxlink:hover {
+		color: #666
+	}
+
+	div.sitebox {
+		padding: unset;
+	}
+
+	div.siteheader {
+		padding: 8px 0px 4px 0px;
+		max-height: 16px;
+	}
+	img.siteicon {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+	}
+
+	span.sitetitle {
+		display: inline-block;
+		padding: unset;
+		width: 160px;
+	}
+	
+	div.sitedescription {
+		padding: 4px 0px 8px 0px;
+	}
+
 }
 
 /* Printer Display */
 
 @media print {
-
-	body {
-		font-family: Mojangles;
-	}
-	
-	a {
-		color: #6cf;
-		text-decoration: none;
-	}
-	
-	div.footer {
-		font-size: 12px;
-	}
+	body {font-family: Mojangles, Unifont;}
+	h1 {margin-block-start: 0.3em;margin-block-end: 0.3em;}
+	h2 {margin-block-start: 0em;margin-block-end: 0em;}
+	hr {margin-block-start: 0.25em;margin-block-end: 0.25em;}
+	a {color: #6cf;text-decoration: none;}
+	div.footer {font-size: 12px;}
+	div.siteboxframe {height: 110px;}
+	a.siteboxlink {display: block;width: 190px;height: 110px;color: #000;}
+	div.siteheader {padding: 8px 0px 4px 0px;max-height: 16px;}
+	img.siteicon {display: inline-block;width: 16px;height: 16px;}
+	span.sitetitle {display: inline-block;width: 160px;}
 }
