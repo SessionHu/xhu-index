@@ -2,20 +2,6 @@
 /* CSS Document */
 
 
-/* Fonts */
-/* 字体的使用及传播遵从 CC-BY-SA-4.0 许可 */
-
-@font-face {
-	font-family: Mojangles;
-	src: url("mojangles.ttf");
-	/* 该Mojangles字体并非来自官方 */
-}
-
-@font-face {
-	font-family: Unifont;
-	src: url("http://unifoundry.com/pub/unifont/unifont-15.0.06/font-builds/unifont-15.0.06.otf");
-}
-
 /* Screen Display */
 
 @media screen {
@@ -26,7 +12,7 @@
 		margin-top: -21px;	/* 去除页面上方多余空白 */
 		background-color: #fefefe;
 		font-family: Mojangles, Unifont;
-		color: #010101
+		color: #010101;
 	}
 
 	h1 {
@@ -36,9 +22,9 @@
 	}
 
 	h2 {
-		/* 去除上下天地 */
-		margin-block-start: 0em;
-		margin-block-end: 0em;
+		/* 减小上下天地 */
+		margin-block-start: 0.1em;
+		margin-block-end: 0.1em;
 	}
 
 	hr {
@@ -56,48 +42,58 @@
 		color: #8ef;	/* 鼠标悬停时的颜色 */
 	}
 
-	div {
-		padding: 5px 10px 5px 10px;
-	}
-
 	/* Special Div Styles */
 
 	div.frame {
-		margin: auto;	/* 居中 */
-		width: 800px;	/* 宽度800px */
+		margin: 0 auto;	/* 居中 */
+		max-width: 800px;	/* 宽度800px */
 		box-shadow: 10px 10px 10px #ccc;	/* 美丽的阴影 */
 		background-color: #eee;
 		text-align: center;
 	}
 
 	div.header{
-		padding-top: 30px;	/* 防止标题在屏幕外显示 */
+		padding: 30px 10px 5px 10px;
+	}
+
+	div.content {
+		padding: 5px 10px 5px 10px;
 	}
 
 	div.footer {
+		padding: 5px 10px 8px 10px;
 		font-size: 12px;
 	}
 
 	/* Website Links Styles */
 
 	div.gp {
+		padding: 5px 10px 5px 10px;
 		text-align: left;
 	}
 
+	div.gptitle {
+		padding-bottom: 1px;
+	}
+
 	div.gpframe {
+		padding: 5px 10px 6px 10px;
 		width: 760px;
 	}
 
-	div.siteboxframe {
-		width: 190px;
+	div.sitebox {
+		display: inline-block;
+		width: 176px;
 		height: 110px;
 		border-radius: 5px;
 		background-color: #fefefe;
+		box-shadow: 4px 4px 4px #ccc;	/* 充满立体感的阴影 */
+		padding: 10px;
 	}
 
 	a.siteboxlink {
 		display: block;
-		width: 190px;
+		width: 176px;
 		height: 110px;
 		color: #111;
 	}
@@ -106,44 +102,26 @@
 		color: #666
 	}
 
-	div.sitebox {
-		padding: unset;
-	}
-
 	div.siteheader {
 		padding: 8px 0px 4px 0px;
-		max-height: 16px;
+		height: 16px;
 	}
-	img.siteicon {
+
+	div.siteicon {
 		display: inline-block;
 		width: 16px;
 		height: 16px;
 	}
 
-	span.sitetitle {
+	div.sitetitle {
 		display: inline-block;
-		padding: unset;
-		width: 160px;
+		height: 16px;
+		width: 150px;
 	}
 	
 	div.sitedescription {
-		padding: 4px 0px 8px 0px;
+		padding: 6px 0px 6px 0px;
+		width: 176px;
 	}
 
-}
-
-/* Printer Display */
-
-@media print {
-	body {font-family: Mojangles, Unifont;}
-	h1 {margin-block-start: 0.3em;margin-block-end: 0.3em;}
-	h2 {margin-block-start: 0em;margin-block-end: 0em;}
-	hr {margin-block-start: 0.25em;margin-block-end: 0.25em;}
-	a {color: #6cf;text-decoration: none;}
-	div.footer {font-size: 12px;}
-	div.siteboxframe {height: 110px;}
-	a.siteboxlink {display: block;width: 190px;height: 110px;color: #000;}
-	div.siteheader {padding: 8px 0px 4px 0px;max-height: 16px;}
-	img.siteicon {display: inline-block;width: 16px;height: 16px;}
-	span.sitetitle {display: inline-block;width: 160px;}
 }

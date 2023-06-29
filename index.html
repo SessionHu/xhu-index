@@ -29,7 +29,10 @@
 		<script type="text/javascript" src="scripts/ie.js"></script>
 
 		<!--style-->
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="styles/fonts.css" />
 		<link rel="stylesheet" href="styles/style.css" />
+		<link rel="stylesheet" href="styles/printer.css" />
 
 	</head>
 
@@ -46,30 +49,36 @@
 
 			<div class="content">
 				<div class="gp">
-					<div class="gptitle" id="top">
+					<div class="gptitle" id="common">
 						<h2>常用网站</h2>
 					</div>
 					<hr />
 					<div class="gpframe">
-						<div class="siteboxframe">
-							<a class="siteboxlink" href="https://github.com/">
-								<div class="sitebox">
-									<div class="siteheader">
-										<img class="siteicon" src="https://github.githubassets.com/pinned-octocat.svg" />
-										<span class="sitetitle">GitHub</span>
+						<!--GitHub-->
+						<div class="sitebox" id="github">
+							<a class="siteboxlink" title="GitHub" href="https://go.xhuoffice.tk/gh/">
+								<div class="siteboxframe">
+									<div class="siteboxheader">
+										<div class="siteicon">
+											<img alt="GitHub" src="https://github.githubassets.com/pinned-octocat.svg" />
+										</div>
+										<div class="sitetitle">
+											<span>GitHub</span>
+										</div>
 									</div>
 									<div class="sitedescription">
-										<span>全球最大的同性交友网站</span>
+										<span>全球最大的开源社区及代码托管平台</span>
 									</div>
 								</div>
 							</a>
 						</div>
+						<!--下一个网站-->
 					</div>
 				</div>
 			</div>
 
 			<div class="footer">
-				<span lang="en">
+				<span>
 					<img src="xhulogo.png" height="12px" title="XhuOffice" alt="XhuOffice" />
 					(C) 2023 XhuOffice
 				</span>
