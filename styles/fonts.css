@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* Fonts */
+/* 字体的使用及传播遵从 CC-BY-SA-4.0 许可 */
+
+@font-face {
+	font-family: Mojangles;
+	src: url("mojangles.ttf");
+	/* 该Mojangles字体并非来自官方 */
+}
+
+@font-face {
+	font-family: Unifont;
+	src: url("http://unifoundry.com/pub/unifont/unifont-15.0.06/font-builds/unifont-15.0.06.otf");
+}

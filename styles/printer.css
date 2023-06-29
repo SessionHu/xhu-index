@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* Printer Display */
+
+@media print {
+
+	/* 暂时不打算适配打印姬 */
+
+}
