@@ -6,6 +6,137 @@
 
 @media print {
 
-	/* 暂时不打算适配打印姬 */
+	/* Universal Style */
 
+	body {
+		margin: 0;	/* 去除页面边缘空白 */
+		background-color: white;
+		font-family: Mojangles, Unifont;
+		color: black;
+	}
+
+	h1 {
+		/* 减小上下天地 */
+		margin-block-start: 0.3em;
+		margin-block-end: 0.3em;
+	}
+
+	h2 {
+		/* 减小上下天地 */
+		margin-block-start: 0.1em;
+		margin-block-end: 0.1em;
+	}
+
+	hr {
+		/* 减小上下天地 */
+		margin-block-start: 0.25em;
+		margin-block-end: 0.25em;
+	}
+
+	a {
+		color: #6cf;
+		text-decoration: none; /* 去除链接下划线 */
+	}
+
+	a[href^="#"]::after {
+    content: ""; /* 不显示锚点链接的网址 */
+  }
+
+	img {
+    max-width: 100%; /* 调整图片大小以适应页面宽度 */
+    page-break-inside: avoid; /* 避免图片跨页打印 */
+  }
+
+  /* Special Div Styles */
+
+	div.frame {
+		margin: 0; /* 去除居中效果 */
+		max-width: none; /* 取消宽度限制 */
+		box-shadow: none; /* 去除阴影效果 */
+		background-color: white;
+		text-align: center;
+	}
+
+	div.header{
+    padding-top: 10px; /* 调整顶部间距 */
+    padding-bottom: 5px; /* 调整底部间距 */
+    page-break-after: avoid; /* 避免页眉跨页打印 */
+  }
+
+	div.content {
+    padding-top: 5px; /* 调整顶部间距 */
+    padding-bottom: 5px; /* 调整底部间距 */
+    page-break-before: auto; /* 允许内容跨页打印 */
+    page-break-after: auto; /* 允许内容跨页打印 */
+    page-break-inside: auto; /* 允许内容内部分页打印 */
+  }
+
+	div.footer {
+    padding-top: 5px; /* 调整顶部间距 */
+    padding-bottom: 10px; /* 调整底部间距 */
+    page-break-before: avoid; /* 避免页脚跨页打印 */
+    position: fixed; /* 固定页脚位置 */
+    bottom: 0; /* 将页脚放在页面底部 */
+    left: 0; /* 将页脚左对齐 */ 
+    right: 0; /* 将页脚右对齐 */ 
+    font-size: 12px;
+	}
+
+	/* Website Links Styles */
+
+	div.gp {
+    padding-top: 5px; /* 调整顶部间距 */ 
+    padding-bottom: 5px; /* 调整底部间距 */
+    text-align: left;
+  }
+
+  div.gptitle {
+    padding-bottom: 1px;
+  }
+
+  div.gpframe {
+    padding: 5px 10px 6px 10px;
+    width: auto; /* 取消宽度限制 */
+  }
+
+  div.sitebox {
+    display: inline-block;
+    width: auto; /* 取消宽度限制 */
+    height: auto; /* 取消高度限制 */
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px; /* 增加底部间距 */
+  }
+
+  a.siteboxlink {
+    display: block;
+    width: auto;
+    height: auto;
+    color: black;
+  }
+
+	a.siteboxlink::after {
+    content: " (" attr(href) ")"; /* 在链接后面显示网址 */
+    font-size: 10px; /* 调整网址字体大小 */
+  }
+
+  div.siteheader {
+    padding: 8px 0px 4px 0px;
+    height: auto;
+  }
+
+  div.siteicon {
+    display: none; /* 隐藏图标 */
+  }
+
+  div.sitetitle {
+    display: inline-block;
+    height: auto;
+    width: auto;
+  }
+  
+  div.sitedescription {
+    padding: 6px 0px 6px 0px;
+    width: auto;
+  }
 }
