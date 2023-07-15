@@ -95,7 +95,7 @@
   }
 
   div.gpframe {
-    padding: 5px 10px 6px 10px;
+    padding: 5px 10px 6px;
     width: auto; /* 取消宽度限制 */
   }
 
@@ -121,7 +121,7 @@
   }
 
   div.siteheader {
-    padding: 8px 0px 4px 0px;
+    padding: 8px 0px 4px;
     height: auto;
   }
 
@@ -136,7 +136,7 @@
   }
   
   div.sitedescription {
-    padding: 6px 0px 6px 0px;
+    padding: 6px 0px;
     width: auto;
   }
 }
