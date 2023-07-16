@@ -13,6 +13,7 @@
 		background-color: #fefefe;
 		font-family: Mojangles, Unifont;
 		color: #010101;
+		line-height: 1.14;
 	}
 
 	h1 {
@@ -116,7 +117,7 @@
 	div.sitetitle {
 		display: inline-block;
 		height: 16px;
-		width: 150px;
+		width: 140px;
 	}
 	
 	div.sitedescription {
