@@ -79,7 +79,7 @@
 
 	div.gpframe {
 		padding: 3px 10px 6px;
-		max-width: 760px;
+		max-width: 768px;
 	}
 
 	div.sitebox {
@@ -89,7 +89,7 @@
 		border-radius: 5px;
 		background-color: #fefefe;
 		box-shadow: 4px 4px 4px #ccc;	/* 阴影 */
-		padding: 10px;
+		padding: 8px;
 		margin: 2px;
 	}
 
@@ -130,5 +130,5 @@
 		padding: 6px 0px;
 		width: 176px;
 	}
-
+	
 }
