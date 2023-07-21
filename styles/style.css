@@ -47,7 +47,7 @@
 
 	div.frame {
 		margin: 0 auto;	/* 居中 */
-		max-width: 800px;	/* 限制宽度800px */
+		max-width: 858px;
 		box-shadow: 10px 10px 10px #ccc;	/* 阴影 */
 		background-color: #eee;
 		text-align: center;
@@ -79,7 +79,7 @@
 
 	div.gpframe {
 		padding: 3px 10px 6px;
-		max-width: 768px;
+		max-width: 838px;
 	}
 
 	div.sitebox {
