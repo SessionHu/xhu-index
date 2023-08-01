@@ -2,133 +2,135 @@
 /* CSS Document */
 
 
+/* Public Display */
+
+h1 {
+    /* 减小上下天地 */
+    margin-block-start: 0.3em;
+    margin-block-end: 0.3em;
+}
+
+h2 {
+    /* 减小上下天地 */
+    margin-block-start: 0.1em;
+    margin-block-end: 0.1em;
+}
+
+hr {
+    /* 减小上下天地 */
+    margin-block-start: 0.25em;
+    margin-block-end: 0.25em;
+}
+
+a {
+    color: #6cf;
+    text-decoration: none;
+}
+
 /* Screen Display */
 
 @media screen {
 
-	/* Universal Style */
+    /* Universal Style */
 
-	body {
-		margin-top: -21px;	/* 去除页面上方多余空白 */
-		background-color: #fefefe;
-		font-family: Mojangles, Unifont;
-		color: #010101;
-		line-height: 1.14;
-	}
+    body {
+        margin-top: -21px;    /* 去除页面上方多余空白 */
+        background-color: #fefefe;
+        font-family: Mojangles, Unifont;
+        color: #010101;
+        line-height: 1.14;
+    }
 
-	h1 {
-		/* 减小上下天地 */
-		margin-block-start: 0.3em;
-		margin-block-end: 0.3em;
-	}
+    a:hover {
+        color: #8ef;    /* 鼠标悬停时的颜色 */
+    }
 
-	h2 {
-		/* 减小上下天地 */
-		margin-block-start: 0.1em;
-		margin-block-end: 0.1em;
-	}
+    /* Special Div Styles */
 
-	hr {
-		/* 减小上下天地 */
-		margin-block-start: 0.25em;
-		margin-block-end: 0.25em;
-	}
+    div.frame {
+        margin: 0 auto;    /* 居中 */
+        max-width: 858px;
+        box-shadow: 10px 10px 10px #ccc;    /* 阴影 */
+        background-color: #eee;
+        text-align: center;
+    }
 
-	a {
-		color: #6cf;
-		text-decoration: none;
-	}
+    div.header{
+        padding: 30px 10px 5px;
+    }
 
-	a:hover {
-		color: #8ef;	/* 鼠标悬停时的颜色 */
-	}
+    div.content {
+        padding: 5px 10px;
+    }
 
-	/* Special Div Styles */
+    div.footer {
+        padding: 5px 10px 8px;
+        font-size: 12px;
+    }
 
-	div.frame {
-		margin: 0 auto;	/* 居中 */
-		max-width: 858px;
-		box-shadow: 10px 10px 10px #ccc;	/* 阴影 */
-		background-color: #eee;
-		text-align: center;
-	}
+    /* Website Links Styles */
 
-	div.header{
-		padding: 30px 10px 5px;
-	}
+    div.gp {
+        padding: 5px 10px;
+        text-align: left;
+    }
 
-	div.content {
-		padding: 5px 10px;
-	}
+    div.gptitle {
+        padding-bottom: 1px;
+    }
 
-	div.footer {
-		padding: 5px 10px 8px;
-		font-size: 12px;
-	}
+    div.gpframe {
+        padding: 3px 10px 6px;
+        max-width: 838px;
+    }
 
-	/* Website Links Styles */
+    div.sitebox {
+        display: inline-block;
+        width: 176px;
+        height: 110px;
+        border-radius: 5px;
+        background-color: #fefefe;
+        box-shadow: 4px 4px 4px #ccc;    /* 阴影 */
+        padding: 8px;
+        margin-bottom: 8px;
+    }
 
-	div.gp {
-		padding: 5px 10px;
-		text-align: left;
-	}
+    a.siteboxlink {
+        display: block;
+        width: 176px;
+        height: 110px;
+        color: #111;
+    }
 
-	div.gptitle {
-		padding-bottom: 1px;
-	}
+    a.siteboxlink:hover {
+        color: #666
+    }
 
-	div.gpframe {
-		padding: 3px 10px 6px;
-		max-width: 838px;
-	}
+    div.siteheader {
+        padding: 8px 0px 4px;
+        height: 16px;
+    }
 
-	div.sitebox {
-		display: inline-block;
-		width: 176px;
-		height: 110px;
-		border-radius: 5px;
-		background-color: #fefefe;
-		box-shadow: 4px 4px 4px #ccc;	/* 阴影 */
-		padding: 8px;
-		margin-bottom: 8px;
-	}
+    div.siteicon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+    }
+    
+    div.siteicon img {
+        width: 16px;
+        height: 16px;
+    }
 
-	a.siteboxlink {
-		display: block;
-		width: 176px;
-		height: 110px;
-		color: #111;
-	}
-
-	a.siteboxlink:hover {
-		color: #666
-	}
-
-	div.siteheader {
-		padding: 8px 0px 4px;
-		height: 16px;
-	}
-
-	div.siteicon {
-		display: inline-block;
-		width: 16px;
-		height: 16px;
-	}
-	
-	div.siteicon img {
-		width: 16px;
-		height: 16px;
-	}
-
-	div.sitetitle {
-		display: inline-block;
-		height: 16px;
-		width: 140px;
-	}
-	
-	div.sitedescription {
-		padding: 6px 0px;
-		width: 176px;
-	}
-	
+    div.sitetitle {
+        display: inline-block;
+        height: 16px;
+        width: 140px;
+    }
+    
+    div.sitedescription {
+        padding: 6px 0px;
+        width: 176px;
+    }
+    
 }
