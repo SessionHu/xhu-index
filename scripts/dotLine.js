@@ -46,7 +46,7 @@ function Dotline(t) {
     };
     
     // 鼠标移出事件，清空鼠标位置
-    this.c.onmouseout = function(t) {
+    this.c.onmouseout = function() {
         n.x = null;
         n.y = null;
     };
