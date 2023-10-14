@@ -59,8 +59,6 @@ function Dotline(t) {
     }
 }
 
-var dotline;
-
 // 对象合并方法，将i对象的属性合并到t对象中
 Dotline.prototype.extend = function(t, i) {
     for(var e in i) i[e] && (t[e] = i[e]);
@@ -162,12 +160,4 @@ window.onload = function() {
     
     // 启动动画
     t.animate();
-};
-
-// 窗口大小变化时，取消当前的动画，并重新初始化Dotline
-window.onresize = function() {
-    cancelAnimationFrame(dotline.animate);
-    dotline.c.width = document.documentElement.clientWidth;
-    dotline.c.height = document.documentElement.clientHeight;
-    initializeDotLine();
 };
