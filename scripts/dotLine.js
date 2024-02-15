@@ -28,9 +28,11 @@ class Dotline {
         // 存储所有的点
         this.dots = [];
         // 获取requestAnimationFrame方法，用于动画
-        var i = window.requestAnimationFrame || window.requestAnimationFrame || window.requestAnimationFrame || window.requestAnimationFrame || window.requestAnimationFrame || function (t) {
+        let i = window.requestAnimationFrame || function (t) {
             window.setTimeout(t, 1e3 / 60);
-        }, e = this, n = {
+        }
+        let e = this
+        let n = {
             x: null,
             y: null,
             label: "mouse"
@@ -56,20 +58,26 @@ class Dotline {
 
     // 对象合并方法，将i对象的属性合并到t对象中
     extend(t, i) {
-        for (var e in i) i[e] && (t[e] = i[e]);
+        for (let e in i) i[e] && (t[e] = i[e]);
         return t;
     }
 
     // 添加点的方法，随机生成点的位置和加速度
     addDots() {
-        for (var t, i = 0; i < this.dotSum; i++) t = {
-            x: Math.floor(Math.random() * this.c.width) - this.radius,
-            y: Math.floor(Math.random() * this.c.height) - this.radius,
-            ax: (2 * Math.random() - 1) / 1.5,
-            ay: (2 * Math.random() - 1) / 1.5
-        },
+        // 清空点
+        this.dots = [];
+        // 循环生成点
+        for(let t, i = 0; i < this.dotSum; i++) {
+            // 生成点
+            t = {
+                x: Math.floor(Math.random() * this.c.width) - this.radius,
+                y: Math.floor(Math.random() * this.c.height) - this.radius,
+                ax: (2 * Math.random() - 1) / 1.5,
+                ay: (2 * Math.random() - 1) / 1.5
+            };
             // 将生成的点添加到dots数组中
             this.dots.push(t);
+        }
     }
 
     // 点的移动方法，改变点的位置，并绘制点
@@ -87,49 +95,43 @@ class Dotline {
 
     // 绘制线条方法，遍历所有的点，计算距离，绘制线条
     drawLine(t) {
-        var i, e = this;
+        let i
+        let e = this;
         this.dots.forEach((function (n) {
             // 移动每一个点
             e.move(n);
-            for (var o = 0; o < t.length; o++)
+            for (let o = 0; o < t.length; o++)
                 if ((i = t[o]) !== n && null !== i.x && null !== i.y) {
-                    var d, c = n.x - i.x, s = n.y - i.y, h = c * c + s * s;
+                    let d, c = n.x - i.x, s = n.y - i.y, h = c * c + s * s;
                     // 如果两点之间的距离小于最大距离，则绘制线条
-                    if (!(Math.sqrt(h) > Math.sqrt(e.disMax)))
+                    if (!(Math.sqrt(h) > Math.sqrt(e.disMax))) {
                         // 如果是鼠标，则让点向鼠标的反方向移动
-                        i.label && Math.sqrt(h) > Math.sqrt(e.disMax) / 2 && (n.x -= .02 * c, n.y -= .02 * s),
-                            // 计算线条的宽度，距离越远，线条越细
-                            d = (e.disMax - h) / e.disMax,
-                            // 绘制线条
-                            e.ctx.beginPath(),
-                            e.ctx.lineWidth = d / 2,
-                            e.ctx.strokeStyle = dlColor,
-                            e.ctx.moveTo(n.x, n.y),
-                            e.ctx.lineTo(i.x, i.y),
-                            e.ctx.stroke();
+                        i.label && Math.sqrt(h) > Math.sqrt(e.disMax) / 2 && (n.x -= .02 * c, n.y -= .02 * s);
+                        // 计算线条的宽度，距离越远，线条越细
+                        d = (e.disMax - h) / e.disMax;
+                        // 绘制线条
+                        e.ctx.beginPath();
+                        e.ctx.lineWidth = d / 2;
+                        e.ctx.strokeStyle = dlColor;
+                        e.ctx.moveTo(n.x, n.y);
+                        e.ctx.lineTo(i.x, i.y);
+                        e.ctx.stroke();
+                    }
                 }
         }));
     }
 
     // 启动动画
     start() {
-        var t = this;
         this.addDots();
-        setTimeout((function () {
-            t.animate();
-        }), 100);
-        // 监听窗口大小变化，重新设置canvas的宽高
-        window.addEventListener("resize", (function () {
-            t.c.width = t.opt.cw = document.documentElement.clientWidth;
-            t.c.height = t.opt.ch = document.documentElement.clientHeight;
-        }));
+        this.animate();
     }
 }
 
 
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
 window.onload = function() {
-    var t = new Dotline({
+    let t = new Dotline({
         dom: dlid,
         cw: document.documentElement.clientWidth,
         ch: document.documentElement.clientHeight,
@@ -137,7 +139,11 @@ window.onload = function() {
         r: .5,
         dis: 80
     });
-    t.addDots();
     // 启动动画
-    t.animate();
+    t.start();
+    // 监听窗口大小变化，重新设置canvas的宽高
+    window.addEventListener("resize", (function () {
+        t.c.width = t.opt.cw = document.documentElement.clientWidth;
+        t.c.height = t.opt.ch = document.documentElement.clientHeight;
+    }));
 };
