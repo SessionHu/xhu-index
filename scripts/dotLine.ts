@@ -43,7 +43,7 @@ class Dotline {
         this.canvas.width = document.documentElement.clientWidth;
         this.canvas.height = document.documentElement.clientHeight;
         // 鼠标移动事件，记录鼠标位置
-        let t = this;
+        const t = this;
         this.canvas.onmousemove = function (ev: MouseEvent) {
             t.mouse.x = ev.clientX - t.canvas.offsetLeft;
             t.mouse.y = ev.clientY - t.canvas.offsetTop;
@@ -54,7 +54,7 @@ class Dotline {
             t.mouse.y = NaN;
         }
         // 获取requestAnimationFrame方法，用于动画
-        let i = window.requestAnimationFrame || function (t) {
+        const i = window.requestAnimationFrame || function (t) {
             window.setTimeout(t, 1e3 / 60);
         }
         // 动画函数，清空画布，绘制线条，递归调用自身
@@ -107,16 +107,16 @@ class Dotline {
 
     // 绘制线条方法，遍历所有的点，计算距离，绘制线条
     drawLine(t: Dot[]): void {
-        for(let n of this.dots) {
+        for(const n of this.dots) {
             // 移动每一个点
             this.move(n);
             // 绘制每一条线
-            for(let d of t) {
+            for(const d of t) {
                 // 是否能够绘制
                 if(d !== n && !Number.isNaN(d.x) && !Number.isNaN(d.y)) {
-                    let c = n.x - d.x;
-                    let s = n.y - d.y;
-                    let h = c * c + s * s;
+                    const c = n.x - d.x;
+                    const s = n.y - d.y;
+                    const h = c * c + s * s;
                     // 如果两点之间的距离小于最大距离，则绘制线条
                     if(!(Math.sqrt(h) > Math.sqrt(this.disMax))) {
                         // 引力
@@ -155,7 +155,7 @@ class Dotline {
 
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
 window.onload = function () {
-    let t: Dotline = new Dotline(
+    const t: Dotline = new Dotline(
         DOTLINE_ID,
         70,
         .5,
