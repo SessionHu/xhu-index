@@ -1,2 +1,8 @@
 # VSCode
 .vscode/
+
+# ts
+*.js
+
+# build
+site/
