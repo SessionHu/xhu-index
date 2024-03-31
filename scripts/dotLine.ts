@@ -31,7 +31,7 @@ class Dotline {
 
     animate: () => void;
 
-    constructor(dom: string, ds: number, r: number, dis: number) {
+    constructor(dom: string, ds: number, r: number, dis: number, width: number, height: number) {
         // 初始化一些参数
         this.dotSum = ds;
         this.radius = r;
@@ -40,8 +40,8 @@ class Dotline {
         this.canvas = document.getElementById(dom) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         // 设置canvas的宽高
-        this.canvas.width = document.documentElement.clientWidth;
-        this.canvas.height = document.documentElement.clientHeight;
+        this.canvas.width = width;
+        this.canvas.height = height;
         // 鼠标移动事件，记录鼠标位置
         const t = this;
         this.canvas.onmousemove = function (ev: MouseEvent) {
@@ -159,7 +159,9 @@ window.onload = function () {
         DOTLINE_ID,
         70,
         .5,
-        80
+        80,
+        document.documentElement.clientWidth,
+        document.documentElement.clientHeight
     );
     // 启动动画
     t.start();
