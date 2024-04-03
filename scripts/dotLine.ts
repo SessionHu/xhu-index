@@ -154,7 +154,7 @@ class Dotline {
 }
 
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
-window.onload = function () {
+window.addEventListener<"load">("load", () => {
     const t: Dotline = new Dotline(
         DOTLINE_ID,
         70,
@@ -170,4 +170,4 @@ window.onload = function () {
         t.canvas.width = document.documentElement.clientWidth;
         t.canvas.height = document.documentElement.clientHeight;
     });
-}
+});
