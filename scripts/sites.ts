@@ -20,7 +20,6 @@ async function fillGroupInfo(): Promise<void> {
         // div.gp
         const gpe: HTMLDivElement = document.createElement("div");
         gpe.className = "gp";
-        ctt.insertAdjacentElement("beforeend",gpe);
         // div.gptitle & hr
         gpe.insertAdjacentHTML("beforeend",`
             <div class="gptitle" id="${gp.id}">
@@ -54,7 +53,8 @@ async function fillGroupInfo(): Promise<void> {
             `);
         }
         gpe.insertAdjacentElement("beforeend",gpframe);
+        ctt.insertAdjacentElement("beforeend",gpe);
     }
 }
 
-window.addEventListener<"load">("load",()=>fillGroupInfo());
+fillGroupInfo();
