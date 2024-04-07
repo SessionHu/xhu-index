@@ -35,19 +35,11 @@ async function fillGroupInfo(): Promise<void> {
                 <!--${sitebox.title}-->
                 <div class="sitebox" id="${sitebox.id}">
                     <a class="siteboxlink" title="${sitebox.title}" href="${sitebox.url}">
-                        <div class="siteboxframe">
-                            <div class="siteboxheader">
-                                <div class="siteicon">
-                                    <img alt=" " src="${sitebox.icon}" />
-                                </div>
-                                <div class="sitetitle">
-                                    <span>${sitebox.titlecn}</span>
-                                </div>
-                            </div>
-                            <div class="sitedescription">
-                                <span>${sitebox.desc}</span>
-                            </div>
+                        <div class="siteboxheader">
+                            <img class="siteicon" alt=" " src="${sitebox.icon}" />
+                            <span class="sitetitle">${sitebox.titlecn}</span>
                         </div>
+                        <span class="sitedescription">${sitebox.desc}</span>
                     </a>
                 </div>
             `);
