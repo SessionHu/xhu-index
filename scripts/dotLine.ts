@@ -29,8 +29,6 @@ class Dotline {
         label: "mouse"
     }
 
-    animate: () => void;
-
     constructor(dom: string, ds: number, r: number, dis: number, width: number, height: number) {
         // 初始化一些参数
         this.dotSum = ds;
@@ -53,16 +51,14 @@ class Dotline {
             t.mouse.x = NaN;
             t.mouse.y = NaN;
         }
-        // 获取requestAnimationFrame方法，用于动画
-        const i = window.requestAnimationFrame || function (t) {
-            window.setTimeout(t, 1e3 / 60);
-        }
-        // 动画函数，清空画布，绘制线条，递归调用自身
-        this.animate = function () {
-            t.ctx.clearRect(0, 0, t.canvas.width, t.canvas.height);
-            t.drawLine([t.mouse].concat(t.dots));
-            i(t.animate);
-        }
+    }
+    
+    // 动画函数
+    animate(): void {
+        // 清空画布
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // 绘制线条
+        this.drawLine([this.mouse].concat(this.dots));
     }
 
     // 添加点的方法，随机生成点的位置和加速度
@@ -149,7 +145,7 @@ class Dotline {
     // 启动动画
     start(): void {
         this.addDots();
-        this.animate();
+        window.setInterval(() => this.animate(), 1e3 / 60);
     }
 }
 
