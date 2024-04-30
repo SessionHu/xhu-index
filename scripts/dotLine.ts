@@ -1,7 +1,7 @@
 // 元素ID
 const DOTLINE_ID: string = "dotLine";
 // 点颜色
-declare let DOT_COLOR: string;
+const DOT_COLOR: string = "rgba(0,0,0,1)"
 
 
 interface Dot {
@@ -29,14 +29,16 @@ class Dotline {
         label: "mouse"
     }
 
-    constructor(dom: string, ds: number, r: number, dis: number, width: number, height: number) {
+    constructor(dom: string, dotSum: number, r: number, disMax: number, width: number, height: number, color: string) {
         // 初始化一些参数
-        this.dotSum = ds;
+        this.dotSum = dotSum;
         this.radius = r;
-        this.disMax = dis * dis;
+        this.disMax = disMax;
         // 获取canvas元素和上下文
         this.canvas = document.getElementById(dom) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        // set dotline color
+        this.ctx.strokeStyle = color;
         // 设置canvas的宽高
         this.canvas.width = width;
         this.canvas.height = height;
@@ -52,16 +54,6 @@ class Dotline {
             t.mouse.ry = NaN;
         }
     }
-    
-    // 动画函数
-    animate(): void {
-        // 清空画布
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        // 移动
-        this.move();
-        // 绘制线条
-        this.drawLine([this.mouse].concat(this.dots));
-    }
 
     // 添加点的方法，随机生成点的位置和加速度
     addDots(): void {
@@ -70,13 +62,11 @@ class Dotline {
         // 循环生成点
         for(let i = 0; i < this.dotSum; i++) {
             // 生成点 & 添加到dots数组中
-            const x = Math.floor(Math.random() * this.canvas.width) - this.radius;
-            const y = Math.floor(Math.random() * this.canvas.width) - this.radius;
             this.dots.push({
                 ax: (2 * Math.random() - 1) / 1.5,
                 ay: (2 * Math.random() - 1) / 1.5,
-                rx: x / this.canvas.width,
-                ry: y / this.canvas.height,
+                rx: Math.random(),
+                ry: Math.random(),
                 label: "dot"
             });
         }
@@ -87,12 +77,16 @@ class Dotline {
         for(const t of this.dots) { // 目标点
             // 重力加速度
             for(const d of [this.mouse].concat(this.dots)) { // 检测点
+                // if worth calculating?
+                if(d === t || Number.isNaN(d.rx) || Number.isNaN(d.ry)) {
+                    continue;
+                }
                 // 计算绝对距离
                 const dx: number = (t.rx - d.rx) * this.canvas.width; // x距离
                 const dy: number = (t.ry - d.ry) * this.canvas.height; // y距离
-                const dd: number = Math.sqrt(dx*dx + dy*dy); // 绝对距离
+                const dd: number = Math.sqrt(dx * dx + dy * dy); // 绝对距离
                 // 重力加速度
-                if(dd < Math.sqrt(this.disMax) && dd > 0) {
+                if(dd < this.disMax && dd > 0) {
                     // 系数
                     const k: number = (d.label == "mouse" ? 6e-2 : 1e-4);
                     // 加速度
@@ -108,38 +102,34 @@ class Dotline {
             t.ry += t.ay / this.canvas.height;
             // 碰到边界反弹
             t.ax *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
-            t.ay *= t.ry <= 0 || t.rx >= 1 ? -1 : 1;
+            t.ay *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
             // 如果点在边界以外，将点的位置设置为边界以内的一个随机位置
             if(t.rx > 1.01  || t.rx < -0.01 || t.ry > 1.01 || t.ry < -0.01) {
                 t.rx = Math.random();
                 t.ry = Math.random();
             }
-            // 绘制点
-            this.ctx.beginPath();
-            this.ctx.strokeStyle = DOT_COLOR;
-            this.ctx.arc((t.rx * this.canvas.width), (t.ry * this.canvas.height), this.radius, 0, 2 * Math.PI, !0);
-            this.ctx.stroke();
         }
     }
 
     // 绘制线条方法，遍历所有的点，计算距离，绘制线条
-    drawLine(t: Dot[]): void {
+    drawLine(): void {
+        // 清空画布
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // draw
         for(const n of this.dots) {
-            // 绘制每一条线
-            for(const d of t) {
+            // draw lines
+            for(const d of [this.mouse].concat(this.dots)) {
                 // 是否能够绘制
                 if(d !== n && !Number.isNaN(d.rx) && !Number.isNaN(d.ry)) {
                     const c = (n.rx - d.rx) * this.canvas.width;
                     const s = (n.ry - d.ry) * this.canvas.height;
-                    const h = c * c + s * s;
+                    const h = Math.sqrt(c * c + s * s);
                     // 如果两点之间的距离小于最大距离，则绘制线条
-                    if(!(Math.sqrt(h) > Math.sqrt(this.disMax))) {
+                    if(h < this.disMax) {
                         // 绘制线条开始
                         this.ctx.beginPath();
                         // 线条的宽度，距离越远，线条越细
-                        this.ctx.lineWidth = (this.disMax - h) / this.disMax / 2;
-                        // 线条颜色
-                        this.ctx.strokeStyle = DOT_COLOR;
+                        this.ctx.lineWidth = (this.disMax - h) / this.disMax * Math.E / 2;
                         // 移动绘制
                         this.ctx.moveTo(n.rx * this.canvas.width, n.ry * this.canvas.height);
                         this.ctx.lineTo(d.rx * this.canvas.width, d.ry * this.canvas.height);
@@ -148,13 +138,23 @@ class Dotline {
                     }
                 }
             }
+            // 绘制点
+            this.ctx.beginPath();
+            this.ctx.arc((n.rx * this.canvas.width), (n.ry * this.canvas.height), this.radius, 0, 2 * Math.PI, !0);
+            this.ctx.stroke();
         }
+        // redraw
+        window.requestAnimationFrame(() => this.drawLine());
     }
 
     // 启动动画
     start(): void {
+        // add dots
         this.addDots();
-        window.setInterval(() => this.animate(), 1e3 / 60);
+        // move dots
+        window.setInterval(() => this.move(), 1e3 / 60);
+        // draw lines
+        this.drawLine();
     }
 }
 
@@ -167,7 +167,8 @@ window.addEventListener<"load">("load", () => {
         .5,
         80,
         document.documentElement.clientWidth,
-        document.documentElement.clientHeight
+        document.documentElement.clientHeight,
+        DOT_COLOR
     );
     // 启动动画
     t.start();
