@@ -43,15 +43,14 @@ class Dotline {
         this.canvas.width = width;
         this.canvas.height = height;
         // 鼠标移动事件，记录鼠标位置
-        const t = this;
-        this.canvas.onmousemove = function (ev: MouseEvent) {
-            t.mouse.rx = (ev.clientX - t.canvas.offsetLeft) / t.canvas.width;
-            t.mouse.ry = (ev.clientY - t.canvas.offsetTop) / t.canvas.height;
+        window.onmousemove = (ev: MouseEvent) => {
+            this.mouse.rx = (ev.clientX - this.canvas.offsetLeft) / this.canvas.width;
+            this.mouse.ry = (ev.clientY - this.canvas.offsetTop) / this.canvas.height;
         };
         // 鼠标移出事件，清空鼠标位置
-        this.canvas.onmouseout = function () {
-            t.mouse.rx = NaN;
-            t.mouse.ry = NaN;
+        window.onmouseout = () => {
+            this.mouse.rx = NaN;
+            this.mouse.ry = NaN;
         }
     }
 
@@ -104,9 +103,15 @@ class Dotline {
             t.ax *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
             t.ay *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
             // 如果点在边界以外，将点的位置设置为边界以内的一个随机位置
-            if(t.rx > 1.01  || t.rx < -0.01 || t.ry > 1.01 || t.ry < -0.01) {
-                t.rx = Math.random();
-                t.ry = Math.random();
+            if(t.rx > 1.1) {
+                t.rx -= 1;
+            } else if(t.rx < -0.1) {
+                t.rx += 1;
+            }
+            if(t.ry > 1.1) {
+                t.ry -= 1;
+            } else if(t.ry < -0.1) {
+                t.ry += 1;
             }
         }
     }
@@ -129,7 +134,7 @@ class Dotline {
                         // 绘制线条开始
                         this.ctx.beginPath();
                         // 线条的宽度，距离越远，线条越细
-                        this.ctx.lineWidth = (this.disMax - h) / this.disMax * Math.E / 2;
+                        this.ctx.lineWidth = (this.disMax - h) / this.disMax;
                         // 移动绘制
                         this.ctx.moveTo(n.rx * this.canvas.width, n.ry * this.canvas.height);
                         this.ctx.lineTo(d.rx * this.canvas.width, d.ry * this.canvas.height);
@@ -140,7 +145,8 @@ class Dotline {
             }
             // 绘制点
             this.ctx.beginPath();
-            this.ctx.arc((n.rx * this.canvas.width), (n.ry * this.canvas.height), this.radius, 0, 2 * Math.PI, !0);
+            this.ctx.lineWidth = this.radius;
+            this.ctx.arc((n.rx * this.canvas.width), (n.ry * this.canvas.height), this.radius, 0, 2 * Math.PI);
             this.ctx.stroke();
         }
         // redraw
