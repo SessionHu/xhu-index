@@ -124,6 +124,8 @@ span.sitetitle {
 }
 
 span.sitedescription {
+    line-height: 1.13;
+    font-family: Unifont, monospace, sinsun, Times, serif;
     padding: 3px 0;
     display: block;
 }
