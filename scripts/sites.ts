@@ -22,9 +22,7 @@ async function fillGroupInfo(): Promise<void> {
         gpe.className = "gp";
         // div.gptitle & hr
         gpe.insertAdjacentHTML("beforeend",`
-            <div class="gptitle" id="${gp.id}">
-                <h2>${gp.name}</h2>
-            </div>
+            <h2 class="gptitle" id="${gp.id}">${gp.name}</h2>
             <hr />
         `);
         // div.gpframe
@@ -33,15 +31,13 @@ async function fillGroupInfo(): Promise<void> {
         for(const sitebox of gp.links) {
             gpframe.insertAdjacentHTML("beforeend",`
                 <!--${sitebox.title}-->
-                <div class="sitebox" id="${sitebox.id}">
-                    <a class="siteboxlink" title="${sitebox.title}" href="${sitebox.url}">
-                        <div class="siteboxheader">
-                            <img class="siteicon" alt=" " src="${sitebox.icon}" />
-                            <span class="sitetitle">${sitebox.titlecn}</span>
-                        </div>
-                        <span class="sitedescription">${sitebox.desc}</span>
-                    </a>
-                </div>
+                <a class="siteboxlink" id="${sitebox.id}" title="${sitebox.title}" href="${sitebox.url}">
+                    <div class="siteboxheader">
+                        <img class="siteicon" alt=" " src="${sitebox.icon}" />
+                        <span class="sitetitle">${sitebox.titlecn}</span>
+                    </div>
+                    <span class="sitedescription">${sitebox.desc}</span>
+                </a>
             `);
         }
         gpe.insertAdjacentElement("beforeend",gpframe);

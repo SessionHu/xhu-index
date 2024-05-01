@@ -10,12 +10,6 @@ h1 {
     margin-block-end: 0.3em;
 }
 
-h2 {
-    /* 减小上下天地 */
-    margin-block-start: 0.1em;
-    margin-block-end: 0.1em;
-}
-
 hr {
     /* 减小上下天地 */
     margin-block-start: 0.25em;
@@ -27,38 +21,32 @@ a {
     text-decoration: none;
 }
 
-/* Screen Display */
-
-
-/* Universal Style */
+a:hover {
+    /* 鼠标悬停时的颜色 */
+    color: #8ef;
+}
 
 body {
     background-color: #fefefe;
     font-family: Mojangles, Unifont;
     color: #010101;
-    line-height: 1.14;
-    /* 去除页面上方多余空白 */
-    margin-top: -21px;
+    /* 去除上下天地 */
+    margin: 0 8px;
     /* 内容水平居中 */
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-a:hover {
-    /* 鼠标悬停时的颜色 */
-    color: #8ef;
-}
-
 canvas#dotLine {
     position: fixed;
-    top: 0;
 }
 
 /* Special Div Styles */
 
 div.frame {
-    max-width: 858px;
+    max-width: 820px;
+    padding: 5px;
     border-radius: 2px;
     box-shadow: 10px 10px 10px rgba(192, 192, 192, 0.7);
     background-color: rgba(240, 240, 240, 0.6);
@@ -67,46 +55,48 @@ div.frame {
 }
 
 div.header {
-    padding: 30px 10px 5px;
+    margin: 5px;
 }
 
 div.content {
-    padding: 5px 10px;
+    margin: 5px;
 }
 
 div.footer {
-    padding: 5px 10px 8px;
+    margin: 5px;
     font-size: 12px;
 }
 
 /* Website Links Styles */
 
 div.gp {
-    padding: 5px 10px;
+    padding: 5px;
     text-align: left;
 }
 
-div.gptitle {
-    padding-bottom: 1px;
+h2 {
+    padding: 0 4px;
+    /* 减小上下天地 */
+    margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
 }
 
 div.gpframe {
-    padding: 3px 10px 6px;
-    max-width: 838px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    /* 边距 */
+    padding: 0 4px;
+    margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
 }
 
-div.sitebox {
+a.siteboxlink {
     border-radius: 5px;
     background-color: #fefefe;
     box-shadow: 4px 4px 4px #ccc;
     padding: 8px;
     margin: 3px;
-}
-
-a.siteboxlink {
     display: block;
     width: 176px;
     height: 110px;
