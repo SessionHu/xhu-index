@@ -1,14 +1,13 @@
-// 元素ID
-const DOTLINE_ID: string = "dotLine";
 // 点颜色
 const DOT_COLOR: string = "rgba(0,0,0,1)"
 
 
 interface Dot {
-    rx: number; // 相对 x
-    ry: number; // 相对 y
-    ax: number; // 加速度 x
-    ay: number; // 加速度 y
+    mass: number; // kg
+    rx: number; // percent
+    ry: number; // percent
+    vx: number; // m/s
+    vy: number; // m/s
     label: string;
 }
 
@@ -16,42 +15,57 @@ interface Dot {
 class Dotline {
     
     canvas: HTMLCanvasElement;
-    ctx: CanvasRenderingContext2D;
+    ctx:    CanvasRenderingContext2D;
+    color:  string;
+    
     dotSum: number;
-    radius: number;
-    disMax: number;
-    dots: Dot[] = [];
+    radius: number; // px
+    disMax: number; // px
+    scale:  number; // px/m
+    freq:   number; // Hz
+    
+    dots:  Dot[] = [];
     mouse: Dot = {
-        ax: NaN,
-        ay: NaN,
+        mass: 5.9722e24,
         rx: NaN,
         ry: NaN,
+        vx: NaN,
+        vy: NaN,
         label: "mouse"
     }
 
-    constructor(dom: string, dotSum: number, r: number, disMax: number, width: number, height: number, color: string) {
+    constructor(dom: HTMLCanvasElement,
+                dotSum: number,
+                radius: number, // px
+                disMax: number, // px
+                width:  number, // px
+                height: number, // px
+                freq:   number, // Hz
+                color:  string)
+    {
         // 初始化一些参数
+        this.canvas = dom;
         this.dotSum = dotSum;
-        this.radius = r;
+        this.radius = radius;
         this.disMax = disMax;
-        // 获取canvas元素和上下文
-        this.canvas = document.getElementById(dom) as HTMLCanvasElement;
+        this.color  = color;
+        this.scale  = radius / 1.7371e6; // dot radius / moon radius
+        this.freq   = freq;
+        // get canvas context
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
-        // set dotline color
-        this.ctx.strokeStyle = color;
         // 设置canvas的宽高
         this.canvas.width = width;
         this.canvas.height = height;
         // 鼠标移动事件，记录鼠标位置
-        window.onmousemove = (ev: MouseEvent) => {
+        window.addEventListener<"mousemove">("mousemove", (ev: MouseEvent) => {
             this.mouse.rx = (ev.clientX - this.canvas.offsetLeft) / this.canvas.width;
             this.mouse.ry = (ev.clientY - this.canvas.offsetTop) / this.canvas.height;
-        };
+        });
         // 鼠标移出事件，清空鼠标位置
-        window.onmouseout = () => {
+        window.addEventListener<"mouseout">("mouseout", () => {
             this.mouse.rx = NaN;
             this.mouse.ry = NaN;
-        }
+        });
     }
 
     // 添加点的方法，随机生成点的位置和加速度
@@ -61,9 +75,12 @@ class Dotline {
         // 循环生成点
         for(let i = 0; i < this.dotSum; i++) {
             // 生成点 & 添加到dots数组中
+            const v: number = (6 * Math.random() - 3) / 1.5 * 1e5; // m/s
+            const d: number = 360 * Math.random(); // deg
             this.dots.push({
-                ax: (2 * Math.random() - 1) / 1.5,
-                ay: (2 * Math.random() - 1) / 1.5,
+                mass: 1.7371e6, // moon mass
+                vx: Math.sin(d) * v,
+                vy: Math.cos(d) * v,
                 rx: Math.random(),
                 ry: Math.random(),
                 label: "dot"
@@ -73,46 +90,51 @@ class Dotline {
 
     // 点的移动方法，改变点的位置，并绘制点
     move(): void {
-        for(const t of this.dots) { // 目标点
-            // 重力加速度
-            for(const d of [this.mouse].concat(this.dots)) { // 检测点
+        // 万有引力
+        for(const t of this.dots) {
+            const xt = t.rx * this.canvas.width / this.scale; // m
+            const yt = t.ry * this.canvas.height / this.scale; // m
+            for(const d of [this.mouse].concat(this.dots)) {
                 // if worth calculating?
                 if(d === t || Number.isNaN(d.rx) || Number.isNaN(d.ry)) {
                     continue;
                 }
-                // 计算绝对距离
-                const dx: number = (t.rx - d.rx) * this.canvas.width; // x距离
-                const dy: number = (t.ry - d.ry) * this.canvas.height; // y距离
-                const dd: number = Math.sqrt(dx * dx + dy * dy); // 绝对距离
-                // 重力加速度
-                if(dd < this.disMax && dd > 0) {
-                    // 系数
-                    const k: number = (d.label == "mouse" ? 6e-2 : 1e-4);
-                    // 加速度
-                    const nax: number = Math.abs(dx) / (Math.abs(dx) + Math.abs(dy)) * k;
-                    const nay: number = Math.abs(dy) / (Math.abs(dx) + Math.abs(dy)) * k;
-                    // 新速度
-                    t.ax -= dx > 0 ? nax : -nax;
-                    t.ay -= dy > 0 ? nay : -nay;
+                // distance
+                const disx: number = xt - d.rx * this.canvas.width / this.scale; // m
+                const disy: number = yt - d.ry * this.canvas.height / this.scale; // m
+                const disq: number = disx * disx + disy * disy; // m^2
+                // do not move too fast
+                if(disq < 1e10) {
+                    continue;
                 }
+                // gravity(force)
+                const f: number = 6.67258e-4 * t.mass * d.mass / disq; // N(kg*m/s^2)
+                const fx: number = f * disx / Math.sqrt(disq); // N
+                const fy: number = f * disy / Math.sqrt(disq); // N
+                // velocity
+                t.vx -= fx / t.mass / this.freq;
+                t.vy -= fy / t.mass / this.freq;
             }
+            // if move too fast
+            t.vx *= t.vx > 8e6 ? 0.9 : 1;
+            t.vy *= t.vy > 8e6 ? 0.9 : 1;
             // 移动
-            t.rx += t.ax / this.canvas.width;
-            t.ry += t.ay / this.canvas.height;
+            t.rx += t.vx / this.freq * this.scale;
+            t.ry += t.vy / this.freq * this.scale;
             // 碰到边界反弹
-            t.ax *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
-            t.ay *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
-            // 如果点在边界以外，将点的位置设置为边界以内的一个随机位置
-            if(t.rx > 1.1) {
-                t.rx -= 1;
-            } else if(t.rx < -0.1) {
-                t.rx += 1;
-            }
-            if(t.ry > 1.1) {
-                t.ry -= 1;
-            } else if(t.ry < -0.1) {
-                t.ry += 1;
-            }
+            t.vx *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
+            t.vy *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
+            // 边界循环
+            //if(t.rx > 1.1) {
+            //    t.rx -= 1.2;
+            //} else if(t.rx < -0.1) {
+            //    t.rx += 1.2;
+            //}
+            //if(t.ry > 1.1) {
+            //    t.ry -= 1.2;
+            //} else if(t.ry < -0.1) {
+            //    t.ry += 1.2;
+            //}
         }
     }
 
@@ -133,9 +155,11 @@ class Dotline {
                     if(h < this.disMax) {
                         // 绘制线条开始
                         this.ctx.beginPath();
-                        // 线条的宽度，距离越远，线条越细
+                        // line color
+                        this.ctx.strokeStyle = this.color;
+                        // line width, thiner if farther
                         this.ctx.lineWidth = (this.disMax - h) / this.disMax;
-                        // 移动绘制
+                        // move to draw
                         this.ctx.moveTo(n.rx * this.canvas.width, n.ry * this.canvas.height);
                         this.ctx.lineTo(d.rx * this.canvas.width, d.ry * this.canvas.height);
                         // 绘制线条结束
@@ -158,7 +182,7 @@ class Dotline {
         // add dots
         this.addDots();
         // move dots
-        window.setInterval(() => this.move(), 1e3 / 60);
+        window.setInterval(() => this.move(), 1e3 / this.freq);
         // draw lines
         this.drawLine();
     }
@@ -168,12 +192,13 @@ class Dotline {
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
 window.addEventListener<"load">("load", () => {
     const t: Dotline = new Dotline(
-        DOTLINE_ID,
+        document.getElementById("dotLine") as HTMLCanvasElement,
         70,
         .5,
         80,
         document.documentElement.clientWidth,
         document.documentElement.clientHeight,
+        60,
         DOT_COLOR
     );
     // 启动动画
