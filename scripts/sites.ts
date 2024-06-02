@@ -32,10 +32,7 @@ async function fillGroupInfo(): Promise<void> {
             gpframe.insertAdjacentHTML("beforeend",`
                 <!--${sitebox.title}-->
                 <a class="siteboxlink" id="${sitebox.id}" title="${sitebox.title}" href="${sitebox.url}">
-                    <div class="siteboxheader">
-                        <img class="siteicon" alt=" " src="${sitebox.icon}" />
-                        <span class="sitetitle">${sitebox.titlecn}</span>
-                    </div>
+                    <span class="sitetitle" style="background-image:url('${sitebox.icon}');">${sitebox.titlecn}</span>
                     <span class="sitedescription">${sitebox.desc}</span>
                 </a>
             `);

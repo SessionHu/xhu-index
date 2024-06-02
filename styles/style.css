@@ -30,8 +30,6 @@ body {
     background-color: #fefefe;
     font-family: Mojangles, Unifont;
     color: #010101;
-    /* 去除上下天地 */
-    margin: 0 8px;
     /* 内容水平居中 */
     display: flex;
     align-items: center;
@@ -40,11 +38,16 @@ body {
 
 canvas#dotLine {
     position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* Special Div Styles */
 
 div.frame {
+    position: relative;
+    top: -8px;
+    flex: auto;
     max-width: 820px;
     padding: 5px;
     border-radius: 2px;
@@ -107,25 +110,20 @@ a.siteboxlink:hover {
     color: #666
 }
 
-div.siteboxheader {
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 0;
-}
-
-img.siteicon {
-    width: 16px;
-    height: 16px;
-}
-
 span.sitetitle {
+    padding: 3px 0 3px 22px;
     height: 16px;
-    width: 154px;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position-x: 1px;
+    background-position-y: center;
+    display: block;
+    /* use #6cf as background-image if not load from url */
 }
 
 span.sitedescription {
     line-height: 1.13;
-    font-family: Unifont, monospace, sinsun, Times, serif;
+    font-family: Unifont, monospace, simsun, Times, serif;
     padding: 3px 0;
     display: block;
 }
