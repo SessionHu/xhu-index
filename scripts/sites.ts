@@ -23,7 +23,6 @@ async function fillGroupInfo(): Promise<void> {
         // div.gptitle & hr
         gpe.insertAdjacentHTML("beforeend",`
             <h2 class="gptitle" id="${gp.id}">${gp.name}</h2>
-            <hr />
         `);
         // div.gpframe
         const gpframe: HTMLDivElement = document.createElement("div");
