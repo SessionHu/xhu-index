@@ -26,7 +26,7 @@ class Dotline {
     
     dots:  Dot[] = [];
     mouse: Dot = {
-        mass: 5.9722e24,
+        mass: 8e30,
         rx: NaN,
         ry: NaN,
         vx: NaN,
@@ -49,7 +49,7 @@ class Dotline {
         this.radius = radius;
         this.disMax = disMax;
         this.color  = color;
-        this.scale  = radius / 1.7371e6; // dot radius / moon radius
+        this.scale  = radius / 1.7371e6;
         this.freq   = freq;
         // get canvas context
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -78,7 +78,7 @@ class Dotline {
             const v: number = (6 * Math.random() - 3) / 1.5 * 1e5; // m/s
             const d: number = 360 * Math.random(); // deg
             this.dots.push({
-                mass: 1.7371e6, // moon mass
+                mass: (Math.random() + 0.5) * 1.7371e10,
                 vx: Math.sin(d) * v,
                 vy: Math.cos(d) * v,
                 rx: Math.random(),
@@ -103,12 +103,14 @@ class Dotline {
                 const disx: number = xt - d.rx * this.canvas.width / this.scale; // m
                 const disy: number = yt - d.ry * this.canvas.height / this.scale; // m
                 const disq: number = disx * disx + disy * disy; // m^2
-                // do not move too fast
-                if(disq < 1e10) {
+                // if too close
+                if(Math.sqrt(disq) < this.radius / this.scale * 2) {
+                    t.vx *= -1;
+                    t.vy *= -1;
                     continue;
                 }
                 // gravity(force)
-                const f: number = 6.67258e-4 * t.mass * d.mass / disq; // N(kg*m/s^2)
+                const f: number = 6.67258e-11 * t.mass * d.mass / disq; // N(kg*m/s^2)
                 const fx: number = f * disx / Math.sqrt(disq); // N
                 const fy: number = f * disy / Math.sqrt(disq); // N
                 // velocity
@@ -116,8 +118,8 @@ class Dotline {
                 t.vy -= fy / t.mass / this.freq;
             }
             // if move too fast
-            t.vx *= t.vx > 8e6 ? 0.9 : 1;
-            t.vy *= t.vy > 8e6 ? 0.9 : 1;
+            t.vx *= t.vx > 5e5 ? 0.9 : 1;
+            t.vy *= t.vy > 5e5 ? 0.9 : 1;
             // 移动
             t.rx += t.vx / this.freq * this.scale;
             t.ry += t.vy / this.freq * this.scale;
