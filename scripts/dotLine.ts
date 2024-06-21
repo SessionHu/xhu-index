@@ -190,10 +190,11 @@ class Dotline {
     }
 }
 
+let dotLine: Dotline;
 
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
 window.addEventListener<"load">("load", () => {
-    const t: Dotline = new Dotline(
+    dotLine = new Dotline(
         document.getElementById("dotLine") as HTMLCanvasElement,
         70,
         .5,
@@ -204,10 +205,10 @@ window.addEventListener<"load">("load", () => {
         DOT_COLOR
     );
     // 启动动画
-    t.start();
+    dotLine.start();
     // 监听窗口大小变化，重新设置canvas的宽高
     window.addEventListener<"resize">("resize", () => {
-        t.canvas.width = document.documentElement.clientWidth;
-        t.canvas.height = document.documentElement.clientHeight;
+        dotLine.canvas.width = document.documentElement.clientWidth;
+        dotLine.canvas.height = document.documentElement.clientHeight;
     });
 });
