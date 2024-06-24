@@ -134,6 +134,12 @@ span.sitedescription {
     display: block;
 }
 
+#common a.siteboxlink {
+    height: auto;
+    width: auto;
+    padding: 4px;
+}
+
 @media (max-width: 220px) {
     a.siteboxlink {
         height: auto;
@@ -149,6 +155,21 @@ span.sitedescription {
     }
 }
 
+button.cross {
+    display: inline;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+button.cross::after {
+    content: 'X';
+}
+
+
 /* Form */
 
 form#search {
@@ -159,32 +180,43 @@ form#search {
 
 form#search * {
     margin: 2px;
+    font-size: 14px;
+    border-radius: 12px;
+    border-color: #6666;
+    border-width: 1px;
+    border-style: solid;
 }
 
-input[type="text"] {
+input[name="q"] {
     width: 50%;
+    padding: 4px 8px;
+}
+
+input[type="submit"] {
+    padding: 4px 12px;
+    cursor: pointer;
 }
 
 @media (max-width: 700px) {
-    input[type="text"] {
+    input[name="q"] {
         width: 60%;
     }
 }
 
 @media (max-width: 600px) {
-    input[type="text"] {
+    input[name="q"] {
         width: 70%;
     }
 }
 
 @media (max-width: 500px) {
-    input[type="text"] {
+    input[name="q"] {
         width: 80%;
     }
 }
 
 @media (max-width: 300px) {
-    input[type="text"] {
+    input[name="q"] {
         width: 90%;
     }
     input[type="submit"] {
