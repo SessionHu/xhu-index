@@ -160,13 +160,14 @@ button.cross {
     background-color: transparent;
     border: none;
     font-size: 16px;
+    line-height: 16px;
     color: #666;
     cursor: pointer;
-    padding: 0 4px;
+    padding: 0 0 0 2px;
 }
 
 button.cross::after {
-    content: 'X';
+    content: '✕';
 }
 
 
