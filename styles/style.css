@@ -5,6 +5,8 @@
 /* Public Display */
 
 h1 {
+    font-size: 32px;
+    line-height: 32px;
     /* 减小上下天地 */
     margin-block-start: 10px;
     margin-block-end: 10px;
@@ -34,7 +36,7 @@ a:hover {
 
 body {
     background-color: #fefefe;
-    font-family: Mojangles, Unifont;
+    font-family: Mojangles, Unifont, monospace, simsun, Times, serif;
     color: #010101;
 }
 
@@ -70,6 +72,7 @@ div.content {
 div.footer {
     margin: 5px;
     font-size: 12px;
+    line-height: 1.1;
 }
 
 /* Website Links Styles */
@@ -80,6 +83,8 @@ div.gp {
 }
 
 h2 {
+    font-size: 24px;
+    line-height: 24px;
     padding: 0 4px;
     /* 减小上下天地 */
     margin-block-start: 4px;
@@ -120,11 +125,13 @@ a.siteboxlink:hover {
 span.sitetitle {
     padding: 3px 0 3px 22px;
     height: 16px;
+    line-height: 16px;
     background-repeat: no-repeat;
     background-size: 16px;
     background-position-x: 1px;
     background-position-y: center;
-    display: block;
+    display: flex;
+    justify-content: space-between;
 }
 
 span.sitedescription {
@@ -138,6 +145,10 @@ span.sitedescription {
     height: auto;
     width: auto;
     padding: 4px;
+}
+
+#common a.siteboxlink span.sitedescription {
+    display: none;
 }
 
 @media (max-width: 220px) {

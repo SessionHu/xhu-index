@@ -43,40 +43,41 @@ async function fillGroupInfo(): Promise<void> {
             sitetitle.innerText = sitebox.titlecn;
             a.appendChild(sitetitle);
             // span.sitedescription
-            if(gp.id !== "common") {
-                const sitedesc = new HTMLSpanElement();
-                sitedesc.className = "sitedescription";
-                sitedesc.innerText = sitebox.desc;
-                a.appendChild(sitedesc);
-            } else a.addEventListener("contextmenu", (ev: MouseEvent) => {
-                // only one cross
-                if(sitetitle.childElementCount < 1) {
-                    ev.preventDefault();
-                    // create element
-                    const cross: HTMLButtonElement = document.createElement("button");
-                    cross.className = "cross";
-                    // remove cross and link
-                    const remover = (rev?: MouseEvent) => {
+            const sitedesc: HTMLSpanElement = document.createElement("span");
+            sitedesc.className = "sitedescription";
+            sitedesc.innerText = sitebox.desc;
+            a.appendChild(sitedesc);
+            if(gpe.id === "common") {
+                a.addEventListener("contextmenu", (ev: MouseEvent) => {
+                    // only one cross
+                    if(sitetitle.childElementCount < 1) {
+                        ev.preventDefault();
+                        // create element
+                        const cross: HTMLButtonElement = document.createElement("button");
+                        cross.className = "cross";
                         // remove cross and link
-                        rev?.preventDefault();
-                        a.remove();
-                        if(cross.parentElement !== null) cross.remove();
-                        // if no link left
-                        if(gpframe.childElementCount < 1) {
-                            gpe.remove();
-                            fillGroupInfo();
+                        const remover = (rev?: MouseEvent) => {
+                            // remove cross and link
+                            rev?.preventDefault();
+                            a.remove();
+                            if(cross.parentElement !== null) cross.remove();
+                            // if no link left
+                            if(gpframe.childElementCount < 1) {
+                                gpe.remove();
+                                fillGroupInfo();
+                            }
+                        };
+                        if(window.innerWidth <= 220) {
+                            remover();
+                        } else {
+                            cross.addEventListener("click", remover);
+                            sitetitle.appendChild(cross);
+                            // auto remove cross 3s later
+                            window.setTimeout(() => cross.remove(), 3e3);
                         }
-                    };
-                    if(window.innerWidth <= 220) {
-                        remover();
-                    } else {
-                        cross.addEventListener("click", remover);
-                        sitetitle.appendChild(cross);
-                        // auto remove cross 3s later
-                        window.setTimeout(() => cross.remove(), 3e3);
                     }
-                }
-            });
+                });
+            }
         }
         gpe.appendChild(gpframe);
         ctt.appendChild(gpe);
