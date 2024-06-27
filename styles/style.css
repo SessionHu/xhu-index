@@ -4,6 +4,12 @@
 
 /* Public Display */
 
+html {
+    width: 100vw;
+    overflow-x: clip;
+    scrollbar-width: thin;
+}
+
 h1 {
     font-size: 32px;
     line-height: 32px;
@@ -215,6 +221,7 @@ form#search * {
     border-color: #6666;
     border-width: 1px;
     border-style: solid;
+    box-shadow: 1px 1px 1px rgba(192, 192, 192, 0.5);
 }
 
 input[name="q"] {
