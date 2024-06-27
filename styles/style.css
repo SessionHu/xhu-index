@@ -90,7 +90,7 @@ h2 {
     margin-block-start: 4px;
     margin-block-end: 4px;
     /* fake hr */
-    padding-bottom: .2em;
+    padding-bottom: 6px;
     border-bottom: 1px solid #c0c0c0dd;
 }
 
@@ -188,15 +188,19 @@ form#search {
     display: flex;
     justify-content: center;
     padding: 5px 0;
+    height: 30px;
 }
 
 form#search * {
     margin: 2px;
     font-size: 14px;
+    font-family: monospace, sans-serif;
+    line-height: 16px;
     border-radius: 12px;
     border-color: #6666;
     border-width: 1px;
     border-style: solid;
+    display: inline-block;
 }
 
 input[name="q"] {
