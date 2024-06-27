@@ -144,7 +144,7 @@ span.sitedescription {
     height: 84px;
     line-height: 1.05;
     font-family: Unifont, monospace, simsun, Times, serif;
-    padding: 3px 0 0 0;
+    padding: 3px 0 0;
     display: block;
     overflow: hidden;
 }
