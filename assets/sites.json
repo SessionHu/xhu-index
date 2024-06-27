@@ -1,7 +1,7 @@
 [
     {
-        "id": "common",
-        "name": "常用网站",
+        "id": "coding",
+        "name": "编程",
         "links": [
             {
                 "id": "github",
@@ -12,14 +12,6 @@
                 "desc": "全球最大的开源社区及代码托管平台"
             },
             {
-                "id": "bing",
-                "title": "Bing",
-                "titlecn": "Bing",
-                "url": "https://www.bing.com/",
-                "icon": "https://www.bing.com/rp/STusdSn-T6WCaX2mhBbpuWWRBHs.svg",
-                "desc": "由Microsoft推出的一款带有AI对话功能的搜索引擎"
-            },
-            {
                 "id": "outlook",
                 "title": "Outlook",
                 "titlecn": "Outlook",
@@ -28,13 +20,41 @@
                 "desc": "由Microsoft推出的一款功能强大的电子邮箱平台"
             },
             {
+                "id": "timeis",
+                "title": "Time.is",
+                "titlecn": "Time.is",
+                "url": "https://time.is/",
+                "icon": "https://time.is/favicon.ico",
+                "desc": "以57种语言显示所有时区(涵盖超过7,000,000个地区)精确的官方原子钟时间"
+            },
+            {
+                "id": "gtranslate",
+                "title": "Google Translate",
+                "titlecn": "Google翻译",
+                "url": "https://translate.google.com/",
+                "icon": "https://ssl.gstatic.com/translate/favicon.ico",
+                "desc": "Google 免费提供的这项服务可在简体中文和其他 100 多种语言之间即时翻译字词、短语和网页"
+            }
+        ]
+    },
+    {
+        "id": "entertainment",
+        "name": "娱乐",
+        "links": [
+            {
                 "id": "bilibili",
                 "title": "Bilibili",
                 "titlecn": "哔哩哔哩",
                 "url": "https://www.bilibili.com/index.html",
                 "icon": "https://www.bilibili.com/favicon.ico",
                 "desc": "中国知名的视频弹幕网站，大家可以在这里找到许多欢乐"
-            },
+            }
+        ]
+    },
+    {
+        "id": "inet",
+        "name": "互联网",
+        "links": [
             {
                 "id": "cloudflare",
                 "title": "Cloudflare",
@@ -50,6 +70,20 @@
                 "url": "https://console.openfrp.net/dashboard",
                 "icon": "https://www.openfrp.net/favicon.ico",
                 "desc": "一个免费公益开放的内网穿透工具为你提供内网穿透"
+            }
+        ]
+    },
+    {
+        "id": "mc",
+        "name": "Minecraft",
+        "links": [
+            {
+                "id": "mc",
+                "title": "Minecraft",
+                "titlecn": "Minecraft",
+                "url": "https://www.minecraft.net/",
+                "icon": "https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/favicon-32x32.png",
+                "desc": "在 Minecraft 官方网站上探索新的游戏冒险、配件和商品. 在此处购买并下载游戏, 或查看网站以获取最新消息"
             },
             {
                 "id": "littleskin",
@@ -58,14 +92,28 @@
                 "url": "https://littleskin.cn/user",
                 "icon": "https://littleskin.cn/favicon.png",
                 "desc": "快速、可靠的公益Minecraft皮肤站"
+            }
+        ]
+    },
+    {
+        "id": "search",
+        "name": "搜索",
+        "links": [
+            {
+                "id": "bing",
+                "title": "Bing",
+                "titlecn": "Bing",
+                "url": "https://www.bing.com/",
+                "icon": "https://www.bing.com/rp/STusdSn-T6WCaX2mhBbpuWWRBHs.svg",
+                "desc": "由Microsoft推出的一款带有AI对话功能的搜索引擎"
             },
             {
-                "id": "timeis",
-                "title": "Time.is",
-                "titlecn": "Time.is",
-                "url": "https://time.is/",
-                "icon": "https://time.is/favicon.ico",
-                "desc": "以57种语言显示所有时区(涵盖超过7,000,000个地区)精确的官方原子钟时间"
+                "id": "google",
+                "title": "Google",
+                "titlecn": "Google",
+                "url": "https://www.google.com/",
+                "icon": "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
+                "desc": "Google是全球最大的搜索引擎, 提供海量的网页、图片、视频等信息, 帮助您快速找到您想要的内容"
             }
         ]
     }

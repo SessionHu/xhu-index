@@ -12,6 +12,18 @@ h1 {
     margin-block-end: 10px;
 }
 
+h2 {
+    font-size: 24px;
+    line-height: 24px;
+    padding: 0 4px;
+    /* 减小上下天地 */
+    margin-block-start: 4px;
+    margin-block-end: 4px;
+    /* fake hr */
+    padding-bottom: 6px;
+    border-bottom: 1px solid #c0c0c0dd;
+}
+
 @media (max-width: 250px) {
     h1 span {
         display: none;
@@ -82,16 +94,10 @@ div.gp {
     text-align: left;
 }
 
-h2 {
-    font-size: 24px;
-    line-height: 24px;
-    padding: 0 4px;
-    /* 减小上下天地 */
-    margin-block-start: 4px;
-    margin-block-end: 4px;
-    /* fake hr */
-    padding-bottom: 6px;
-    border-bottom: 1px solid #c0c0c0dd;
+.gptitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div.gpframe {
@@ -113,7 +119,7 @@ a.siteboxlink {
     display: block;
     width: 100%;
     max-width: 176px;
-    height: 110px;
+    height: 112px;
     color: #111;
 }
 
@@ -123,22 +129,24 @@ a.siteboxlink:hover {
 }
 
 span.sitetitle {
-    padding: 3px 0 3px 22px;
+    padding: 3px 0 3px 24px;
     height: 16px;
     line-height: 16px;
     background-repeat: no-repeat;
     background-size: 16px;
-    background-position-x: 1px;
+    background-position-x: 2px;
     background-position-y: center;
     display: flex;
     justify-content: space-between;
 }
 
 span.sitedescription {
-    line-height: 1.13;
+    height: 84px;
+    line-height: 1.05;
     font-family: Unifont, monospace, simsun, Times, serif;
-    padding: 3px 0;
+    padding: 3px 0 0 0;
     display: block;
+    overflow: hidden;
 }
 
 #common a.siteboxlink {
@@ -177,10 +185,15 @@ button.cross {
     padding: 0 0 0 2px;
 }
 
-button.cross::after {
+.cross::after {
     content: '✕';
 }
 
+@media (max-width: 220px) {
+    button.cross {
+        display: none;
+    }
+}
 
 /* Form */
 
@@ -189,6 +202,8 @@ form#search {
     justify-content: center;
     padding: 5px 0;
     height: 30px;
+    position: sticky;
+    top: 0;
 }
 
 form#search * {
@@ -196,11 +211,10 @@ form#search * {
     font-size: 14px;
     font-family: monospace, sans-serif;
     line-height: 16px;
-    border-radius: 12px;
+    border-radius: 24px;
     border-color: #6666;
     border-width: 1px;
     border-style: solid;
-    display: inline-block;
 }
 
 input[name="q"] {
