@@ -95,7 +95,7 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLAnchorElement): vo
         return;
     }
     const crossButton: HTMLButtonElement = createCrossButton(link, async () => {
-        let common: string[] = JSON.parse(window.localStorage.getItem("common") as string);
+        const common: string[] = JSON.parse(window.localStorage.getItem("common") as string);
         for (let i = 0; i < common.length; i++) {
             if (common[i] === link.id) {
                 common.splice(i, 1);
