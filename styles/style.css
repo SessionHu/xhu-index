@@ -6,7 +6,7 @@
 
 html {
     width: 100vw;
-    overflow-x: clip;
+    overflow-x: hidden;
     scrollbar-width: thin;
 }
 
