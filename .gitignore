@@ -1,8 +1,13 @@
 # VSCode
 .vscode/
 
-# ts
-*.js
+# node
+node_modules/
 
 # build
-site/
+*.js
+*.map
+*.css
+
+# vim
+*.swp

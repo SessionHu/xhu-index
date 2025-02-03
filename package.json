@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "sass": "^1.83.4",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "build": "tsc && sass styles",
+    "watch": "tsc -w & sass -w styles"
+  }
+}
