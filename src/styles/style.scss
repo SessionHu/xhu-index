@@ -225,38 +225,26 @@ form#search * {
 }
 
 input[name="q"] {
-    width: 50%;
-    padding: 4px 8px;
+  width: 50%;
+  padding: 4px 8px;
+  @media (max-width: 700px) {
+     width: 60%;
+  }
+  @media (max-width: 600px) {
+     width: 70%;
+  }
+  @media (max-width: 500px) {
+    width: 80%;
+  }
+  @media (max-width: 300px) {
+    width: 90%;
+  }
 }
 
 input[type="submit"] {
-    padding: 4px 12px;
-    cursor: pointer;
-}
-
-@media (max-width: 700px) {
-    input[name="q"] {
-        width: 60%;
-    }
-}
-
-@media (max-width: 600px) {
-    input[name="q"] {
-        width: 70%;
-    }
-}
-
-@media (max-width: 500px) {
-    input[name="q"] {
-        width: 80%;
-    }
-}
-
-@media (max-width: 300px) {
-    input[name="q"] {
-        width: 90%;
-    }
-    input[type="submit"] {
-        display: none;
-    }
+  padding: 4px 12px;
+  cursor: pointer;
+  @media (max-width: 300px) {
+    display: none;
+  }
 }

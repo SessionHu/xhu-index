@@ -1,10 +1,24 @@
 {
   "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.2",
     "sass": "^1.83.4",
-    "typescript": "^5.7.3"
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
   },
   "scripts": {
-    "build": "tsc && sass styles",
-    "watch": "tsc -w & sass -w styles"
-  }
+    "build": "webpack"
+  },
+  "name": "xhu-index",
+  "version": "1.0.0",
+  "repository": "https://github.com/SessionHu/xhu-index",
+  "author": "SessionHu <102411014+SessionHu@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "type": "module"
 }
