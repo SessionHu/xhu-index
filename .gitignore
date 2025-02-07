@@ -9,6 +9,7 @@ dist/
 *.js
 *.map
 *.css
+!webpack.config.js
 
 # vim
 *.swp
