@@ -10,13 +10,14 @@ export default {
     filename: 'main.js',
     path: path.resolve(import.meta.dirname, 'dist'),
   },
+  devServer: {
+    port: 8000
+  },
   plugins: [
     new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
-        { from: 'assets', to: 'assets' },
-        { from: 'icons', to: 'icons' },
-        { from: 'index.html', to: 'index.html' }
+        { from: 'public', to: '.' },
       ]
     })
   ],
@@ -37,7 +38,14 @@ export default {
           'css-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       }
     ]
-  }
+  },
 };

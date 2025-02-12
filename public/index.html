@@ -26,38 +26,35 @@
 
 	<body>
 
-		<div class="frame">
+    <canvas id="dotLine"></canvas>
 
-			<div class="header">
+		<mdui-card>
+
+			<header>
 				<h1 lang="en">
 					<a href="https://xhustudio.eu.org/">Xhu</a>
 					<span>Navigation Galaxy</span>
 				</h1>
-			</div>
+			</header>
 
-			<div class="content">
+			<main>
 				<form action="https://www.bing.com/search" id="search">
 					<input type="text" name="q" title="input your keyword" placeholder="Bing" />
 					<input type="submit" value="Search" />
 				</form>
 				<noscript>PLEASE ENABLE JAVASCRIPT!</noscript>
-				<script>
-					window.addEventListener('keypress', () => document.querySelector('#search input[type="text"]').focus());
-				</script>
         <div class="maingp"></div>
-			</div>
+			</main>
 
-			<div class="footer">
+			<footer>
 				<span>
 					Under CC-BY-SA-4.0 License<br />
 					<img src="/assets/xhulogo.png" height="12px" title="XhuOffice" alt="XhuOffice" />
 					(C) 2023-2024 XhuOffice
 				</span>
-			</div>
+			</footer>
 
-		</div>
-
-		<canvas id="dotLine"></canvas>
+		</mdui-card>
 
     <script type="text/javascript" src="/main.js"></script>
 

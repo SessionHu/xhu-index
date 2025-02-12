@@ -1,3 +1,6 @@
+import 'mdui/components/card.js';
+import type { Card } from 'mdui/components/card.js';
+
 interface SiteGroup {
     id: string;
     name: string;
@@ -66,25 +69,26 @@ function createCommonGroupDiv(common: string[], groups: SiteGroup[]): HTMLDivEle
     return groupDiv;
 }
 
-function createSiteboxlink(sitebox: Sitebox, groupId: string): HTMLAnchorElement {
+function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
     // a.siteboxlink
-    const link: HTMLAnchorElement = document.createElement<"a">("a");
+    const link: Card = document.createElement("mdui-card");
     link.className = "siteboxlink";
     link.id = sitebox.id;
     link.title = sitebox.title;
     link.href = sitebox.url;
-    link.innerHTML = `
+    link.clickable = true;
+    link.insertAdjacentHTML('beforeend', `
         <span class="sitetitle" style="background-image: url('${sitebox.icon}');">${sitebox.titlecn}</span>
         <span class="sitedescription">${sitebox.desc}</span>
-    `;
+    `);
     // button.cross
     if (groupId === "common") {
-        link.addEventListener<"contextmenu">("contextmenu", event => handleCommonContextMenu(event, link));
+        link.addEventListener("contextmenu", event => handleCommonContextMenu(event, link));
     }
     return link;
 }
 
-function handleCommonContextMenu(event: MouseEvent, link: HTMLAnchorElement): void {
+function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
     if (window.innerWidth <= 220) {
         link.remove();
         return;

@@ -54,8 +54,10 @@ a:hover {
 
 body {
     background-color: #fefefe;
-    font-family: Mojangles, Unifont, monospace, simsun, Times, serif;
+    font-family: Mojangles, Unifont, monospace, serif;
     color: #010101;
+    display: flex;
+    justify-content: center;
 }
 
 canvas#dotLine {
@@ -66,31 +68,22 @@ canvas#dotLine {
 
 /* Special Div Styles */
 
-div.frame {
-    position: relative;
-    margin: 0 auto;
-    top: -8px;
-    max-width: 820px;
-    padding: 5px;
-    border-radius: 2px;
-    box-shadow: 10px 10px 10px rgba(192, 192, 192, 0.5);
-    background-color: rgba(240, 240, 240, 0.6);
-    text-align: center;
-    z-index: 1;
+body > mdui-card {
+  padding: 4px;
+  background-color: rgba(240, 240, 240, 0.6);
+  & > * {
+    margin: 4px;
+  }
 }
 
-div.header {
-    margin: 5px;
+header {
+  text-align: center;
 }
 
-div.content {
-    margin: 5px;
-}
-
-div.footer {
-    margin: 5px;
-    font-size: 12px;
-    line-height: 1.1;
+footer {
+  @extend header;
+  font-size: 12px;
+  line-height: 1.1;
 }
 
 /* Website Links Styles */
@@ -116,22 +109,18 @@ div.gpframe {
     margin-block-end: 4px;
 }
 
-a.siteboxlink {
-    border-radius: 5px;
-    background-color: #fefefe;
-    box-shadow: 4px 4px 4px #ccc;
-    padding: 8px;
-    margin: 3px;
-    display: block;
-    width: 100%;
-    max-width: 176px;
-    height: 112px;
-    color: #111;
-}
-
-a.siteboxlink:hover {
+.siteboxlink {
+  background-color: #fefefe;
+  box-shadow: 4px 4px 4px #ccc;
+  padding: 8px;
+  margin: 3px;
+  max-width: 176px;
+  height: 112px;
+  color: #111;
+  &:hover {
     color: #666;
     background-color: #fcfcfc;
+  }
 }
 
 span.sitetitle {
@@ -142,31 +131,29 @@ span.sitetitle {
     background-size: 16px;
     background-position-x: 2px;
     background-position-y: center;
-    display: flex;
-    justify-content: space-between;
 }
 
 span.sitedescription {
-    height: 84px;
-    line-height: 1.05;
+    height: 74px;
+    line-height: 1.125;
     font-family: Unifont, monospace, simsun, Times, serif;
     padding: 3px 0 0;
     display: block;
     overflow: hidden;
 }
 
-#common a.siteboxlink {
+#common .siteboxlink {
     height: auto;
     width: auto;
     padding: 4px;
 }
 
-#common a.siteboxlink span.sitedescription {
+#common .siteboxlink span.sitedescription {
     display: none;
 }
 
 @media (max-width: 220px) {
-    a.siteboxlink {
+    .siteboxlink {
         height: auto;
         width: auto;
         padding: 4px;

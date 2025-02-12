@@ -1,5 +1,9 @@
-import './scripts/dotLine';
-import './scripts/sites';
+import 'mdui/mdui.css';
 
-import './styles/style.scss';
-import './styles/fonts.scss';
+import './css/style.scss';
+
+import './dotLine';
+import './sites';
+
+const inputbox = document.querySelector('#search input[type="text"]');
+window.addEventListener('keypress', () => inputbox instanceof HTMLElement ? inputbox.focus : void 0);
