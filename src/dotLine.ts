@@ -190,11 +190,9 @@ class Dotline {
     }
 }
 
-let dotLine: Dotline;
-
 // 页面加载完成后，创建Dotline实例，添加点，启动动画
 window.addEventListener<"load">("load", () => {
-    dotLine = new Dotline(
+    const dotLine = new Dotline(
         document.getElementById("dotLine") as HTMLCanvasElement,
         70,
         .5,

@@ -117,20 +117,28 @@ div.gpframe {
   max-width: 176px;
   height: 112px;
   color: #111;
+  font-size: 16px;
   &:hover {
     color: #666;
     background-color: #fcfcfc;
   }
+  & > * {
+    display: block;
+  }
 }
 
 span.sitetitle {
-    padding: 3px 0 3px 24px;
-    height: 16px;
-    line-height: 16px;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    background-position-x: 2px;
-    background-position-y: center;
+  padding: 3px 3px 3px 23px;
+  height: 16px;
+  line-height: 100%;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-position-x: 2px;
+  background-position-y: center;
+  display: flex;
+  span.sitetitle:has(.cross) {
+   padding-right: 0;
+  }
 }
 
 span.sitedescription {
@@ -142,14 +150,15 @@ span.sitedescription {
     overflow: hidden;
 }
 
-#common .siteboxlink {
-    height: auto;
+#common {
+  .siteboxlink {
+    height: 30px;
     width: auto;
     padding: 4px;
-}
-
-#common .siteboxlink span.sitedescription {
-    display: none;
+    span.sitedescription {
+      display: none;
+    }
+  }
 }
 
 @media (max-width: 220px) {
@@ -167,25 +176,12 @@ span.sitedescription {
     }
 }
 
-button.cross {
-    display: inline;
-    background-color: transparent;
-    border: none;
-    font-size: 16px;
-    line-height: 16px;
-    color: #666;
-    cursor: pointer;
-    padding: 0 0 0 2px;
-}
-
-.cross::after {
-    content: '✕';
-}
-
-@media (max-width: 220px) {
-    button.cross {
-        display: none;
-    }
+.cross {
+  width: 16px;
+  height: 16px;
+  @media (max-width: 220px) {
+    display: none;
+  }
 }
 
 /* Form */

@@ -1,6 +1,11 @@
 import 'mdui/components/card.js';
 import type { Card } from 'mdui/components/card.js';
 
+import 'mdui/components/button-icon.js';
+import type { ButtonIcon } from 'mdui/components/button-icon.js';
+
+import '@mdui/icons/close.js';
+
 interface SiteGroup {
     id: string;
     name: string;
@@ -70,7 +75,7 @@ function createCommonGroupDiv(common: string[], groups: SiteGroup[]): HTMLDivEle
 }
 
 function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
-    // a.siteboxlink
+    // .siteboxlink
     const link: Card = document.createElement("mdui-card");
     link.className = "siteboxlink";
     link.id = sitebox.id;
@@ -78,8 +83,10 @@ function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
     link.href = sitebox.url;
     link.clickable = true;
     link.insertAdjacentHTML('beforeend', `
-        <span class="sitetitle" style="background-image: url('${sitebox.icon}');">${sitebox.titlecn}</span>
-        <span class="sitedescription">${sitebox.desc}</span>
+      <span class="sitetitle" style="background-image: url('${sitebox.icon}');">
+        <span>${sitebox.titlecn}</span>
+      </span>
+      <span class="sitedescription">${sitebox.desc}</span>
     `);
     // button.cross
     if (groupId === "common") {
@@ -98,7 +105,7 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
     } else {
         return;
     }
-    const crossButton: HTMLButtonElement = createCrossButton(link, async () => {
+    const crossButton: ButtonIcon = createCrossButton(link, async () => {
         const common: string[] = JSON.parse(window.localStorage.getItem("common") as string);
         for (let i = 0; i < common.length; i++) {
             if (common[i] === link.id) {
@@ -117,13 +124,14 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
     window.setTimeout(() => crossButton.remove(), 3e3);
 }
 
-function createCrossButton(beremoved: HTMLElement, onclick?: (ev?: MouseEvent) => void): HTMLButtonElement {
-    const button: HTMLButtonElement = document.createElement<"button">("button");
+function createCrossButton(beremoved: HTMLElement, onclick?: (ev?: MouseEvent) => void): ButtonIcon {
+    const button: ButtonIcon = document.createElement("mdui-button-icon");
+    button.appendChild(document.createElement('mdui-icon-close'));
     button.className = "cross";
-    button.addEventListener<"click">("click", (ev: MouseEvent) => {
+    button.addEventListener("click", (ev: MouseEvent) => {
         ev.preventDefault();
         beremoved.remove();
-        if (onclick !== undefined) onclick(ev);
+        if (onclick) onclick(ev);
     });
     return button;
 }
