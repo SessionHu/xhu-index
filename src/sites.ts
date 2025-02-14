@@ -82,12 +82,13 @@ function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
     link.title = sitebox.title;
     link.href = sitebox.url;
     link.clickable = true;
-    link.insertAdjacentHTML('beforeend', `
-      <span class="sitetitle" style="background-image: url('${sitebox.icon}');">
-        <span>${sitebox.titlecn}</span>
-      </span>
-      <span class="sitedescription">${sitebox.desc}</span>
-    `);
+    link.insertAdjacentHTML('beforeend',
+      '<div class="sitetitle">' +
+        '<img src="' + sitebox.icon + '" />' +
+        '<span>' + sitebox.titlecn + '</span>' +
+      '</div>' +
+      '<div class="sitedescription">' + sitebox.desc + '</div>'
+    );
     // button.cross
     if (groupId === "common") {
         link.addEventListener("contextmenu", event => handleCommonContextMenu(event, link));

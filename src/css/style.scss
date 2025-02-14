@@ -71,91 +71,91 @@ canvas#dotLine {
 body > mdui-card {
   padding: 4px;
   background-color: rgba(240, 240, 240, 0.6);
+  border-radius: var(--mdui-shape-corner-extra-small);
+  max-width: 770px;
+  width: 100%;
   & > * {
     margin: 4px;
+    text-align: center;
+  }
+  & > footer {
+    font-size: 12px;
+    line-height: 1.1;
   }
 }
 
-header {
-  text-align: center;
-}
-
-footer {
-  @extend header;
-  font-size: 12px;
-  line-height: 1.1;
-}
 
 /* Website Links Styles */
 
-div.gp {
-    padding: 5px;
-    text-align: left;
-}
-
-.gptitle {
+.gp {
+  padding: 5px;
+  text-align: left;
+  & > .gptitle {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-div.gpframe {
+  }
+  & > .gpframe {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-size: 16px;
     /* 边距 */
     padding: 0 4px;
     margin-block-start: 4px;
     margin-block-end: 4px;
-}
-
-.siteboxlink {
-  background-color: #fefefe;
-  box-shadow: 4px 4px 4px #ccc;
-  padding: 8px;
-  margin: 3px;
-  max-width: 176px;
-  height: 112px;
-  color: #111;
-  font-size: 16px;
-  &:hover {
-    color: #666;
-    background-color: #fcfcfc;
+    & > * {
+      background-color: #fefefe;
+      box-shadow: 4px 4px 4px #ccc;
+      padding: 4px;
+      margin: 4px;
+      max-width: 176px;
+      height: 110px;
+      color: #111;
+      &:hover {
+        color: #666;
+        background-color: #fcfcfc;
+      }
+      & > .sitetitle {
+        margin: 4px;
+        height: 16px;
+        line-height: 100%;
+        display: flex;
+        & > :first-child {
+          height: 16px;
+          width: 16px;
+          object-position: center center;
+          object-fit: contain;
+          margin-left: 1px;
+        }
+        & > :nth-child(2) {
+          margin-left: 4px;
+        }
+        & > mdui-button-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: -4px;
+          @media (max-width: 220px) {
+            display: none;
+          }
+        }
+      }
+      & > .sitedescription {
+        margin: 0 4px 4px;
+        height: 74px;
+        line-height: 1.15;
+        font-family: Unifont, monospace, simsun, Times, serif;
+        overflow: hidden;
+      }
+    }
   }
-  & > * {
-    display: block;
-  }
-}
-
-span.sitetitle {
-  padding: 3px 3px 3px 23px;
-  height: 16px;
-  line-height: 100%;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  background-position-x: 2px;
-  background-position-y: center;
-  display: flex;
-  span.sitetitle:has(.cross) {
-   padding-right: 0;
-  }
-}
-
-span.sitedescription {
-    height: 74px;
-    line-height: 1.125;
-    font-family: Unifont, monospace, simsun, Times, serif;
-    padding: 3px 0 0;
-    display: block;
-    overflow: hidden;
 }
 
 #common {
   .siteboxlink {
-    height: 30px;
+    height: 32px;
     width: auto;
-    padding: 4px;
-    span.sitedescription {
+    .sitedescription {
       display: none;
     }
   }
@@ -167,21 +167,13 @@ span.sitedescription {
         width: auto;
         padding: 4px;
     }
-    span.sitedescription {
+    .sitedescription {
         display: none;
     }
-    span.sitetitle {
+    .sitetitle {
         font-size: 0;
         background-position: center center;
     }
-}
-
-.cross {
-  width: 16px;
-  height: 16px;
-  @media (max-width: 220px) {
-    display: none;
-  }
 }
 
 /* Form */
