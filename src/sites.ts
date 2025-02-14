@@ -6,6 +6,8 @@ import type { ButtonIcon } from 'mdui/components/button-icon.js';
 
 import '@mdui/icons/close.js';
 
+import sitegroups from './json/sites.json';
+
 interface SiteGroup {
     id: string;
     name: string;
@@ -24,8 +26,7 @@ interface Sitebox {
 async function fillGroupInfo(): Promise<void> {
     const contentDiv: HTMLDivElement = document.querySelector("div.maingp") as HTMLDivElement;
     // normal
-    const groups: SiteGroup[] = await (await fetch("/assets/sites.json")).json();
-    groups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
+    sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
     // common
     let common: string[] = JSON.parse(window.localStorage.getItem("common") || '{}');
     if(!Array.isArray(common) || !common.every(item => typeof item === "string")) {
@@ -35,7 +36,7 @@ async function fillGroupInfo(): Promise<void> {
         ];
     }
     window.localStorage.setItem("common", JSON.stringify(common));
-    contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv(common, groups));
+    contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv(common, sitegroups));
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
