@@ -9,6 +9,7 @@ export default {
   output: {
     filename: 'main.js',
     path: path.resolve(import.meta.dirname, 'dist'),
+    pathinfo: false,
   },
   devServer: {
     port: 8000
