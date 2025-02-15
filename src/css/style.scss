@@ -66,6 +66,11 @@ canvas#dotLine {
     bottom: 0;
 }
 
+@mixin backdrop-filter($filters...) {
+  -webkit-backdrop-filter: $filters;
+  backdrop-filter: $filters;
+}
+
 /* Special Div Styles */
 
 body > mdui-card {
@@ -75,6 +80,7 @@ body > mdui-card {
   box-shadow: var(--mdui-elevation-level1);
   max-width: 770px;
   width: 100%;
+  @include backdrop-filter(blur(1px));
   & > * {
     margin: 4px;
     text-align: center;
