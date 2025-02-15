@@ -34,7 +34,7 @@ for (const group of sitegroups) {
   }
 }
 
-function fillGroupInfo(): void {
+export function fillGroupInfo(): void {
     const contentDiv: HTMLDivElement = document.querySelector("div.maingp") as HTMLDivElement;
     // normal
     sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
@@ -160,5 +160,3 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
   // auto remove
   setTimeout(() => btn.remove(), 3e3);
 }
-
-fillGroupInfo();

@@ -1,7 +1,3 @@
-// 点颜色
-const DOT_COLOR: string = "rgba(0,0,0,1)"
-
-
 interface Dot {
     mass: number; // kg
     rx: number; // percent
@@ -11,8 +7,7 @@ interface Dot {
     label: string;
 }
 
-// Dotline构造函数
-class Dotline {
+export class Dotline {
     
     canvas: HTMLCanvasElement;
     ctx:    CanvasRenderingContext2D;
@@ -189,24 +184,3 @@ class Dotline {
         this.drawLine();
     }
 }
-
-// 页面加载完成后，创建Dotline实例，添加点，启动动画
-window.addEventListener<"load">("load", () => {
-    const dotLine = new Dotline(
-        document.getElementById("dotLine") as HTMLCanvasElement,
-        70,
-        .5,
-        80,
-        document.documentElement.clientWidth,
-        document.documentElement.clientHeight,
-        60,
-        DOT_COLOR
-    );
-    // 启动动画
-    dotLine.start();
-    // 监听窗口大小变化，重新设置canvas的宽高
-    window.addEventListener<"resize">("resize", () => {
-        dotLine.canvas.width = document.documentElement.clientWidth;
-        dotLine.canvas.height = document.documentElement.clientHeight;
-    });
-});
