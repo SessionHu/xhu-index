@@ -53,9 +53,7 @@ a:hover {
 }
 
 body {
-    background-color: #fefefe;
     font-family: Mojangles, Unifont, monospace, serif;
-    color: #010101;
     display: flex;
     justify-content: center;
 }
@@ -64,14 +62,17 @@ canvas#dotLine {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 /* Special Div Styles */
 
 body > mdui-card {
   padding: 4px;
-  background-color: rgba(240, 240, 240, 0.6);
+  background-color: rgba(var(--mdui-color-background), 0.6);
   border-radius: var(--mdui-shape-corner-extra-small);
+  box-shadow: var(--mdui-elevation-level1);
   max-width: 770px;
   width: 100%;
   & > * {
@@ -104,18 +105,13 @@ body > mdui-card {
     padding: 0 4px;
     margin-block-start: 4px;
     margin-block-end: 4px;
-    & > * {
-      background-color: #fefefe;
-      box-shadow: 4px 4px 4px #ccc;
+    & > .siteboxlink {
+      box-shadow: var(--mdui-elevation-level2);
+      background-color: rgba(var(--mdui-color-surface), .9);
       padding: 4px;
       margin: 4px;
       max-width: 176px;
       height: 110px;
-      color: #111;
-      &:hover {
-        color: #666;
-        background-color: #fcfcfc;
-      }
       & > .sitetitle {
         margin: 4px;
         height: 16px;
@@ -143,7 +139,7 @@ body > mdui-card {
       & > .sitedescription {
         margin: 0 4px 4px;
         height: 74px;
-        line-height: 1.15;
+        line-height: 1.158;
         font-family: Unifont, monospace, simsun, Times, serif;
         overflow: hidden;
       }
@@ -172,7 +168,6 @@ body > mdui-card {
     }
     .sitetitle {
         font-size: 0;
-        background-position: center center;
     }
 }
 
