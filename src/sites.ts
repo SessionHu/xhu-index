@@ -23,6 +23,17 @@ interface Sitebox {
     desc: string;
 }
 
+const siteMap = new Map<string, Sitebox>();
+for (const group of sitegroups) {
+  for (const sitebox of group.links) {
+    if (siteMap.has(sitebox.id)) {
+      console.warn('Duplicate ID:', sitebox.id, 'in group', group.id);
+      continue;
+    }
+    siteMap.set(sitebox.id, sitebox);
+  }
+}
+
 function fillGroupInfo(): void {
     const contentDiv: HTMLDivElement = document.querySelector("div.maingp") as HTMLDivElement;
     // normal
@@ -46,35 +57,35 @@ function createGroupDiv(group: SiteGroup): HTMLDivElement {
 }
 
 function createCommonGroupDiv(): HTMLDivElement {
-    let common: string[] | Set<string> = JSON.parse(window.localStorage.getItem("common") || '[]');
-    if(!Array.isArray(common) || !common.length || !common.every(item => typeof item === "string")) {
-      common = [
-        "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
-        "littleskin", "timeis", "gtranslate"
-      ];
+  let common: string[] | Set<string> = JSON.parse(window.localStorage.getItem("common") || '[]');
+  if(!Array.isArray(common) || !common.length || !common.every(item => typeof item === "string")) {
+    common = [
+      "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
+      "littleskin", "timeis", "gtranslate"
+    ];
+  }
+  common = new Set(common);
+  window.localStorage.setItem("common", JSON.stringify(Array.from(common)));
+  // div.gp
+  const groupDiv: HTMLDivElement = document.querySelector('#common') || document.createElement("div");
+  groupDiv.className = "gp";
+  groupDiv.id = "common";
+  groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
+  // div.gpframe
+  const gpframe: HTMLDivElement = groupDiv.querySelector('.gpframe') || document.createElement("div");
+  gpframe.className = "gpframe";
+  gpframe.innerHTML = '';
+  for (const id of common) {
+    const sitebox = siteMap.get(id);
+    if (sitebox) {
+      gpframe.appendChild(createSiteboxlink(sitebox, "common"));
+    } else {
+      console.warn('Invalid common item:', id);
+      removeFromStorage(id);
     }
-    common = new Set(common);
-    window.localStorage.setItem("common", JSON.stringify(Array.from(common)));
-    // div.gp
-    const groupDiv: HTMLDivElement = document.querySelector('#common') || document.createElement("div");
-    groupDiv.className = "gp";
-    groupDiv.id = "common";
-    groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
-    // div.gpframe
-    const gpframe: HTMLDivElement = groupDiv.querySelector('.gpframe') || document.createElement("div");
-    gpframe.className = "gpframe";
-    gpframe.innerHTML = '';
-    for (const id of common) {
-      for (const fgroup of sitegroups) {
-        for (const fsitebox of fgroup.links) {
-          if (fsitebox.id === id) {
-            gpframe.appendChild(createSiteboxlink(fsitebox, groupDiv.id));
-          }
-        }
-      }
-    }
-    groupDiv.append(gpframe);
-    return groupDiv;
+  };
+  groupDiv.append(gpframe);
+  return groupDiv;
 }
 
 function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
