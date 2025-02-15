@@ -51,9 +51,25 @@ function createGroupDiv(group: SiteGroup): HTMLDivElement {
     // div.gpframe
     const gpframe: HTMLDivElement = document.createElement<"div">("div");
     gpframe.className = "gpframe";
-    group.links.forEach(sitebox => gpframe.appendChild(createSiteboxlink(sitebox, group.id)));
+    group.links.forEach(sitebox => gpframe.appendChild(createSiteboxlink(sitebox)));
+    gpframe.addEventListener("contextmenu", handleGroupContextMenu);
     groupDiv.appendChild(gpframe);
     return groupDiv;
+}
+
+function handleGroupContextMenu(event: MouseEvent): void {
+  if (!(event.target instanceof HTMLElement)) return;
+  const targetCard = event.target.closest(".siteboxlink");
+  if (!(targetCard instanceof HTMLElement)) return;
+  const groupId = targetCard.closest(".gp")?.id;
+  const siteId = targetCard.id;
+  event.preventDefault();
+  if (groupId === "common") {
+    handleCommonContextMenu(event, targetCard);
+  } else {
+    addToStorage(siteId);
+    createCommonGroupDiv();
+  }
 }
 
 function createCommonGroupDiv(): HTMLDivElement {
@@ -78,17 +94,18 @@ function createCommonGroupDiv(): HTMLDivElement {
   for (const id of common) {
     const sitebox = siteMap.get(id);
     if (sitebox) {
-      gpframe.appendChild(createSiteboxlink(sitebox, "common"));
+      gpframe.appendChild(createSiteboxlink(sitebox, true));
     } else {
       console.warn('Invalid common item:', id);
       removeFromStorage(id);
     }
   };
+  gpframe.addEventListener("contextmenu", handleGroupContextMenu);
   groupDiv.append(gpframe);
   return groupDiv;
 }
 
-function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
+function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
     // .siteboxlink
     const link: Card = document.createElement("mdui-card");
     link.className = "siteboxlink";
@@ -102,18 +119,8 @@ function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
         '<span>' + sitebox.titlecn + '</span>' +
       '</div>'
     );
-    // button
-    if (groupId === "common") {
-      link.addEventListener("contextmenu", event => handleCommonContextMenu(event, link));
-    } else {
-      link.insertAdjacentHTML('beforeend', 
-       '<div class="sitedescription">' + sitebox.desc + '</div>'
-      );
-      link.addEventListener('contextmenu', (ev) => {
-        addToStorage(sitebox.id);
-        createCommonGroupDiv();
-        ev.preventDefault();
-      });
+    if (!iscommon) {
+      link.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
     }
     return link;
 }
