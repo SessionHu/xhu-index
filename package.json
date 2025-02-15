@@ -16,7 +16,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "webpack server"
+    "dev": "webpack server --mode development"
   },
   "name": "xhu-index",
   "version": "1.0.0",
