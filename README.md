@@ -6,19 +6,7 @@ Welcome to [Xhu Navigation Galaxy](https://inde.xhustudio.eu.org/)!
 
 - If you just want to build this project, run `yarn && yarn build` .
 
-  ```bash
-  cd /path/to/repo
-  yarn && yarn build
-  ls build
-  ```
-
-- If you want to help develop this project, just run `yarn && yarn watch` and a simple HTTP server.
-
-  ```bash
-  cd /path/to/repo
-  yarn && yarn watch
-  python3 -m http.server # can also use others you like
-  ```
+- If you want to help develop this project, just run `yarn && yarn dev`.
 
 ## License
 
