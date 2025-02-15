@@ -23,20 +23,12 @@ interface Sitebox {
     desc: string;
 }
 
-async function fillGroupInfo(): Promise<void> {
+function fillGroupInfo(): void {
     const contentDiv: HTMLDivElement = document.querySelector("div.maingp") as HTMLDivElement;
     // normal
     sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
     // common
-    let common: string[] = JSON.parse(window.localStorage.getItem("common") || '{}');
-    if(!Array.isArray(common) || !common.every(item => typeof item === "string")) {
-        common = [
-            "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
-            "littleskin", "timeis", "gtranslate"
-        ];
-    }
-    window.localStorage.setItem("common", JSON.stringify(common));
-    contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv(common, sitegroups));
+    contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv());
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
@@ -53,23 +45,33 @@ function createGroupDiv(group: SiteGroup): HTMLDivElement {
     return groupDiv;
 }
 
-function createCommonGroupDiv(common: string[], groups: SiteGroup[]): HTMLDivElement {
+function createCommonGroupDiv(): HTMLDivElement {
+    let common: string[] | Set<string> = JSON.parse(window.localStorage.getItem("common") || '[]');
+    if(!Array.isArray(common) || !common.length || !common.every(item => typeof item === "string")) {
+      common = [
+        "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
+        "littleskin", "timeis", "gtranslate"
+      ];
+    }
+    common = new Set(common);
+    window.localStorage.setItem("common", JSON.stringify(Array.from(common)));
     // div.gp
-    const groupDiv: HTMLDivElement = document.createElement<"div">("div");
+    const groupDiv: HTMLDivElement = document.querySelector('#common') || document.createElement("div");
     groupDiv.className = "gp";
     groupDiv.id = "common";
     groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
     // div.gpframe
-    const gpframe: HTMLDivElement = document.createElement<"div">("div");
+    const gpframe: HTMLDivElement = groupDiv.querySelector('.gpframe') || document.createElement("div");
     gpframe.className = "gpframe";
+    gpframe.innerHTML = '';
     for (const id of common) {
-        for (const fgroup of groups) {
-            for (const fsitebox of fgroup.links) {
-                if (fsitebox.id === id) {
-                    gpframe.appendChild(createSiteboxlink(fsitebox, groupDiv.id));
-                }
-            }
+      for (const fgroup of sitegroups) {
+        for (const fsitebox of fgroup.links) {
+          if (fsitebox.id === id) {
+            gpframe.appendChild(createSiteboxlink(fsitebox, groupDiv.id));
+          }
         }
+      }
     }
     groupDiv.append(gpframe);
     return groupDiv;
@@ -87,14 +89,34 @@ function createSiteboxlink(sitebox: Sitebox, groupId: string): Card {
       '<div class="sitetitle">' +
         '<img src="' + sitebox.icon + '" />' +
         '<span>' + sitebox.titlecn + '</span>' +
-      '</div>' +
-      '<div class="sitedescription">' + sitebox.desc + '</div>'
+      '</div>'
     );
-    // button.cross
+    // button
     if (groupId === "common") {
-        link.addEventListener("contextmenu", event => handleCommonContextMenu(event, link));
+      link.addEventListener("contextmenu", event => handleCommonContextMenu(event, link));
+    } else {
+      link.insertAdjacentHTML('beforeend', 
+       '<div class="sitedescription">' + sitebox.desc + '</div>'
+      );
+      link.addEventListener('contextmenu', (ev) => {
+        addToStorage(sitebox.id);
+        createCommonGroupDiv();
+        ev.preventDefault();
+      });
     }
     return link;
+}
+
+function removeFromStorage(linkid: string) {
+  const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
+  common.splice(common.indexOf(linkid), 1);
+  localStorage.setItem('common', JSON.stringify(common));
+}
+
+function addToStorage(linkid: string) {
+  const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
+  if (!(linkid in common)) common.push(linkid);
+  localStorage.setItem('common', JSON.stringify(common));
 }
 
 function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
@@ -102,24 +124,13 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
         link.remove();
         return;
     }
-    if (!link.querySelector(".cross")) {
+    if (!link.querySelector("mdui-icon-close")) {
         event.preventDefault();
     } else {
         return;
     }
-    const crossButton: ButtonIcon = createCrossButton(link, async () => {
-        const common: string[] = JSON.parse(window.localStorage.getItem("common") as string);
-        for (let i = 0; i < common.length; i++) {
-            if (common[i] === link.id) {
-                common.splice(i, 1);
-                break;
-            }
-        }
-        window.localStorage.setItem("common", JSON.stringify(common));
-        if(common.length < 1) {
-            window.localStorage.removeItem("common");
-            window.location.reload();
-        }
+    const crossButton: ButtonIcon = createCrossButton(link, () => {
+      removeFromStorage(link.id);
     });
     link.querySelector(".sitetitle")?.appendChild(crossButton);
     // auto remove
@@ -129,7 +140,6 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
 function createCrossButton(beremoved: HTMLElement, onclick?: (ev?: MouseEvent) => void): ButtonIcon {
     const button: ButtonIcon = document.createElement("mdui-button-icon");
     button.appendChild(document.createElement('mdui-icon-close'));
-    button.className = "cross";
     button.addEventListener("click", (ev: MouseEvent) => {
         ev.preventDefault();
         beremoved.remove();
