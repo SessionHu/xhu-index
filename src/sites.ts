@@ -88,9 +88,8 @@ function createCommonGroupDiv(): HTMLDivElement {
   groupDiv.id = "common";
   groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
   // div.gpframe
-  const gpframe: HTMLDivElement = groupDiv.querySelector('.gpframe') || document.createElement("div");
+  const gpframe: HTMLDivElement = document.createElement("div");
   gpframe.className = "gpframe";
-  gpframe.innerHTML = '';
   for (const id of common) {
     const sitebox = siteMap.get(id);
     if (sitebox) {
@@ -138,32 +137,28 @@ function addToStorage(linkid: string) {
 }
 
 function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
-    if (window.innerWidth <= 220) {
-        link.remove();
-        return;
-    }
-    if (!link.querySelector("mdui-icon-close")) {
-        event.preventDefault();
+  if (window.innerWidth <= 220) {
+    return link.remove();
+  }
+  if (!link.querySelector("mdui-icon-close")) {
+    event.preventDefault();
+  } else {
+    return;
+  }
+  const btn: ButtonIcon = document.createElement('mdui-button-icon');
+  btn.appendChild(document.createElement('mdui-icon-close'));
+  btn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    if (link.parentElement && Number(link.parentElement?.childElementCount) <= 1) {
+      link.parentElement.innerHTML = '<mdui-card disabled class="siteboxlink"><div class="sitetitle">None</div></mdui-card>';
     } else {
-        return;
+      link.remove();
     }
-    const crossButton: ButtonIcon = createCrossButton(link, () => {
-      removeFromStorage(link.id);
-    });
-    link.querySelector(".sitetitle")?.appendChild(crossButton);
-    // auto remove
-    window.setTimeout(() => crossButton.remove(), 3e3);
-}
-
-function createCrossButton(beremoved: HTMLElement, onclick?: (ev?: MouseEvent) => void): ButtonIcon {
-    const button: ButtonIcon = document.createElement("mdui-button-icon");
-    button.appendChild(document.createElement('mdui-icon-close'));
-    button.addEventListener("click", (ev: MouseEvent) => {
-        ev.preventDefault();
-        beremoved.remove();
-        if (onclick) onclick(ev);
-    });
-    return button;
+    removeFromStorage(link.id);
+  }, { once: true });
+  link.querySelector('.sitetitle')?.appendChild(btn);
+  // auto remove
+  setTimeout(() => btn.remove(), 3e3);
 }
 
 fillGroupInfo();
