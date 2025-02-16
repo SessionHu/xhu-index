@@ -11,16 +11,12 @@ html {
 }
 
 h1 {
-    font-size: 32px;
-    line-height: 32px;
-    /* 减小上下天地 */
-    margin-block-start: 10px;
-    margin-block-end: 10px;
+  line-height: 100%;
 }
 
 h2 {
     font-size: 24px;
-    line-height: 24px;
+    line-height: 100%;
     padding: 0 4px;
     /* 减小上下天地 */
     margin-block-start: 4px;
@@ -80,14 +76,16 @@ body > mdui-card {
   box-shadow: var(--mdui-elevation-level1);
   max-width: 770px;
   width: 100%;
+  position: relative;
   @include backdrop-filter(blur(1px));
   & > * {
     margin: 4px;
     text-align: center;
   }
   & > footer {
-    font-size: 12px;
-    line-height: 1.1;
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 4px 0;
   }
 }
 
@@ -183,27 +181,20 @@ body > mdui-card {
 form#search {
     display: flex;
     justify-content: center;
-    padding: 5px 0;
-    height: 30px;
+    align-items: center;
+    margin: 4px 0;
     position: sticky;
     top: 0;
 }
 
-form#search * {
-    margin: 2px;
-    font-size: 14px;
-    font-family: monospace, sans-serif;
-    line-height: 16px;
-    border-radius: 24px;
-    border-color: #6666;
-    border-width: 1px;
-    border-style: solid;
-    box-shadow: 1px 1px 1px rgba(192, 192, 192, 0.5);
+form#search > * {
+  font-family: monospace, sans-serif;
+  line-height: 100%;
+  margin: 0 4px;
 }
 
-input[name="q"] {
+mdui-text-field[name="q"] {
   width: 50%;
-  padding: 4px 8px;
   @media (max-width: 700px) {
      width: 60%;
   }
@@ -216,10 +207,17 @@ input[name="q"] {
   @media (max-width: 300px) {
     width: 90%;
   }
+  &::part(container) {
+    border-radius: var(--mdui-shape-corner-large);
+  }
+  &::part(label) {
+    transform: translateX(4px);
+  }
 }
 
-input[type="submit"] {
-  padding: 4px 12px;
+mdui-button-icon[type="submit"] {
+  height: 48px;
+  width: 48px;
   cursor: pointer;
   @media (max-width: 300px) {
     display: none;
