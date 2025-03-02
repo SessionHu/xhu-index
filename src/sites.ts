@@ -4,6 +4,9 @@ import type { Card } from 'mdui/components/card.js';
 import 'mdui/components/button-icon.js';
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
 
+import 'mdui/components/tooltip.js';
+import type { Tooltip } from 'mdui/components/tooltip.js';
+
 import '@mdui/icons/close.js';
 
 import sitegroups from './json/sites.json';
@@ -46,18 +49,18 @@ export function fillGroupInfo(): void {
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
-    // div.gp
-    const groupDiv: HTMLDivElement = document.createElement<"div">("div");
-    groupDiv.className = "gp";
-    groupDiv.id = group.id;
-    groupDiv.innerHTML = `<h2 class="gptitle">${group.name}</h2>`;
-    // div.gpframe
-    const gpframe: HTMLDivElement = document.createElement<"div">("div");
-    gpframe.className = "gpframe";
-    group.links.forEach(sitebox => gpframe.appendChild(createSiteboxlink(sitebox)));
-    gpframe.addEventListener("contextmenu", handleGroupContextMenu);
-    groupDiv.appendChild(gpframe);
-    return groupDiv;
+  // div.gp
+  const groupDiv: HTMLDivElement = document.createElement("div");
+  groupDiv.className = "gp";
+  groupDiv.id = group.id;
+  groupDiv.innerHTML = `<h2 class="gptitle">${group.name}</h2>`;
+  // div.gpframe
+  const gpframe: HTMLDivElement = document.createElement("div");
+  gpframe.className = "gpframe";
+  group.links.forEach((v) => gpframe.appendChild(createSiteboxlink(v)));
+  gpframe.addEventListener("contextmenu", handleGroupContextMenu);
+  groupDiv.appendChild(gpframe);
+  return groupDiv;
 }
 
 function handleGroupContextMenu(event: MouseEvent): void {
@@ -72,6 +75,10 @@ function handleGroupContextMenu(event: MouseEvent): void {
   } else {
     addToStorage(siteId);
     createCommonGroupDiv();
+    const tt = targetCard.querySelector('mdui-tooltip');
+    if (!tt) return;
+    tt.content = "已添加至常用网站";
+    tt.open = true;
   }
 }
 
@@ -115,14 +122,17 @@ function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
     link.title = sitebox.title;
     link.href = sitebox.url;
     link.clickable = true;
-    link.insertAdjacentHTML('beforeend',
+    const tt: Tooltip = document.createElement('mdui-tooltip');
+    tt.trigger = 'manual';
+    link.appendChild(tt);
+    tt.insertAdjacentHTML('beforeend',
       '<div class="sitetitle">' +
         '<img src="' + sitebox.icon + '" />' +
         '<span>' + sitebox.titlecn + '</span>' +
       '</div>'
     );
     if (!iscommon) {
-      link.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
+      tt.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
     }
     return link;
 }
