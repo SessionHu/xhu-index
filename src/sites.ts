@@ -9,18 +9,18 @@ import '@mdui/icons/close.js';
 import sitegroups from './json/sites.json';
 
 interface SiteGroup {
-    id: string;
-    name: string;
-    links: Sitebox[];
+  id: string;
+  name: string;
+  links: Sitebox[];
 }
 
 interface Sitebox {
-    id: string;
-    title: string;
-    titlecn: string;
-    url: string;
-    icon: string;
-    desc: string;
+  id: string;
+  title: string;
+  titlecn: string;
+  url: string;
+  icon: string;
+  desc: string;
 }
 
 const siteMap = new Map<string, Sitebox>();
@@ -35,11 +35,14 @@ for (const group of sitegroups) {
 }
 
 export function fillGroupInfo(): void {
-    const contentDiv: HTMLDivElement = document.querySelector("div.maingp") as HTMLDivElement;
-    // normal
-    sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
-    // common
-    contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv());
+  const contentDiv = document.querySelector("div.maingp");
+  if (!contentDiv) {
+    return console.error('div.maingp not found');
+  }
+  // normal
+  sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
+  // common
+  contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv());
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
@@ -73,7 +76,7 @@ function handleGroupContextMenu(event: MouseEvent): void {
 }
 
 function createCommonGroupDiv(): HTMLDivElement {
-  let common: string[] | Set<string> = JSON.parse(window.localStorage.getItem("common") || '[]');
+  let common: string[] | Set<string> = JSON.parse(localStorage.getItem("common") || '[]');
   if(!Array.isArray(common) || !common.length || !common.every(item => typeof item === "string")) {
     common = [
       "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
@@ -81,7 +84,7 @@ function createCommonGroupDiv(): HTMLDivElement {
     ];
   }
   common = new Set(common);
-  window.localStorage.setItem("common", JSON.stringify(Array.from(common)));
+  localStorage.setItem("common", JSON.stringify(Array.from(common)));
   // div.gp
   const groupDiv: HTMLDivElement = document.querySelector('#common') || document.createElement("div");
   groupDiv.className = "gp";
