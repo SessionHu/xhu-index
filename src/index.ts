@@ -1,3 +1,9 @@
+/**
+* @license
+* Copyright 2023-2025 XhuStudio
+* SPDX-License-Identifier: MIT
+*/
+
 import 'mdui/mdui.css';
 
 import './css/style.scss';
