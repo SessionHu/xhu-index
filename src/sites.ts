@@ -93,7 +93,7 @@ function createCommonGroupDiv(): HTMLDivElement {
   common = new Set(common);
   localStorage.setItem("common", JSON.stringify(Array.from(common)));
   // div.gp
-  const groupDiv: HTMLDivElement = document.querySelector('#common') || document.createElement("div");
+  const groupDiv: HTMLDivElement = document.querySelector('div#common') || document.createElement("div");
   groupDiv.className = "gp";
   groupDiv.id = "common";
   groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
@@ -115,37 +115,37 @@ function createCommonGroupDiv(): HTMLDivElement {
 }
 
 function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
-    // .siteboxlink
-    const link: Card = document.createElement("mdui-card");
-    link.className = "siteboxlink";
-    link.id = sitebox.id;
-    link.title = sitebox.title;
-    link.href = sitebox.url;
-    link.clickable = true;
-    const tt: Tooltip = document.createElement('mdui-tooltip');
-    tt.trigger = 'manual';
-    link.appendChild(tt);
-    tt.insertAdjacentHTML('beforeend',
-      '<div class="sitetitle">' +
-        '<img src="' + sitebox.icon + '" />' +
-        '<span>' + sitebox.titlecn + '</span>' +
-      '</div>'
-    );
-    if (!iscommon) {
-      tt.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
-    }
-    return link;
+  // .siteboxlink
+  const link: Card = document.createElement("mdui-card");
+  link.className = "siteboxlink";
+  link.id = sitebox.id;
+  link.title = sitebox.title;
+  link.href = sitebox.url;
+  link.clickable = true;
+  const tt: Tooltip = document.createElement('mdui-tooltip');
+  tt.trigger = 'manual';
+  link.appendChild(tt);
+  tt.insertAdjacentHTML('beforeend',
+    '<div class="sitetitle">' +
+      '<img src="' + sitebox.icon + '" />' +
+      '<span>' + sitebox.titlecn + '</span>' +
+    '</div>'
+  );
+  if (!iscommon) {
+    tt.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
+  }
+  return link;
 }
 
-function removeFromStorage(linkid: string) {
+function removeFromStorage(linkid: string): void {
   const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
   common.splice(common.indexOf(linkid), 1);
   localStorage.setItem('common', JSON.stringify(common));
 }
 
-function addToStorage(linkid: string) {
+function addToStorage(linkid: string): void {
   const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
-  if (!(linkid in common)) common.push(linkid);
+  if (!(common.includes(linkid))) common.push(linkid);
   localStorage.setItem('common', JSON.stringify(common));
 }
 
@@ -162,7 +162,7 @@ function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
   btn.appendChild(document.createElement('mdui-icon-close'));
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
-    if (link.parentElement && Number(link.parentElement?.childElementCount) <= 1) {
+    if (link.parentElement && link.parentElement?.childElementCount <= 1) {
       link.parentElement.innerHTML = '<mdui-card disabled class="siteboxlink"><div class="sitetitle">None</div></mdui-card>';
     } else {
       link.remove();
