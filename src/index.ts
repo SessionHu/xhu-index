@@ -38,5 +38,8 @@ if (canvas instanceof HTMLCanvasElement) {
   console.warn('canvas#dotLine not found');
 }
 
-const inputbox = document.querySelector('#search input[type="text"]');
-if (inputbox instanceof HTMLElement) window.addEventListener('keypress', () => inputbox.focus());
+const searchform = document.querySelector('form#search');
+if (searchform) {
+  const textfield = searchform.querySelector('mdui-text-field[name=q]');
+  if (textfield instanceof HTMLElement) window.addEventListener('keypress', () => textfield.focus());
+}
