@@ -167,13 +167,18 @@ body > mdui-card {
 
 /* Form */
 
+main > div {
+  position: relative;
+}
+
 form#search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 4px 0;
-    position: sticky;
-    top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 0;
+  position: relative;
+  z-index: 1;
+  will-change: top;
 }
 
 form#search > * {
