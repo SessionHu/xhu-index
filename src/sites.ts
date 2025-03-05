@@ -4,8 +4,7 @@ import type { Card } from 'mdui/components/card.js';
 import 'mdui/components/button-icon.js';
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
 
-import 'mdui/components/tooltip.js';
-import type { Tooltip } from 'mdui/components/tooltip.js';
+import { snackbar } from "mdui/functions/snackbar.js";
 
 import '@mdui/icons/close.js';
 
@@ -75,10 +74,12 @@ function handleGroupContextMenu(event: MouseEvent): void {
   } else {
     addToStorage(siteId);
     createCommonGroupDiv();
-    const tt = targetCard.querySelector('mdui-tooltip');
-    if (!tt) return;
-    tt.content = "已添加至常用网站";
-    tt.open = true;
+    snackbar({
+      message: '已添加至常用网站',
+      closeable: true,
+      autoCloseDelay: 2e3,
+      closeOnOutsideClick: true
+    });
   }
 }
 
@@ -122,17 +123,14 @@ function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
   link.title = sitebox.title;
   link.href = sitebox.url;
   link.clickable = true;
-  const tt: Tooltip = document.createElement('mdui-tooltip');
-  tt.trigger = 'manual';
-  link.appendChild(tt);
-  tt.insertAdjacentHTML('beforeend',
+  link.insertAdjacentHTML('beforeend',
     '<div class="sitetitle">' +
       '<img src="' + sitebox.icon + '" />' +
       '<span>' + sitebox.titlecn + '</span>' +
     '</div>'
   );
   if (!iscommon) {
-    tt.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
+    link.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
   }
   return link;
 }
