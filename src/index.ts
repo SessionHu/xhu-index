@@ -11,8 +11,6 @@ import './css/style.scss';
 import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
 
-import { $ } from 'mdui/jq.js';
-
 import 'mdui/components/text-field.js';
 
 import '@mdui/icons/search.js';
@@ -40,19 +38,13 @@ if (canvas instanceof HTMLCanvasElement) {
   console.warn('canvas#dotLine not found');
 }
 
-const searchform = $('form#search');
-const textfield = searchform.find('mdui-text-field[name=q]')[0];
-if (textfield) {
-  const prt = searchform.parents()[0];
+const searchform = document.querySelector('form#search');
+const textfield = searchform?.querySelector('mdui-text-field[name=q]');
+if (searchform && textfield instanceof HTMLElement) {
   window.addEventListener('scroll', () => {
-    const { y, height } = prt.getBoundingClientRect();
-    const topn = height - y;
-    if (topn > 0) {
-      searchform.css('top', topn);
-      searchform.children().attr('variant', 'filled');
-    } else {
-      searchform.css('top', 0);
-      searchform.children().attr('variant', 'outlined');
+    const vt = searchform.getBoundingClientRect().y <= 4 ? 'filled' : 'outlined';
+    for (let i = 0; i < searchform.children.length; i++) {
+      searchform.children[i].setAttribute('variant', vt);
     }
   });
   window.addEventListener('keypress', () => textfield.focus());

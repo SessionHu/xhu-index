@@ -67,6 +67,7 @@ body > mdui-card {
   box-shadow: var(--mdui-elevation-level1);
   max-width: 770px;
   width: 100%;
+  overflow: visible;
   & > * {
     margin: 4px;
     text-align: center;
@@ -167,18 +168,14 @@ body > mdui-card {
 
 /* Form */
 
-main > div {
-  position: relative;
-}
-
 form#search {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 4px 0;
-  position: relative;
+  position: sticky;
+  top: 4px;
   z-index: 1;
-  will-change: top;
 }
 
 form#search > * {
