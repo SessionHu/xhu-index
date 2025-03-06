@@ -26,7 +26,7 @@ if (canvas instanceof HTMLCanvasElement) {
     disMax: 80,
     width: window.innerWidth,
     height: window.innerHeight,
-    freq: 24,
+    freq: 60,
     color: '#111'
   });
   window.addEventListener<"resize">("resize", () => {
