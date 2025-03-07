@@ -1,5 +1,4 @@
-import 'mdui/components/card.js';
-import type { Card } from 'mdui/components/card.js';
+import { Card } from 'mdui/components/card.js';
 
 import 'mdui/components/button-icon.js';
 import type { ButtonIcon } from 'mdui/components/button-icon.js';
@@ -44,7 +43,7 @@ export function fillGroupInfo(): void {
   // normal
   sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
   // common
-  contentDiv.insertAdjacentElement("beforebegin", createCommonGroupDiv());
+  contentDiv.insertAdjacentElement("beforebegin", CommonGroup.instance.container);
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
@@ -65,15 +64,14 @@ function createGroupDiv(group: SiteGroup): HTMLDivElement {
 function handleGroupContextMenu(event: MouseEvent): void {
   if (!(event.target instanceof HTMLElement)) return;
   const targetCard = event.target.closest(".siteboxlink");
-  if (!(targetCard instanceof HTMLElement)) return;
+  if (!(targetCard instanceof Card)) return;
   const groupId = targetCard.closest(".gp")?.id;
   const siteId = targetCard.id;
   event.preventDefault();
   if (groupId === "common") {
     handleCommonContextMenu(event, targetCard);
   } else {
-    addToStorage(siteId);
-    createCommonGroupDiv();
+    CommonGroup.instance.add(siteId);
     snackbar({
       message: '已添加至常用网站',
       closeable: true,
@@ -83,39 +81,61 @@ function handleGroupContextMenu(event: MouseEvent): void {
   }
 }
 
-function createCommonGroupDiv(): HTMLDivElement {
-  let common: string[] | Set<string> = JSON.parse(localStorage.getItem("common") || '[]');
-  if(!Array.isArray(common) || !common.length || !common.every(item => typeof item === "string")) {
-    common = [
+class CommonGroup {
+  #items: Set<string>;
+  #container: HTMLDivElement;
+  get container() {
+    return this.#container;
+  }
+  #elem: HTMLDivElement;
+  constructor() {
+    const lsr = JSON.parse(localStorage.getItem('common') || '[]');
+    if (Array.isArray(lsr) && lsr.length && lsr.every(e => typeof e === 'string')) {
+      this.#items = new Set(lsr);
+    } else {
+      this.#items = new Set([
       "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
       "littleskin", "timeis", "gtranslate"
-    ];
-  }
-  common = new Set(common);
-  localStorage.setItem("common", JSON.stringify(Array.from(common)));
-  // div.gp
-  const groupDiv: HTMLDivElement = document.querySelector('div#common') || document.createElement("div");
-  groupDiv.className = "gp";
-  groupDiv.id = "common";
-  groupDiv.innerHTML = `<h2 class="gptitle">常用</h2>`;
-  // div.gpframe
-  const gpframe: HTMLDivElement = document.createElement("div");
-  gpframe.className = "gpframe";
-  for (const id of common) {
-    const sitebox = siteMap.get(id);
-    if (sitebox) {
-      gpframe.appendChild(createSiteboxlink(sitebox, true));
-    } else {
-      console.warn('Invalid common item:', id);
-      removeFromStorage(id);
+      ]);
     }
-  };
-  gpframe.addEventListener("contextmenu", handleGroupContextMenu);
-  groupDiv.append(gpframe);
-  return groupDiv;
+    this.#container = document.querySelector('div#common') || document.createElement('div');
+    this.#container.className = 'gp';
+    this.#container.id = 'common';
+    this.#container.innerHTML = '<h2 class="gptitle">常用</h2>';
+    this.#elem = document.createElement("div");
+    this.#elem.className = "gpframe";
+    for (const id of this.#items) {
+      const sitebox = siteMap.get(id);
+      if (sitebox) {
+        this.#elem.appendChild(createSiteboxlink(sitebox, true));
+      } else {
+        console.warn('Invalid common item:', id);
+        this.#items.delete(id);
+      }
+    }
+    this.#elem.addEventListener("contextmenu", handleGroupContextMenu);
+    this.#container.appendChild(this.#elem);
+  }
+  remove(card: Card) {
+    this.#items.delete(card.id);
+    localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
+    card.remove();
+  }
+  add(id: string) {
+    const sitebox = siteMap.get(id);
+    if (!sitebox) {
+      return console.warn('Invalid common item:', id);
+    }
+    if (this.#items.has(id)) return;
+    this.#items.add(id);
+    localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
+    if (this.#elem.textContent === 'None') this.#elem.innerHTML = '';
+    this.#elem.appendChild(createSiteboxlink(sitebox, true));
+  }
+  static instance = new CommonGroup();
 }
 
-function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
+function createSiteboxlink(sitebox: Sitebox, nodesc = false): Card {
   // .siteboxlink
   const link: Card = document.createElement("mdui-card");
   link.className = "siteboxlink";
@@ -129,43 +149,27 @@ function createSiteboxlink(sitebox: Sitebox, iscommon = false): Card {
       '<span>' + sitebox.titlecn + '</span>' +
     '</div>'
   );
-  if (!iscommon) {
+  if (!nodesc) {
     link.insertAdjacentHTML('beforeend', `<div class="sitedescription">${sitebox.desc}</div>`);
   }
   return link;
 }
 
-function removeFromStorage(linkid: string): void {
-  const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
-  common.splice(common.indexOf(linkid), 1);
-  localStorage.setItem('common', JSON.stringify(common));
-}
-
-function addToStorage(linkid: string): void {
-  const common: string[] = JSON.parse(localStorage.getItem("common") || '[]');
-  if (!(common.includes(linkid))) common.push(linkid);
-  localStorage.setItem('common', JSON.stringify(common));
-}
-
-function handleCommonContextMenu(event: MouseEvent, link: HTMLElement): void {
+function handleCommonContextMenu(event: MouseEvent, link: Card): void {
   if (window.innerWidth <= 220) {
-    return link.remove();
+    return CommonGroup.instance.remove(link);
   }
   if (!link.querySelector("mdui-icon-close")) {
     event.preventDefault();
-  } else {
-    return;
-  }
+  } else return;
   const btn: ButtonIcon = document.createElement('mdui-button-icon');
   btn.appendChild(document.createElement('mdui-icon-close'));
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
     if (link.parentElement && link.parentElement?.childElementCount <= 1) {
       link.parentElement.innerHTML = '<mdui-card disabled class="siteboxlink"><div class="sitetitle">None</div></mdui-card>';
-    } else {
-      link.remove();
     }
-    removeFromStorage(link.id);
+    CommonGroup.instance.remove(link);
   }, { once: true });
   link.querySelector('.sitetitle')?.appendChild(btn);
   // auto remove
