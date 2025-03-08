@@ -63,8 +63,8 @@ canvas#dotLine {
 body > mdui-card {
   padding: 4px;
   background-color: rgba(var(--mdui-color-background), 0.6);
-  border-radius: var(--mdui-shape-corner-extra-small);
-  box-shadow: var(--mdui-elevation-level1);
+  border-radius: var(--mdui-shape-corner-small);
+  box-shadow: var(--mdui-elevation-level2);
   max-width: 770px;
   width: 100%;
   overflow: visible;
