@@ -11,7 +11,7 @@ import './css/style.scss';
 import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
 
-import 'mdui/components/text-field.js';
+import { TextField } from 'mdui/components/text-field.js';
 
 import '@mdui/icons/search.js';
 
@@ -40,7 +40,7 @@ if (canvas instanceof HTMLCanvasElement) {
 
 const searchform = document.querySelector('form#search');
 const textfield = searchform?.querySelector('mdui-text-field[name=q]');
-if (searchform && textfield instanceof HTMLElement) {
+if (searchform && textfield instanceof TextField) {
   window.addEventListener('scroll', () => {
     const vt = searchform.getBoundingClientRect().y <= 4 ? 'filled' : 'outlined';
     for (let i = 0; i < searchform.children.length; i++) {

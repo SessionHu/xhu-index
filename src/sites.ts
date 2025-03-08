@@ -1,11 +1,9 @@
 import { Card } from 'mdui/components/card.js';
-
-import 'mdui/components/button-icon.js';
-import type { ButtonIcon } from 'mdui/components/button-icon.js';
+import { ButtonIcon } from 'mdui/components/button-icon.js';
 
 import { snackbar } from "mdui/functions/snackbar.js";
 
-import '@mdui/icons/close.js';
+import { IconClose } from '@mdui/icons/close.js';
 
 import sitegroups from './json/sites.json';
 
@@ -168,8 +166,8 @@ function handleCommonContextMenu(event: MouseEvent, link: Card): void {
   }
   if (link.querySelector("mdui-icon-close")) return;
   event.preventDefault();
-  const btn: ButtonIcon = document.createElement('mdui-button-icon');
-  btn.appendChild(document.createElement('mdui-icon-close'));
+  const btn = new ButtonIcon();
+  btn.appendChild(new IconClose());
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
     CommonGroup.instance.remove(link);
