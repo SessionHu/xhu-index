@@ -36,28 +36,29 @@ for (const group of sitegroups) {
 }
 
 export function fillGroupInfo(): void {
-  const contentDiv = document.querySelector("div.maingp");
-  if (!contentDiv) {
-    return console.error('div.maingp not found');
-  }
-  // normal
-  sitegroups.forEach(group => contentDiv.appendChild(createGroupDiv(group)));
+  const mainelem = document.querySelector("main");
+  if (!mainelem)
+    return console.error("selector 'main' not found");
   // common
-  contentDiv.insertAdjacentElement("beforebegin", CommonGroup.instance.container);
+  mainelem.appendChild(CommonGroup.instance.container);
+  // normal
+  for (const g of sitegroups)
+    mainelem.appendChild(createGroupDiv(g));
 }
 
 function createGroupDiv(group: SiteGroup): HTMLDivElement {
   // div.gp
-  const groupDiv: HTMLDivElement = document.createElement("div");
+  const groupDiv = document.createElement("div");
   groupDiv.className = "gp";
   groupDiv.id = group.id;
   groupDiv.innerHTML = `<h2 class="gptitle">${group.name}</h2>`;
   // div.gpframe
-  const gpframe: HTMLDivElement = document.createElement("div");
+  const gpframe = document.createElement("div");
   gpframe.className = "gpframe";
-  group.links.forEach((v) => gpframe.appendChild(createSiteboxlink(v)));
   gpframe.addEventListener("contextmenu", handleGroupContextMenu);
   groupDiv.appendChild(gpframe);
+  for (const v of group.links)
+    gpframe.appendChild(createSiteboxlink(v));
   return groupDiv;
 }
 
@@ -65,19 +66,11 @@ function handleGroupContextMenu(event: MouseEvent): void {
   if (!(event.target instanceof HTMLElement)) return;
   const targetCard = event.target.closest(".siteboxlink");
   if (!(targetCard instanceof Card)) return;
-  const groupId = targetCard.closest(".gp")?.id;
-  const siteId = targetCard.id;
   event.preventDefault();
-  if (groupId === "common") {
+  if (targetCard.closest(".gp")?.id === "common") {
     handleCommonContextMenu(event, targetCard);
   } else {
-    CommonGroup.instance.add(siteId);
-    snackbar({
-      message: '已添加至常用网站',
-      closeable: true,
-      autoCloseDelay: 2e3,
-      closeOnOutsideClick: true
-    });
+    CommonGroup.instance.add(targetCard.id);
   }
 }
 
@@ -94,9 +87,9 @@ class CommonGroup {
       this.#items = new Set(lsr);
     } else {
       this.#items = new Set([
-      "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
-      "littleskin", "timeis", "gtranslate"
-      ]);
+       "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
+       "littleskin", "timeis", "gtranslate"
+     ]);
     }
     this.#container = document.querySelector('div#common') || document.createElement('div');
     this.#container.className = 'gp';
@@ -120,6 +113,14 @@ class CommonGroup {
     this.#items.delete(card.id);
     localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
     card.remove();
+    snackbar({
+      message: '已移除该常用网站',
+      closeable: true,
+      autoCloseDelay: 2e3,
+      closeOnOutsideClick: true
+    });
+    if (!this.#elem.childElementCount)
+      this.#elem.innerHTML = '<mdui-card disabled class="siteboxlink"><div class="sitetitle">None</div></mdui-card>';
   }
   add(id: string) {
     const sitebox = siteMap.get(id);
@@ -131,6 +132,12 @@ class CommonGroup {
     localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
     if (this.#elem.textContent === 'None') this.#elem.innerHTML = '';
     this.#elem.appendChild(createSiteboxlink(sitebox, true));
+    snackbar({
+      message: '已添加至常用网站',
+      closeable: true,
+      autoCloseDelay: 2e3,
+      closeOnOutsideClick: true
+    });
   }
   static instance = new CommonGroup();
 }
@@ -159,16 +166,12 @@ function handleCommonContextMenu(event: MouseEvent, link: Card): void {
   if (window.innerWidth <= 220) {
     return CommonGroup.instance.remove(link);
   }
-  if (!link.querySelector("mdui-icon-close")) {
-    event.preventDefault();
-  } else return;
+  if (link.querySelector("mdui-icon-close")) return;
+  event.preventDefault();
   const btn: ButtonIcon = document.createElement('mdui-button-icon');
   btn.appendChild(document.createElement('mdui-icon-close'));
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
-    if (link.parentElement && link.parentElement?.childElementCount <= 1) {
-      link.parentElement.innerHTML = '<mdui-card disabled class="siteboxlink"><div class="sitetitle">None</div></mdui-card>';
-    }
     CommonGroup.instance.remove(link);
   }, { once: true });
   link.querySelector('.sitetitle')?.appendChild(btn);
