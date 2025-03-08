@@ -85,8 +85,8 @@ class CommonGroup {
       this.#items = new Set(lsr);
     } else {
       this.#items = new Set([
-       "github", "bing", "outlook", "bilibili", "cloudflare", "openfrp",
-       "littleskin", "timeis", "gtranslate"
+       "github", "cloudflare", "bilibili", "outlook",
+       "littleskin", "openfrp", "gtranslate"
      ]);
     }
     this.#container = document.querySelector('div#common') || document.createElement('div');
@@ -142,7 +142,7 @@ class CommonGroup {
 
 function createSiteboxlink(sitebox: Sitebox, nodesc = false): Card {
   // .siteboxlink
-  const link: Card = document.createElement("mdui-card");
+  const link = new Card();
   link.className = "siteboxlink";
   link.id = sitebox.id;
   link.title = sitebox.title;
