@@ -58,6 +58,16 @@ canvas#dotLine {
   bottom: 0;
 }
 
+@mixin lines-cutter($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 /* Special Div Styles */
 
 body > mdui-card {
@@ -85,12 +95,12 @@ body > mdui-card {
 .gp {
   padding: 5px;
   text-align: left;
-  & > .gptitle {
+  > .gptitle {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  & > .gpframe {
+  > .gpframe {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -99,7 +109,7 @@ body > mdui-card {
     padding: 0 4px;
     margin-block-start: 4px;
     margin-block-end: 4px;
-    & > .siteboxlink {
+    > .siteboxlink {
       box-shadow: var(--mdui-elevation-level2);
       background-color: rgba(var(--mdui-color-surface), .9);
       padding: 4px;
@@ -111,20 +121,21 @@ body > mdui-card {
         height: 16px;
         line-height: 100%;
         display: flex;
-        & > :first-child {
+        > :first-child {
           height: 16px;
           width: 16px;
           object-position: center center;
           object-fit: contain;
           margin-left: 1px;
         }
-        & > :nth-child(2) {
-          margin-left: 4px;
+        > :nth-child(2) {
+          margin-left: 6px;
+          margin-right: 1px;
         }
-        & > mdui-button-icon {
+        > mdui-button-icon {
           width: 16px;
           height: 16px;
-          margin-left: 1px;
+          margin-left: 2px;
           margin-right: -2px;
           @media (max-width: 220px) {
             display: none;
@@ -132,11 +143,11 @@ body > mdui-card {
         }
       }
       .sitedescription {
+        @include lines-cutter(4);
         margin: 0 4px 4px;
         height: 74px;
         line-height: 1.158;
         font-family: Unifont, monospace, simsun, Times, serif;
-        overflow: hidden;
       }
     }
   }
