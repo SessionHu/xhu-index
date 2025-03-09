@@ -10,6 +10,7 @@ import './css/style.scss';
 
 import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
+import { openSettings } from './settings';
 
 import { TextField } from 'mdui/components/text-field.js';
 
@@ -49,3 +50,6 @@ if (searchform && textfield instanceof TextField) {
   });
   window.addEventListener('keypress', () => textfield.focus());
 }
+
+const header = document.querySelector('header');
+header?.addEventListener('dblclick', openSettings);
