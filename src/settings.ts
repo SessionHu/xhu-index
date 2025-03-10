@@ -3,13 +3,19 @@ import { ListItem } from 'mdui/components/list-item.js';
 import { ListSubheader } from 'mdui/components/list-subheader.js';
 
 import { IconColorLens } from '@mdui/icons/color-lens.js';
+import { IconRestore } from  '@mdui/icons/restore.js';
 
 import { alert } from 'mdui/functions/alert.js';
 import { dialog } from 'mdui/functions/dialog.js';
 import { prompt } from 'mdui/functions/prompt.js';
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
+import { snackbar } from 'mdui/functions/snackbar';
+
+import { common } from './sites';
 
 const contentList = new List();
+
+// Appearance
 
 const apperanceSubheader = new ListSubheader();
 apperanceSubheader.textContent = '外观';
@@ -50,6 +56,44 @@ const colorschemeIcon = new IconColorLens();
 colorschemeIcon.slot = 'icon';
 colorscheme.appendChild(colorschemeIcon);
 contentList.appendChild(colorscheme);
+
+// Common Sites
+
+const commonsitesSubheader = new ListSubheader();
+commonsitesSubheader .textContent = '常用网站';
+contentList.appendChild(commonsitesSubheader );
+
+const restorecommonsites = new ListItem();
+restorecommonsites.textContent = '恢复默认';
+restorecommonsites.addEventListener('click', () => {
+  dialog({
+    headline: '恢复默认',
+    body: '确认要恢复默认常用网站吗?',
+    actions: [
+      {
+        text: '取消'
+      },
+      {
+        text: '确认',
+        onClick: () => {
+          common.clearAll();
+          snackbar({
+            message: '已恢复默认常用网站',
+            closeable: true,
+            autoCloseDelay: 2e3,
+            closeOnOutsideClick: true
+          });
+        }
+      }
+    ]
+  });
+});
+const restoreIcon = new IconRestore();
+restoreIcon.slot = 'icon';
+restorecommonsites.appendChild(restoreIcon);
+contentList.appendChild(restorecommonsites);
+
+// export
 
 export function openSettings() {
   return dialog({

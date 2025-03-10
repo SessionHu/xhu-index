@@ -38,7 +38,7 @@ export function fillGroupInfo(): void {
   if (!mainelem)
     return console.error("selector 'main' not found");
   // common
-  mainelem.appendChild(CommonGroup.instance.container);
+  mainelem.appendChild(common.container);
   // normal
   for (const g of sitegroups)
     mainelem.appendChild(createGroupDiv(g));
@@ -68,26 +68,27 @@ function handleGroupContextMenu(event: MouseEvent): void {
   if (targetCard.closest(".gp")?.id === "common") {
     handleCommonContextMenu(event, targetCard);
   } else {
-    CommonGroup.instance.add(targetCard.id);
+    common.add(targetCard.id);
   }
 }
 
-class CommonGroup {
+export const common = new (class {
   #items: Set<string>;
   #container: HTMLDivElement;
   get container() {
     return this.#container;
   }
   #elem: HTMLDivElement;
+  readonly #default = [
+     "github", "cloudflare", "bilibili", "outlook",
+     "littleskin", "openfrp", "gtranslate"
+  ];
   constructor() {
     const lsr = JSON.parse(localStorage.getItem('common') || '[]');
     if (Array.isArray(lsr) && lsr.length && lsr.every(e => typeof e === 'string')) {
       this.#items = new Set(lsr);
     } else {
-      this.#items = new Set([
-       "github", "cloudflare", "bilibili", "outlook",
-       "littleskin", "openfrp", "gtranslate"
-     ]);
+      this.#items = new Set(this.#default);
     }
     this.#container = document.querySelector('div#common') || document.createElement('div');
     this.#container.className = 'gp';
@@ -137,8 +138,21 @@ class CommonGroup {
       closeOnOutsideClick: true
     });
   }
-  static instance = new CommonGroup();
-}
+  clearAll() {
+    // reset
+    this.#items = new Set(this.#default);
+    localStorage.removeItem('common');
+    // clear
+    this.#elem.textContent = '';
+    // readd
+    for (const id of this.#items) {
+      const sitebox = siteMap.get(id);
+      if (sitebox) {
+        this.#elem.appendChild(createSiteboxlink(sitebox, true));
+      }
+    }
+  }
+})();
 
 function createSiteboxlink(sitebox: Sitebox, nodesc = false): Card {
   // .siteboxlink
@@ -162,7 +176,7 @@ function createSiteboxlink(sitebox: Sitebox, nodesc = false): Card {
 
 function handleCommonContextMenu(event: MouseEvent, link: Card): void {
   if (window.innerWidth <= 220) {
-    return CommonGroup.instance.remove(link);
+    return common.remove(link);
   }
   if (link.querySelector("mdui-icon-close")) return;
   event.preventDefault();
@@ -170,7 +184,7 @@ function handleCommonContextMenu(event: MouseEvent, link: Card): void {
   btn.appendChild(new IconClose());
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
-    CommonGroup.instance.remove(link);
+    common.remove(link);
   }, { once: true });
   link.querySelector('.sitetitle')?.appendChild(btn);
   // auto remove
