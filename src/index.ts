@@ -12,9 +12,11 @@ import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
 import { openSettings } from './settings';
 
+import { ButtonIcon } from 'mdui/components/button-icon';
 import { TextField } from 'mdui/components/text-field.js';
 
 import '@mdui/icons/search.js';
+import { IconSettings } from '@mdui/icons/settings.js';
 
 fillGroupInfo();
 
@@ -51,5 +53,13 @@ if (searchform && textfield instanceof TextField) {
   window.addEventListener('keypress', () => textfield.focus());
 }
 
-const header = document.querySelector('header');
-header?.addEventListener('dblclick', openSettings);
+const commondivh2 = document.querySelector('div#common>h2');
+if (commondivh2) {
+  const settingsBtn = new ButtonIcon();
+  settingsBtn.appendChild(new IconSettings());
+  settingsBtn.addEventListener('click', openSettings);
+  settingsBtn.style.height = String(commondivh2.computedStyleMap().get('line-height'));
+  settingsBtn.style.width = settingsBtn.style.height;
+  settingsBtn.style.float = 'right';
+  commondivh2.appendChild(settingsBtn);
+}
