@@ -5,6 +5,8 @@ import { snackbar } from "mdui/functions/snackbar.js";
 
 import { IconClose } from '@mdui/icons/close.js';
 
+import { setSettingsItem, getSettingsItem } from './settings';
+
 import sitegroups from './json/sites.json';
 
 interface SiteGroup {
@@ -84,7 +86,7 @@ export const common = new (class {
      "littleskin", "openfrp", "gtranslate"
   ];
   constructor() {
-    const lsr = JSON.parse(localStorage.getItem('common') || '[]');
+    const lsr = getSettingsItem('common');
     if (Array.isArray(lsr) && lsr.length && lsr.every(e => typeof e === 'string')) {
       this.#items = new Set(lsr);
     } else {
@@ -110,7 +112,7 @@ export const common = new (class {
   }
   remove(card: Card) {
     this.#items.delete(card.id);
-    localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
+    setSettingsItem('common', JSON.stringify(Array.from(this.#items)));
     card.remove();
     snackbar({
       message: '已移除该常用网站',
@@ -128,7 +130,7 @@ export const common = new (class {
     }
     if (this.#items.has(id)) return;
     this.#items.add(id);
-    localStorage.setItem('common', JSON.stringify(Array.from(this.#items)));
+    setSettingsItem('common', JSON.stringify(Array.from(this.#items)));
     if (this.#elem.textContent === 'None') this.#elem.innerHTML = '';
     this.#elem.appendChild(createSiteboxlink(sitebox, true));
     snackbar({
@@ -141,7 +143,7 @@ export const common = new (class {
   clearAll() {
     // reset
     this.#items = new Set(this.#default);
-    localStorage.removeItem('common');
+    setSettingsItem('common', void 0);
     // clear
     this.#elem.textContent = '';
     // readd

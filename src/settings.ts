@@ -11,7 +11,19 @@ import { prompt } from 'mdui/functions/prompt.js';
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 import { snackbar } from 'mdui/functions/snackbar';
 
-import { common } from './sites';
+const [
+  getSettingsItem,
+  setSettingsItem
+] = (() => {
+  const json = JSON.parse(localStorage.getItem('xhuindex') || '{}');
+  return [
+    (key: string) => json[key],
+    (key: string, value: any) => {
+      json[key] = value;
+      localStorage.setItem('xhuindex', JSON.stringify(json));
+    }
+  ];
+})();
 
 const contentList = new List();
 
@@ -24,7 +36,7 @@ contentList.appendChild(apperanceSubheader);
 const colorscheme = new ListItem();
 colorscheme.textContent = '配色方案';
 try {
-  const value = localStorage.getItem('colorscheme');
+  const value = getSettingsItem('colorscheme');
   setColorScheme(value || '#66ccff');
 } catch (e) {
   console.warn(e);
@@ -39,7 +51,7 @@ colorscheme.addEventListener('click', () => {
     closeOnOverlayClick: true
   }).then((value) => {
     setColorScheme(value);
-    localStorage.setItem('colorscheme', value);
+    setSettingsItem('colorscheme', value);
   }).catch((e) => {
     if (!e) return;
     alert({
@@ -61,7 +73,7 @@ contentList.appendChild(colorscheme);
 
 const commonsitesSubheader = new ListSubheader();
 commonsitesSubheader .textContent = '常用网站';
-contentList.appendChild(commonsitesSubheader );
+contentList.appendChild(commonsitesSubheader);
 
 const restorecommonsites = new ListItem();
 restorecommonsites.textContent = '恢复默认';
@@ -75,8 +87,8 @@ restorecommonsites.addEventListener('click', () => {
       },
       {
         text: '确认',
-        onClick: () => {
-          common.clearAll();
+        onClick: async () =>{
+          (await import('./sites')).common.clearAll();
           snackbar({
             message: '已恢复默认常用网站',
             closeable: true,
@@ -85,7 +97,9 @@ restorecommonsites.addEventListener('click', () => {
           });
         }
       }
-    ]
+    ],
+    closeOnEsc: true,
+    closeOnOverlayClick: true
   });
 });
 const restoreIcon = new IconRestore();
@@ -107,4 +121,9 @@ export function openSettings() {
       }
     ]
   });
+}
+
+export {
+  getSettingsItem,
+  setSettingsItem
 }

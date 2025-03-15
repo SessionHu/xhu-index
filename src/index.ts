@@ -8,9 +8,9 @@ import 'mdui/mdui.css';
 
 import './css/style.scss';
 
+import { openSettings } from './settings';
 import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
-import { openSettings } from './settings';
 
 import { ButtonIcon } from 'mdui/components/button-icon';
 import { TextField } from 'mdui/components/text-field.js';
