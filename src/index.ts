@@ -20,6 +20,17 @@ import { IconSettings } from '@mdui/icons/settings.js';
 
 fillGroupInfo();
 
+const mqldark = window.matchMedia('(prefers-color-scheme: dark)');
+mqldark.addEventListener('change', (e) => {
+  if (e.matches) {
+    document.documentElement.classList.remove('mdui-theme-light');
+    document.documentElement.classList.add('mdui-theme-dark');
+  } else {
+    document.documentElement.classList.add('mdui-theme-light');
+    document.documentElement.classList.remove('mdui-theme-dark');
+  }
+});
+
 const canvas = document.querySelector("canvas#dotLine");
 if (canvas instanceof HTMLCanvasElement) {
   const dotLine = new Dotline({
@@ -30,12 +41,13 @@ if (canvas instanceof HTMLCanvasElement) {
     width: window.innerWidth,
     height: window.innerHeight,
     freq: 60,
-    color: '#111'
+    color: mqldark.matches ? '#fff' : '#111'
   });
   window.addEventListener<"resize">("resize", () => {
     dotLine.canvas.width = window.innerWidth;
     dotLine.canvas.height = window.innerHeight;
   });
+  mqldark.addEventListener('change', (e) => dotLine.color = e.matches ? '#fff' : '#111');
   dotLine.start();
 } else {
   console.warn('canvas#dotLine not found');
@@ -58,8 +70,5 @@ if (commondivh2) {
   const settingsBtn = new ButtonIcon();
   settingsBtn.appendChild(new IconSettings());
   settingsBtn.addEventListener('click', openSettings);
-  settingsBtn.style.height = String(commondivh2.computedStyleMap().get('line-height'));
-  settingsBtn.style.width = settingsBtn.style.height;
-  settingsBtn.style.float = 'right';
   commondivh2.appendChild(settingsBtn);
 }

@@ -4,9 +4,7 @@
 /* Public Display */
 
 html {
-    width: 100vw;
-    overflow-x: hidden;
-    scrollbar-width: thin;
+  scrollbar-width: thin;
 }
 
 h1 {
@@ -19,15 +17,20 @@ h1 {
 }
 
 h2 {
-    font-size: 24px;
-    line-height: 100%;
-    padding: 0 4px;
-    /* 减小上下天地 */
-    margin-block-start: 4px;
-    margin-block-end: 4px;
-    /* fake hr */
-    padding-bottom: 6px;
-    border-bottom: 1px solid #c0c0c0dd;
+  font-size: 24px;
+  line-height: 100%;
+  padding: 0 4px;
+  /* 减小上下天地 */
+  margin-block-start: 4px;
+  margin-block-end: 4px;
+  /* fake hr */
+  padding-bottom: 6px;
+  border-bottom: 1px solid #c0c0c0dd;
+  mdui-button-icon {
+    height: 24px;
+    width: 24px;
+    float: right;
+  }
 }
 
 hr {
@@ -45,9 +48,10 @@ a {
 }
 
 body {
-    font-family: Mojangles, Unifont, monospace, serif;
-    display: flex;
-    justify-content: center;
+  font-family: Mojangles, Unifont, monospace, serif;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
 }
 
 canvas#dotLine {
