@@ -9,8 +9,8 @@ interface Dot {
 
 export class Dotline {
 
-  canvas: HTMLCanvasElement;
-  ctx:    CanvasRenderingContext2D;
+  readonly canvas: HTMLCanvasElement;
+  private readonly ctx:    CanvasRenderingContext2D;
   color:  string;
 
   dotSum: number;
@@ -20,7 +20,7 @@ export class Dotline {
   freq:   number; // Hz
 
   dots:  Dot[] = [];
-  mouse: Dot = {
+  readonly mouse: Dot = {
     mass: 8e30,
     rx: NaN,
     ry: NaN,
@@ -93,7 +93,7 @@ export class Dotline {
       const yt = t.ry * this.canvas.height / this.scale; // m
       for (const d of [this.mouse].concat(this.dots)) {
         // if worth calculating?
-        if(d === t || isNaN(d.rx) || isNaN(d.ry)) {
+        if (d === t || isNaN(d.rx) || isNaN(d.ry)) {
           continue;
         }
         // distance
@@ -173,17 +173,30 @@ export class Dotline {
       this.ctx.stroke();
     }
     // redraw
-    window.requestAnimationFrame(() => this.drawLine());
+    if (!isNaN(this.#itv)) window.requestAnimationFrame(() => this.drawLine());
+    else this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  // 启动动画
+  /**
+   * Start animation
+   */
   start(): void {
     // add dots
     this.addDots();
+    // move dots
+    this.#itv = window.setInterval(() => this.move(), 1e3 / this.freq);
     // draw lines
     this.drawLine();
-    // move dots
-    setInterval(() => this.move(), 1e3 / this.freq);
+  }
+
+  #itv: number = NaN;
+
+  /**
+   * Stop animation
+   */
+  stop(): void {
+    window.clearInterval(this.#itv);
+    this.#itv = NaN;
   }
 
 }

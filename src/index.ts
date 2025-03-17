@@ -8,7 +8,7 @@ import 'mdui/mdui.css';
 
 import './css/style.scss';
 
-import { openSettings } from './settings';
+import { openSettings, getSettingsItem } from './settings';
 import { fillGroupInfo } from './sites';
 import { Dotline } from './dotLine';
 
@@ -32,8 +32,9 @@ mqldark.addEventListener('change', (e) => {
 });
 
 const canvas = document.querySelector("canvas#dotLine");
+export let dotLine: Dotline;
 if (canvas instanceof HTMLCanvasElement) {
-  const dotLine = new Dotline({
+  dotLine = new Dotline({
     dom: canvas,
     dotSum: 70,
     radius: .5,
@@ -48,7 +49,7 @@ if (canvas instanceof HTMLCanvasElement) {
     dotLine.canvas.height = window.innerHeight;
   });
   mqldark.addEventListener('change', (e) => dotLine.color = e.matches ? '#fff' : '#111');
-  dotLine.start();
+  if (getSettingsItem('dotline') !== false) dotLine.start();
 } else {
   console.warn('canvas#dotLine not found');
 }

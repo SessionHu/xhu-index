@@ -2,8 +2,11 @@ import { List } from 'mdui/components/list.js';
 import { ListItem } from 'mdui/components/list-item.js';
 import { ListSubheader } from 'mdui/components/list-subheader.js';
 
+import { Switch } from 'mdui/components/switch.js';
+
 import { IconColorLens } from '@mdui/icons/color-lens.js';
 import { IconRestore } from  '@mdui/icons/restore.js';
+import { IconTimeline } from '@mdui/icons/timeline.js';
 
 import { alert } from 'mdui/functions/alert.js';
 import { dialog } from 'mdui/functions/dialog.js';
@@ -69,10 +72,27 @@ colorschemeIcon.slot = 'icon';
 colorscheme.appendChild(colorschemeIcon);
 contentList.appendChild(colorscheme);
 
+const dotlinebg = new ListItem();
+dotlinebg.textContent = 'Dotline';
+const dotlinebgIcon = new IconTimeline();
+dotlinebgIcon.slot = 'icon';
+dotlinebg.appendChild(dotlinebgIcon);
+const dotlinebgSwitch = new Switch();
+dotlinebgSwitch.slot = 'end-icon';
+dotlinebgSwitch.checked = getSettingsItem('dotline') === false ? false : true;
+dotlinebgSwitch.addEventListener('change', async () => {
+  const st = dotlinebgSwitch.checked;
+  setSettingsItem('dotline', st);
+  const dl = (await import('./index')).dotLine;
+  st ? dl.start() : dl.stop();
+});
+dotlinebg.appendChild(dotlinebgSwitch);
+contentList.appendChild(dotlinebg);
+
 // Common Sites
 
 const commonsitesSubheader = new ListSubheader();
-commonsitesSubheader .textContent = '常用网站';
+commonsitesSubheader.textContent = '常用网站';
 contentList.appendChild(commonsitesSubheader);
 
 const restorecommonsites = new ListItem();
