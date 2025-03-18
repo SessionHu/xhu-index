@@ -41,7 +41,6 @@ if (canvas instanceof HTMLCanvasElement) {
     disMax: 80,
     width: window.innerWidth,
     height: window.innerHeight,
-    freq: 60,
     color: mqldark.matches ? '#fff' : '#111'
   });
   window.addEventListener<"resize">("resize", () => {

@@ -10,14 +10,13 @@ interface Dot {
 export class Dotline {
 
   readonly canvas: HTMLCanvasElement;
-  private readonly ctx:    CanvasRenderingContext2D;
+  private readonly ctx: CanvasRenderingContext2D;
   color:  string;
 
   dotSum: number;
   radius: number; // px
   disMax: number; // px
   scale:  number; // px/m
-  freq:   number; // Hz
 
   dots:  Dot[] = [];
   readonly mouse: Dot = {
@@ -36,7 +35,6 @@ export class Dotline {
     disMax: number, // px
     width:  number, // px
     height: number, // px
-    freq:   number, // Hz
     color:  string
   }){
     this.canvas = args.dom;
@@ -45,7 +43,6 @@ export class Dotline {
     this.disMax = args.disMax;
     this.color  = args.color;
     this.scale  = args.radius / 1.7371e6;
-    this.freq   = args.freq;
     // get canvas context
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     // set canvas size
@@ -60,6 +57,10 @@ export class Dotline {
       this.mouse.rx = NaN;
       this.mouse.ry = NaN;
     });
+    // add dots
+    this.addDots();
+    // draw first frame
+    this.drawLine();
   }
 
   /**
@@ -86,7 +87,7 @@ export class Dotline {
   /**
    * Move dots in place.
    */
-  move(): void {
+  move(dt: number): void {
     // 万有引力
     for (const t of this.dots) {
       const xt = t.rx * this.canvas.width / this.scale; // m
@@ -111,15 +112,15 @@ export class Dotline {
         const fx = f * disx / Math.sqrt(disq); // N
         const fy = f * disy / Math.sqrt(disq); // N
         // velocity
-        t.vx -= fx / t.mass / this.freq;
-        t.vy -= fy / t.mass / this.freq;
+        t.vx -= fx / t.mass * dt / 1e3;
+        t.vy -= fy / t.mass * dt / 1e3;
       }
       // if move too fast
       //t.vx *= t.vx > 5e5 ? 0.9 : 1;
       //t.vy *= t.vy > 5e5 ? 0.9 : 1;
       // move
-      t.rx += t.vx / this.freq * this.scale;
-      t.ry += t.vy / this.freq * this.scale;
+      t.rx += t.vx * dt / 1e3 * this.scale;
+      t.ry += t.vy * dt / 1e3 * this.scale;
       // out of bound
       //t.vx *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
       //t.vy *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
@@ -140,9 +141,15 @@ export class Dotline {
     }
   }
 
-  drawLine(): void {
+  drawLine(t0 = 0, t1 = t0): void {
     // clear
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    // move
+    const dt = t0 - t1;
+    this.move(dt);
+    // fps
+    //this.ctx.font = '16px monospace';
+    //this.ctx.fillText(Math.round(1e3 / dt).toString(), 0, 16);
     // draw
     for (const n of this.dots) {
       // draw lines
@@ -173,30 +180,25 @@ export class Dotline {
       this.ctx.stroke();
     }
     // redraw
-    if (!isNaN(this.#itv)) window.requestAnimationFrame(() => this.drawLine());
-    else this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    if (this.#running) window.requestAnimationFrame((t) => this.drawLine(t, t0));
   }
 
   /**
    * Start animation
    */
   start(): void {
-    // add dots
-    this.addDots();
-    // move dots
-    this.#itv = window.setInterval(() => this.move(), 1e3 / this.freq);
+    this.#running = true;
     // draw lines
-    this.drawLine();
+    window.requestAnimationFrame(t => this.drawLine(t, t));
   }
 
-  #itv: number = NaN;
+  #running = false;
 
   /**
    * Stop animation
    */
   stop(): void {
-    window.clearInterval(this.#itv);
-    this.#itv = NaN;
+    this.#running = false;
   }
 
 }
