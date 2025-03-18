@@ -103,8 +103,8 @@ export class Dotline {
         const disq = disx * disx + disy * disy; // m^2
         // if too close
         if (Math.sqrt(disq) < this.radius / this.scale * 2) {
-          t.vx *= Number.MIN_VALUE - 1;
-          t.vy *= Number.MIN_VALUE - 1;
+          t.rx = Math.random();
+          t.ry = Math.random();
           continue;
         }
         // gravity
@@ -116,14 +116,12 @@ export class Dotline {
         t.vy -= fy / t.mass * dt / 1e3;
       }
       // if move too fast
-      //t.vx *= t.vx > 5e5 ? 0.9 : 1;
-      //t.vy *= t.vy > 5e5 ? 0.9 : 1;
+      t.vx *= t.vx > 5e5 ? .5 : 1;
+      t.vy *= t.vy > 5e5 ? .5 : 1;
       // move
       t.rx += t.vx * dt / 1e3 * this.scale;
       t.ry += t.vy * dt / 1e3 * this.scale;
       // out of bound
-      //t.vx *= t.rx <= 0 || t.rx >= 1 ? -1 : 1;
-      //t.vy *= t.ry <= 0 || t.ry >= 1 ? -1 : 1;
       if (t.rx > 1) {
         t.rx = 1;
         t.vx *= -1;
