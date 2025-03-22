@@ -46,6 +46,7 @@ if (canvas instanceof HTMLCanvasElement) {
   window.addEventListener<"resize">("resize", () => {
     dotLine.canvas.width = window.innerWidth;
     dotLine.canvas.height = window.innerHeight;
+    if (getSettingsItem('dotline') === false) dotLine.drawLine();
   });
   mqldark.addEventListener('change', (e) => dotLine.color = e.matches ? '#fff' : '#111');
   if (getSettingsItem('dotline') !== false) dotLine.start();
