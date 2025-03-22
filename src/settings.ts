@@ -5,6 +5,7 @@ import { ListSubheader } from 'mdui/components/list-subheader.js';
 import { Switch } from 'mdui/components/switch.js';
 
 import { IconColorLens } from '@mdui/icons/color-lens.js';
+import { IconDeblur } from '@mdui/icons/deblur.js';
 import { IconRestore } from  '@mdui/icons/restore.js';
 import { IconTimeline } from '@mdui/icons/timeline.js';
 
@@ -79,7 +80,7 @@ dotlinebgIcon.slot = 'icon';
 dotlinebg.appendChild(dotlinebgIcon);
 const dotlinebgSwitch = new Switch();
 dotlinebgSwitch.slot = 'end-icon';
-dotlinebgSwitch.checked = getSettingsItem('dotline') === false ? false : true;
+dotlinebgSwitch.checked = !(getSettingsItem('dotline') === false);
 dotlinebgSwitch.addEventListener('change', async () => {
   const st = dotlinebgSwitch.checked;
   setSettingsItem('dotline', st);
@@ -88,6 +89,27 @@ dotlinebgSwitch.addEventListener('change', async () => {
 });
 dotlinebg.appendChild(dotlinebgSwitch);
 contentList.appendChild(dotlinebg);
+
+const bgblur = new ListItem();
+bgblur.textContent = '背景模糊';
+const bgblurIcon = new IconDeblur();
+bgblurIcon.slot = 'icon';
+bgblur.appendChild(bgblurIcon);
+const bgblurSwitch = new Switch();
+bgblurSwitch.slot = 'end-icon';
+if (!(bgblurSwitch.checked = !(getSettingsItem('bgblur') === false))) {
+  document.body.classList.add('no-bg-blur');
+}
+bgblurSwitch.addEventListener('change', async () => {
+  const st = bgblurSwitch.checked;
+  setSettingsItem('bgblur', st);
+  st ?
+    document.body.classList.remove('no-bg-blur')
+  :
+    document.body.classList.add('no-bg-blur');
+});
+bgblur.appendChild(bgblurSwitch);
+contentList.appendChild(bgblur);
 
 // Common Sites
 
