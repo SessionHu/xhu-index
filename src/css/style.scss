@@ -5,7 +5,6 @@
 
 html {
   scrollbar-width: thin;
-  overflow-x: hidden;
 }
 
 h1 {
@@ -49,10 +48,11 @@ a {
 }
 
 body {
-  font-family: Mojangles, Unifont, monospace, serif;
+  font-family: 'Mojangles', 'Unifont', 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace, serif;
   display: flex;
   justify-content: center;
   width: 100vw;
+  margin: 0;
 }
 
 canvas#dotLine {
@@ -83,11 +83,11 @@ body > mdui-card {
   max-width: 770px;
   width: 100%;
   overflow: visible;
-  & > * {
+  > * {
     margin: 4px;
     text-align: center;
   }
-  & > footer {
+  > footer {
     font-size: 14px;
     line-height: 1.2;
     padding: 4px 0;
@@ -152,7 +152,7 @@ body > mdui-card {
         margin: 0 4px 4px;
         height: 74px;
         line-height: 1.158;
-        font-family: Unifont, monospace, simsun, Times, serif;
+        font-family: 'Unifont', 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace, serif;
       }
     }
   }
@@ -195,7 +195,7 @@ form#search {
 }
 
 form#search > * {
-  font-family: monospace, sans-serif;
+  font-family: 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace;
   line-height: 100%;
   margin: 0 4px;
 }
