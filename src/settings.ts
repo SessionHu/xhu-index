@@ -39,9 +39,13 @@ contentList.appendChild(apperanceSubheader);
 
 const colorscheme = new ListItem();
 colorscheme.textContent = '配色方案';
+const colorschemeElem = document.createElement('meta');
+colorschemeElem.name = 'theme-color';
+document.head.appendChild(colorschemeElem);
 try {
-  const value = getSettingsItem('colorscheme');
-  setColorScheme(value || '#66ccff');
+  const value = getSettingsItem('colorscheme') || '#66ccff';
+  colorschemeElem.content = value;
+  setColorScheme(value);
 } catch (e) {
   console.warn(e);
 }
@@ -54,7 +58,9 @@ colorscheme.addEventListener('click', () => {
     closeOnEsc: true,
     closeOnOverlayClick: true
   }).then((value) => {
+    if (!value.startsWith('#')) value = '#' + value;
     setColorScheme(value);
+    colorschemeElem.content = value;
     setSettingsItem('colorscheme', value);
   }).catch((e) => {
     if (!e) return;
