@@ -18,6 +18,14 @@
         "url": "https://developer.mozilla.org/zh-CN/",
         "icon": "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png",
         "desc": "The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps."
+      },
+      {
+        "id": "mdui",
+        "title": "mdui",
+        "titlecn": "mdui",
+        "url": "https://www.mdui.org/zh-cn/",
+        "icon": "https://cdn.w3cbus.com/mdui/icon.svg",
+        "desc": "mdui 是基于 Material Design 3 的开源前端组件库, 使用 Web Components 技术, 且支持动态配色、暗色模式, 轻量高效"
       }
     ]
   },
@@ -48,6 +56,14 @@
         "url": "https://translate.google.com/",
         "icon": "https://ssl.gstatic.com/translate/favicon.ico",
         "desc": "Google 免费提供的这项服务可在简体中文和其他 100 多种语言之间即时翻译字词、短语和网页"
+      },
+      {
+        "id": "lipsum",
+        "title": "Lorem Ipsum",
+        "titlecn": "Lorem Ipsum",
+        "url": "https://cn.lipsum.com",
+        "icon": "https://cn.lipsum.com/favicon.ico",
+        "desc": "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
       }
     ]
   },
