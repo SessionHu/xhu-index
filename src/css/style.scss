@@ -49,7 +49,6 @@ a {
 }
 
 body {
-  font-family: 'Mojangles', 'Unifont', 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace, serif;
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -156,7 +155,6 @@ body > mdui-card {
         margin: 0 4px 4px;
         height: 74px;
         line-height: 1.158;
-        font-family: 'Unifont', 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace, serif;
       }
     }
   }
@@ -197,7 +195,6 @@ form#search {
 }
 
 form#search > * {
-  font-family: 'JetBrainsMono NFM', 'JetBrainsMono', 'Noto Sans Mono CJK SC', 'Consolas', monospace;
   line-height: 100%;
   margin: 0 4px;
 }
