@@ -73,3 +73,5 @@ if (commondivh2) {
   settingsBtn.addEventListener('click', openSettings);
   commondivh2.appendChild(settingsBtn);
 }
+
+document.body.classList.remove('hidden');
