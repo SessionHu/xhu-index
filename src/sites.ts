@@ -166,7 +166,7 @@ function createSiteboxlink(sitebox: Sitebox, nodesc = false): Card {
   link.clickable = true;
   link.insertAdjacentHTML('beforeend',
     '<div class="sitetitle">' +
-      '<img src="' + sitebox.icon + '" />' +
+      `<img src="${sitebox.icon}" referrerpolicy="no-referrer" />` +
       '<span>' + sitebox.titlecn + '</span>' +
     '</div>'
   );
