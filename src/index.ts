@@ -74,4 +74,4 @@ if (commondivh2) {
   commondivh2.appendChild(settingsBtn);
 }
 
-document.body.classList.remove('hidden');
+document.body.classList.add('visible');

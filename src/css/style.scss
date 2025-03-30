@@ -53,7 +53,7 @@ body {
   justify-content: center;
   width: 100vw;
   margin: 0;
-  &.hidden {
+  &:not(.visible) {
     display: none;
   }
 }
