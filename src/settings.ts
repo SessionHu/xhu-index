@@ -43,7 +43,7 @@ const colorschemeElem = document.createElement('meta');
 colorschemeElem.name = 'theme-color';
 document.head.appendChild(colorschemeElem);
 try {
-  const value = getSettingsItem('colorscheme') || '#66ccff';
+  const value = getSettingsItem('colorscheme') || '#ffc0cb';
   colorschemeElem.content = value;
   setColorScheme(value);
 } catch (e) {
