@@ -86,7 +86,7 @@ export const common = new (class {
      "littleskin", "openfrp", "gtranslate"
   ];
   constructor() {
-    const lsr = JSON.parse(getSettingsItem('common'));
+    const lsr = JSON.parse(getSettingsItem('common') || '[]');
     if (Array.isArray(lsr) && lsr.length && lsr.every(e => typeof e === 'string')) {
       this.#items = new Set(lsr);
     } else {
