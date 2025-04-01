@@ -50,8 +50,8 @@ a {
 
 body {
   display: flex;
-  justify-content: center;
   width: 100vw;
+  height: 100vh;
   margin: 0;
   &:not(.visible) {
     display: none;
@@ -84,6 +84,7 @@ body:not(.no-bg-blur) .bg-blur {
 /* Special Div Styles */
 
 body > mdui-card {
+  margin: auto;
   padding: 4px;
   background-color: rgba(var(--mdui-color-background), 0.6);
   border-radius: var(--mdui-shape-corner-small);
