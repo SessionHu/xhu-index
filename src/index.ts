@@ -20,8 +20,7 @@ import { IconSettings } from '@mdui/icons/settings.js';
 
 fillGroupInfo();
 
-const mqldark = window.matchMedia('(prefers-color-scheme: dark)');
-mqldark.addEventListener('change', (e) => {
+const onmqlchange = (e: MediaQueryListEvent | MediaQueryList) => {
   if (e.matches) {
     document.documentElement.classList.remove('mdui-theme-light');
     document.documentElement.classList.add('mdui-theme-dark');
@@ -29,7 +28,10 @@ mqldark.addEventListener('change', (e) => {
     document.documentElement.classList.add('mdui-theme-light');
     document.documentElement.classList.remove('mdui-theme-dark');
   }
-});
+};
+const mqldark = window.matchMedia('(prefers-color-scheme: dark)');
+onmqlchange(mqldark);
+mqldark.addEventListener('change', onmqlchange);
 
 const canvas = document.querySelector("canvas#dotLine");
 export let dotLine: Dotline;
