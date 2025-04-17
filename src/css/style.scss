@@ -35,9 +35,9 @@ h2 {
 }
 
 hr {
-    /* 减小上下天地 */
-    margin-block-start: 0.25em;
-    margin-block-end: 0.25em;
+  /* 减小上下天地 */
+  margin-block-start: 0.25em;
+  margin-block-end: 0.25em;
 }
 
 a {
@@ -164,13 +164,11 @@ body > mdui-card {
   }
 }
 
-#common {
-  .siteboxlink {
-    height: 32px;
-    width: auto;
-    .sitedescription {
-      display: none;
-    }
+#common .siteboxlink {
+  height: 32px;
+  width: auto;
+  .sitedescription {
+    display: none;
   }
 }
 
@@ -182,7 +180,7 @@ body > mdui-card {
   }
   .sitedescription,
   .sitetitle > span {
-      display: none;
+    display: none;
   }
 }
 
