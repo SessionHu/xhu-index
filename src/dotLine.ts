@@ -28,6 +28,10 @@ export class Dotline {
     label: "mouse"
   }
 
+  get dpr() {
+    return window.devicePixelRatio || 1;
+  }
+
   constructor(args: {
     dom: HTMLCanvasElement,
     dotSum: number,
@@ -50,8 +54,9 @@ export class Dotline {
     this.canvas.height = args.height;
     // listen event
     window.addEventListener<"mousemove">("mousemove", (ev: MouseEvent) => {
-      this.mouse.rx = (ev.clientX - this.canvas.offsetLeft) / this.canvas.width;
-      this.mouse.ry = (ev.clientY - this.canvas.offsetTop) / this.canvas.height;
+      const dpr = this.dpr;
+      this.mouse.rx = (ev.clientX - this.canvas.offsetLeft) / this.canvas.width * dpr;
+      this.mouse.ry = (ev.clientY - this.canvas.offsetTop) / this.canvas.height * dpr;
     });
     window.addEventListener<"mouseout">("mouseout", () => {
       this.mouse.rx = NaN;
@@ -149,6 +154,7 @@ export class Dotline {
     //this.ctx.font = '16px monospace';
     //this.ctx.fillText(Math.round(1e3 / dt).toString(), 0, 16);
     // draw
+    const dpr = this.dpr;
     for (const n of this.dots) {
       // draw lines
       for (const d of [this.mouse].concat(this.dots)) {
@@ -166,14 +172,14 @@ export class Dotline {
         // draw
         this.ctx.beginPath();
         this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = (this.disMax - h) / this.disMax;
+        this.ctx.lineWidth = (this.disMax - h) / this.disMax * dpr;
         this.ctx.moveTo(n.rx * this.canvas.width, n.ry * this.canvas.height);
         this.ctx.lineTo(d.rx * this.canvas.width, d.ry * this.canvas.height);
         this.ctx.stroke();
       }
       // draw dots
       this.ctx.beginPath();
-      this.ctx.lineWidth = this.radius;
+      this.ctx.lineWidth = this.radius * dpr;
       this.ctx.arc((n.rx * this.canvas.width), (n.ry * this.canvas.height), this.radius, 0, 2 * Math.PI);
       this.ctx.stroke();
     }

@@ -36,18 +36,20 @@ mqldark.addEventListener('change', onmqlchange);
 const canvas = document.querySelector("canvas#dotLine");
 export let dotLine: Dotline;
 if (canvas instanceof HTMLCanvasElement) {
+  const dpr = window.devicePixelRatio || 1;
   dotLine = new Dotline({
     dom: canvas,
     dotSum: 70,
     radius: .5,
     disMax: 80,
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: window.innerWidth * dpr,
+    height: window.innerHeight * dpr,
     color: mqldark.matches ? '#fff' : '#111'
   });
   window.addEventListener<"resize">("resize", () => {
-    dotLine.canvas.width = window.innerWidth;
-    dotLine.canvas.height = window.innerHeight;
+    const dpr = dotLine.dpr;
+    dotLine.canvas.width = window.innerWidth * dpr;
+    dotLine.canvas.height = window.innerHeight * dpr;
     if (getSettingsItem('dotline') === false) dotLine.drawLine();
   });
   mqldark.addEventListener('change', (e) => dotLine.color = e.matches ? '#fff' : '#111');
