@@ -21,12 +21,13 @@ import { IconSettings } from '@mdui/icons/settings.js';
 fillGroupInfo();
 
 const onmqlchange = (e: MediaQueryListEvent | MediaQueryList) => {
+  const cl = document.documentElement.classList;
   if (e.matches) {
-    document.documentElement.classList.remove('mdui-theme-light');
-    document.documentElement.classList.add('mdui-theme-dark');
+    cl.remove('mdui-theme-light');
+    cl.add('mdui-theme-dark');
   } else {
-    document.documentElement.classList.add('mdui-theme-light');
-    document.documentElement.classList.remove('mdui-theme-dark');
+    cl.add('mdui-theme-light');
+    cl.remove('mdui-theme-dark');
   }
 };
 const mqldark = window.matchMedia('(prefers-color-scheme: dark)');
