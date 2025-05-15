@@ -15,7 +15,6 @@ import { Dotline } from './dotLine';
 import { ButtonIcon } from 'mdui/components/button-icon';
 import { TextField } from 'mdui/components/text-field.js';
 
-import '@mdui/icons/search.js';
 import { IconSettings } from '@mdui/icons/settings.js';
 
 fillGroupInfo();
@@ -59,8 +58,8 @@ if (canvas instanceof HTMLCanvasElement) {
   console.warn('canvas#dotLine not found');
 }
 
-const searchform = document.querySelector('form#search');
-const textfield = searchform?.querySelector('mdui-text-field[name=q]');
+export const searchform = document.querySelector('form#search');
+export const textfield = searchform?.querySelector('mdui-text-field[name=q]');
 if (searchform && textfield instanceof TextField) {
   window.addEventListener('scroll', () => {
     const vt = searchform.getBoundingClientRect().y <= 4 ? 'filled' : 'outlined';

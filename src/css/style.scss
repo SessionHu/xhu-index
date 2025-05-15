@@ -231,3 +231,7 @@ mdui-button-icon[type="submit"] {
     display: none;
   }
 }
+
+mdui-menu-item::part(label) {
+  overflow: visible;
+}

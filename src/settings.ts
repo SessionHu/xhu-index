@@ -1,12 +1,19 @@
 import { List } from 'mdui/components/list.js';
 import { ListItem } from 'mdui/components/list-item.js';
 import { ListSubheader } from 'mdui/components/list-subheader.js';
+import { TextField } from 'mdui/components/text-field.js';
 
+import { ButtonIcon } from 'mdui/components/button-icon.js';
+import { Dropdown } from 'mdui/components/dropdown.js';
+import { Menu } from 'mdui/components/menu.js';
+import { MenuItem } from 'mdui/components/menu-item.js';
 import { Switch } from 'mdui/components/switch.js';
 
+import { IconArrowDropDown } from '@mdui/icons/arrow-drop-down.js';
 import { IconColorLens } from '@mdui/icons/color-lens.js';
 import { IconDeblur } from '@mdui/icons/deblur.js';
 import { IconRestore } from  '@mdui/icons/restore.js';
+import { IconSearch } from '@mdui/icons/search.js';
 import { IconTimeline } from '@mdui/icons/timeline.js';
 
 import { alert } from 'mdui/functions/alert.js';
@@ -28,6 +35,42 @@ const [
     }
   ];
 })();
+
+interface SearchEngineItem {
+  name: string,
+  base: string,
+  keyname: string
+}
+
+const SEARCH_ENGINE_LIST: SearchEngineItem[] = [
+  {
+    name: 'Bing',
+    base: 'https://www.bing.com/search',
+    keyname: 'q'
+  },
+  {
+    name: 'Bing CN',
+    base: 'https://cn.bing.com/search',
+    keyname: 'q'
+  },
+  {
+    name: 'Bing Global',
+    base: 'https://global.bing.com/search?setmkt=en-us',
+    keyname: 'q'
+  },
+];
+
+const setSearchEngine = async (s: SearchEngineItem) => {
+  const { searchform, textfield } = await import('./index');
+  if (!(searchform instanceof HTMLFormElement) ||
+    !(textfield instanceof TextField)
+    ) return;
+  searchform.action = s.base;
+  textfield.label = s.name;
+  textfield.name = s.keyname;
+  setSettingsItem('search', s);
+}
+setSearchEngine(getSettingsItem('search') || SEARCH_ENGINE_LIST[0]);
 
 const contentList = new List();
 
@@ -154,6 +197,44 @@ const restoreIcon = new IconRestore();
 restoreIcon.slot = 'icon';
 restorecommonsites.appendChild(restoreIcon);
 contentList.appendChild(restorecommonsites);
+
+// Search
+
+const searchSubheader = new ListSubheader;
+searchSubheader.textContent = '搜索';
+contentList.appendChild(commonsitesSubheader);
+const chooseSearchEngine = new ListItem;
+chooseSearchEngine.textContent = '搜索引擎';
+const searchIcon = new IconSearch;
+searchIcon.slot = 'icon';
+chooseSearchEngine.appendChild(searchIcon);
+const chooseSearchEngineDropdown = new Dropdown;
+chooseSearchEngineDropdown.slot = 'end-icon';
+{
+  const btn = new ButtonIcon;
+  btn.slot = 'trigger';
+  const icon = new IconArrowDropDown;
+  btn.appendChild(icon);
+  chooseSearchEngineDropdown.appendChild(btn);
+  const menu = new Menu;
+  chooseSearchEngineDropdown.appendChild(menu);
+  for (const i of SEARCH_ENGINE_LIST) {
+    const elem = new MenuItem;
+    elem.textContent = i.name;
+    elem.dataset.base = i.base;
+    elem.dataset.keyname = i.keyname;
+    menu.appendChild(elem);
+  }
+  menu.addEventListener('click', (ev) => {
+    if (ev.target instanceof MenuItem && ev.target.textContent && ev.target.dataset.base && ev.target.dataset.keyname) setSearchEngine({
+      name: ev.target.textContent,
+      base: ev.target.dataset.base,
+      keyname: ev.target.dataset.keyname
+    });
+  });
+}
+chooseSearchEngine.appendChild(chooseSearchEngineDropdown);
+contentList.appendChild(chooseSearchEngine);
 
 // export
 
