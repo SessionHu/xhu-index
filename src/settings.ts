@@ -70,7 +70,10 @@ const setSearchEngine = async (s: SearchEngineItem) => {
   textfield.name = s.keyname;
   setSettingsItem('search', s);
 }
-setSearchEngine(getSettingsItem('search') || SEARCH_ENGINE_LIST[0]);
+setSearchEngine({
+  ...SEARCH_ENGINE_LIST[0],
+  ...getSettingsItem('search')
+});
 
 const contentList = new List();
 
@@ -202,7 +205,7 @@ contentList.appendChild(restorecommonsites);
 
 const searchSubheader = new ListSubheader;
 searchSubheader.textContent = '搜索';
-contentList.appendChild(commonsitesSubheader);
+contentList.appendChild(searchSubheader);
 const chooseSearchEngine = new ListItem;
 chooseSearchEngine.textContent = '搜索引擎';
 const searchIcon = new IconSearch;
