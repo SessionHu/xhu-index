@@ -73,7 +73,7 @@ const setSearchEngine = async (s: SearchEngineItem) => {
 setSearchEngine({
   ...SEARCH_ENGINE_LIST[0],
   ...getSettingsItem('search')
-});
+}).catch(console.warn);
 
 const contentList = new List();
 
