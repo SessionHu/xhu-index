@@ -229,11 +229,19 @@ chooseSearchEngineDropdown.slot = 'end-icon';
     menu.appendChild(elem);
   }
   menu.addEventListener('click', (ev) => {
-    if (ev.target instanceof MenuItem && ev.target.textContent && ev.target.dataset.base && ev.target.dataset.keyname) setSearchEngine({
-      name: ev.target.textContent,
-      base: ev.target.dataset.base,
-      keyname: ev.target.dataset.keyname
-    });
+    if (ev.target instanceof MenuItem && ev.target.textContent && ev.target.dataset.base && ev.target.dataset.keyname) {
+      setSearchEngine({
+        name: ev.target.textContent,
+        base: ev.target.dataset.base,
+        keyname: ev.target.dataset.keyname
+      });
+      snackbar({
+        message: '已设置搜索引擎为 ' + ev.target.textContent,
+        closeable: true,
+        autoCloseDelay: 2e3,
+        closeOnOutsideClick: true
+      });
+    }
   });
 }
 chooseSearchEngine.appendChild(chooseSearchEngineDropdown);
