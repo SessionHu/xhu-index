@@ -64,6 +64,14 @@
         "url": "https://cn.lipsum.com",
         "icon": "https://cn.lipsum.com/favicon.ico",
         "desc": "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+      },
+      {
+        "id": "12306",
+        "title": "12306",
+        "titlecn": "12306",
+        "url": "https://www.12306.cn/index/",
+        "icon": "https://www.12306.cn/index/images/favicon.ico",
+        "desc": "中国铁路 12306 网站"
       }
     ]
   },
