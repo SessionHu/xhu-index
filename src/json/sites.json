@@ -72,6 +72,14 @@
         "url": "https://www.12306.cn/index/",
         "icon": "https://www.12306.cn/index/images/favicon.ico",
         "desc": "中国铁路 12306 网站"
+      },
+      {
+        "id": "totp",
+        "title": "TOTP Generator",
+        "titlecn": "TOTP Generator",
+        "url": "https://totp.danhersam.com/",
+        "icon": "https://totp.danhersam.com/favicon.ico",
+        "desc": "Generate time-based one time passwords in the browser"
       }
     ]
   },
