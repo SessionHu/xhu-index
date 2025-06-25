@@ -17,6 +17,11 @@ import { TextField } from 'mdui/components/text-field.js';
 
 import { IconSettings } from '@mdui/icons/settings.js';
 
+(() => {
+  if (!/eruda=true/.test(location.search) && localStorage.getItem('active-eruda') != 'true') return;
+  document.write('<script src="https://unpkg.com/eruda"></script><script>eruda.init();</script>');
+})();
+
 fillGroupInfo();
 
 const onmqlchange = (e: MediaQueryListEvent | MediaQueryList) => {
