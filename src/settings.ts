@@ -44,6 +44,11 @@ interface SearchEngineItem {
 
 const SEARCH_ENGINE_LIST: SearchEngineItem[] = [
   {
+    name: 'DuckDuckGo',
+    base: 'https://duckduckgo.com/',
+    keyname: 'q'
+  },
+  {
     name: 'Bing',
     base: 'https://www.bing.com/search',
     keyname: 'q'
