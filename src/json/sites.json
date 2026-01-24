@@ -16,7 +16,7 @@
         "title": "MDN Web Docs",
         "titlecn": "MDN Web Docs",
         "url": "https://developer.mozilla.org/zh-CN/",
-        "icon": "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png",
+        "icon": "https://developer.mozilla.org/favicon.svg",
         "desc": "The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps."
       },
       {
@@ -38,7 +38,7 @@
         "title": "Outlook",
         "titlecn": "Outlook",
         "url": "https://outlook.live.com/",
-        "icon": "https://compass-ssl.microsoft.com/assets/28/de/28de50b6-21d9-484d-b400-edfafd7fe5fb.svg",
+        "icon": "https://res.public.onecdn.static.microsoft/assets/mail/pwa/v4/pngs/apple-touch-icon.png",
         "desc": "由Microsoft推出的一款功能强大的电子邮箱平台"
       },
       {
@@ -80,6 +80,14 @@
         "url": "https://totp.danhersam.com/",
         "icon": "https://totp.danhersam.com/favicon.ico",
         "desc": "Generate time-based one time passwords in the browser"
+      },
+      {
+        "id": "osm",
+        "title": "OpenStreetMap",
+        "titlecn": "OpenStreetMap",
+        "url": "https://www.openstreetmap.org/",
+        "icon": "https://wiki.openstreetmap.org/w/images/7/79/Public-images-osm_logo.svg",
+        "desc": "一个所有人都可以编辑并自由使用的世界地图. 其中的大部分内容由志愿者从无到有地构建起来, 并以开放授权发布"
       }
     ]
   },
@@ -145,6 +153,14 @@
     "id": "search",
     "name": "搜索",
     "links": [
+      {
+        "id": "duckduckgo",
+        "title": "DuckDuckGo",
+        "titlecn": "DuckDuckGo",
+        "url": "https://duckduckgo.com/",
+        "icon": "https://duckduckgo.com/static-assets/favicons/DDG-icon_256x256.png",
+        "desc": "The Internet privacy company that empowers you to seamlessly take control of your personal information online, without any tradeoffs."
+      },
       {
         "id": "bing",
         "title": "Bing",
