@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "@mdui/icons": "^1.0.2",
-    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "mdui": "2",
     "mini-css-extract-plugin": "^2.9.2",

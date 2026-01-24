@@ -1,14 +1,13 @@
 import path from 'node:path';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CopyPlugin from 'copy-webpack-plugin';
 
 export default {
   entry: './src/index.ts',
   devtool: 'source-map',
   output: {
     filename: 'main.js',
-    path: path.resolve(import.meta.dirname, 'dist'),
+    path: path.resolve(import.meta.dirname, 'public/dist/'),
     pathinfo: false,
   },
   devServer: {
@@ -16,11 +15,6 @@ export default {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: 'public', to: '.' },
-      ]
-    })
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
