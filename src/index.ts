@@ -1,6 +1,6 @@
 /**
 * @license
-* Copyright 2023-2025 XhuStudio
+* Copyright 2023-2026 SessionHu
 * SPDX-License-Identifier: MIT
 */
 
