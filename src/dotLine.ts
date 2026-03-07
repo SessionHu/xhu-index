@@ -124,8 +124,8 @@ export class Dotline {
       t.vx *= t.vx > 5e5 ? .5 : 1;
       t.vy *= t.vy > 5e5 ? .5 : 1;
       // move
-      t.rx += t.vx * dt / 1e3 * this.scale;
-      t.ry += t.vy * dt / 1e3 * this.scale;
+      t.rx += t.vx * dt / 1e3 * this.scale / this.canvas.width;
+      t.ry += t.vy * dt / 1e3 * this.scale / this.canvas.height;
       // out of bound
       if (t.rx > 1) {
         t.rx = 1;
